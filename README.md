@@ -36,3 +36,4 @@ Usually add branches for each feature
 4. Click on Create Pull Request
 5. The reviewer will approve the changes and you can then click on merge (this will merge the code into the master) and it's safe to delete your branch now!! :D 
 
+## Forgot about Pull, shall do that later 
