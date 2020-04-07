@@ -23,7 +23,7 @@ Usually add branches for each feature
 ``` git commit -m "<Include commit message here, make sure it is meaningful>" ```
 
 3. Follow this step if it's your **first commit with the branch**. What we're doing here is trying to do here in simple words establishing some sort of connection between the branch and the master branch. (More on: https://devconnected.com/how-to-set-upstream-branch-on-git/) 
-``` git --set-upstream origin <branchName> ```
+``` git push --set-upstream origin <branchName> ```
 
 4. If you've used the above command
   ``` git push origin ``` should do it for you this time. No need to set an upstream again! 
