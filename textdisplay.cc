@@ -32,5 +32,5 @@ ostream &operator<<(std::ostream &out, const TextDisplay &td) {
 }
 
 TextDisplay::~TextDisplay() {
-    theDisplay.clear;
+    theDisplay.clear();
 }

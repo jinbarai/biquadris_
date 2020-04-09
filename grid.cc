@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-void Grid::init(size_t n) {
+void Grid::init(int n) {
     if (n == 0) {
         this->level = new levelzero(); // add notes based on level code
     } else if (n == 1) {
@@ -23,7 +23,7 @@ void Grid::init(size_t n) {
         vector<Cell> c;
         this->theGrid.emplace_back(c);
         for (int k = 0; k < 11; ++k) {
-            this->theGrid.at(i).emplace_back(new Cell{i,k});
+            this->theGrid.at(i).emplace_back(Cell(i,k));
         }
     }
 }

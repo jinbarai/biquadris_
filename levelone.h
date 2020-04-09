@@ -7,16 +7,15 @@
 #include "levels.h"
 #include <random>
 
-#ifndef FOUR_H
-#define FOUR_H
+#ifndef ONE_H
+#define ONE_H
 
-class Block{};
 
-class levelfour: public levels { 
+class levelone: public levels { 
     Block *createBlock() override; 
-    Block *makeBlocks(std::string type, bool isHeavy) override; 
+    Block *makeBlocks(char type, bool isHeavy) override; 
     bool isHeavy() override; 
-    ~levelfour();
+    ~levelone();
 };
 
 

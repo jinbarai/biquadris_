@@ -9,10 +9,9 @@
 #include <random>
 
 using namespace std; 
-class Block{};
 
 Block* levelzero::createBlock() {
-       string nowBlock = block_file.at(this->curseq); 
+       char nowBlock = block_file.at(this->curseq); 
        this->curseq++;
        // go through the same sequence if reached the end of sequence 
        if (this->curseq >= block_file.size()) { 
@@ -22,7 +21,7 @@ Block* levelzero::createBlock() {
 }
 
 // Implementing methods 
-Block* levelzero::makeBlocks(string type, bool isHeavy) {
+Block* levelzero::makeBlocks(char type, bool isHeavy) {
     // create a new block pointer inside level 0
     // depends on how the block class is made
     // return a block pointer 
