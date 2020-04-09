@@ -3,7 +3,7 @@
 using namespace std;
 
 
-TextDisplay::TextDisplay(level *l) {
+TextDisplay::TextDisplay(levels *l) {
     theDisplay.clear();
     this->l = l; 
     for (int i = 0; i < 18; ++i) {

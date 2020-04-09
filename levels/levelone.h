@@ -11,7 +11,7 @@
 #define ONE_H
 
 
-class levelone:levels { 
+class levelone: public levels { 
     Block *createBlock() override; 
     Block *makeBlocks(std::string type, bool isHeavy) override; 
     bool isHeavy() override; 

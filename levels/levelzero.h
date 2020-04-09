@@ -1,17 +1,17 @@
+#ifndef ZERO_H
+#define ZERO_H
 #include <iostream>
 #include <string>
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include "Block.h"
+#include "block.h"
 #include "levels.h"
 #include <random>
 
-#ifndef ZERO_H
-#define ZERO_H
+class Block{};
 
-
-class levelzero:levels {
+class levelzero: public levels {
     int curseq; 
     Block *createBlock() override; 
     Block *makeBlocks(std::string type, bool isHeavy) override;

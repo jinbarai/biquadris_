@@ -3,12 +3,13 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include "Block.h"
+#include "block.h"
 #include "levels.h"
 #include "levelzero.h"
 #include <random>
 
 using namespace std; 
+class Block{};
 
 Block* levelzero::createBlock() {
        string nowBlock = block_file.at(this->curseq); 
