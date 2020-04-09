@@ -7,16 +7,16 @@
 using namespace std;
 
 class Cell;
-
-int CLOCKWISE = 2;
-int COUNTER_CLOCKWISE = 3;
-int LEFT = -1;
-int RIGHT = 1;
+//
+//int CLOCKWISE = 2;
+//int COUNTER_CLOCKWISE = 3;
+//int LEFT = -1;
+//int RIGHT = 1;
 
 class Block{
     int xPos, yPos, height, width;
     bool heavy;
-    vector <Cell> blockVector;
+    vector <unique_ptr <Cell>> blockVector;
     public:
         Block(int height, int width, int x, int y, vector <pair <int, int>> cellCoords, bool isHeavy);
         virtual ~Block() = 0;
