@@ -4,7 +4,6 @@
 class Cell{
     int x; 
     int y;
-    
     public:
         Cell(int x, int y);
         bool isEmpty = false;

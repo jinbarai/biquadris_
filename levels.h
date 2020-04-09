@@ -11,11 +11,11 @@
 
 class levels {
     protected:
-    std::vector <string> block_file;  
+    std::vector <char> block_file;  
     public:
     int curLevel;
     virtual Block *createBlock() = 0; 
-    virtual Block *makeBlocks(std::string type, bool isHeavy) = 0;
+    virtual Block *makeBlocks(char type, bool isHeavy) = 0;
     virtual void blocksFromFile(std::string filename); 
     virtual bool isHeavy()=0; 
     virtual ~levels(); 

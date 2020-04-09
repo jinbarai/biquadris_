@@ -1,3 +1,5 @@
+#ifndef ZERO_H
+#define ZERO_H
 #include <iostream>
 #include <string>
 #include <vector>
@@ -7,16 +9,13 @@
 #include "levels.h"
 #include <random>
 
-#ifndef THREE_H
-#define THREE_H
-
-class Block{};
-
-class levelthree: public levels { 
+class levelzero: public levels {
+    int curseq; 
     Block *createBlock() override; 
-    Block *makeBlocks(std::string type, bool isHeavy) override; 
+    Block *makeBlocks(char type, bool isHeavy) override;
+    void blocksFromFile(std::string filename) override; 
     bool isHeavy() override; 
-    ~levelthree();
+    ~levelzero();
 };
 
 

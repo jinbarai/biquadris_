@@ -19,10 +19,10 @@ class Block{
     vector <unique_ptr<Cell>> blockVector;
     public:
         Block(int height, int width, int x, int y, vector <pair <int, int>> cellCoords, bool isHeavy);
-       // virtual ~Block() = 0;
+        virtual ~Block() = 0;
         virtual void rotate (int direction) = 0;
         void move (int direction);
         bool isHeavy();
-        virtual char getType () const = 0;
+        virtual char getType() const = 0;
 };
 #endif

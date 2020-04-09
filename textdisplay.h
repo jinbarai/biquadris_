@@ -2,7 +2,7 @@
 #define TEXTDISPLAY_H
 #include <vector>
 #include "cell.h"
-#include "levels/levels.h"
+#include "levels.h"
 #include "controller.h"
 
 class TextDisplay { 
