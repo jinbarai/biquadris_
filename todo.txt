@@ -1,3 +1,4 @@
 - Merge levels and blocks
 - Work on generating coordinates (height, width, spawn_coords) for each block 
 - Controller
+- Add a way to show moving blocks when you make them on grid.cc 
