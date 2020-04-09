@@ -8,15 +8,15 @@ using namespace std;
 
 class Cell;
 
-extern int CLOCKWISE = 2;
-extern int COUNTER_CLOCKWISE = 3;
-extern int LEFT = -1;
-extern int RIGHT = 1;
+int CLOCKWISE = 2;
+int COUNTER_CLOCKWISE = 3;
+int LEFT = -1;
+int RIGHT = 1;
 
 class Block{
     int xPos, yPos, height, width;
     bool heavy;
-    vector <unique_ptr<Cell>> blockVector;
+    vector <Cell> blockVector;
     public:
         Block(int height, int width, int x, int y, vector <pair <int, int>> cellCoords, bool isHeavy);
         virtual ~Block() = 0;
