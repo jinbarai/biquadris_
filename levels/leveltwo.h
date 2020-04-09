@@ -3,15 +3,16 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include "Block.h"
+#include "block.h"
 #include "levels.h"
 #include <random>
 
 #ifndef TWO_H
 #define TWO_H
 
+class Block{};
 
-class leveltwo:levels { 
+class leveltwo: public levels { 
     Block *createBlock() override; 
     Block *makeBlocks(std::string type, bool isHeavy) override; 
     bool isHeavy() override; 

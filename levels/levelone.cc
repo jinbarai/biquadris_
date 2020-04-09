@@ -3,12 +3,14 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include "Block.h"
+#include "block.h"
 #include "levels.h"
 #include "levelone.h"
 #include <random>
 
 using namespace std; 
+
+class Block{};
 
 Block* levelone::createBlock() {
   // generate a number from 1-6 

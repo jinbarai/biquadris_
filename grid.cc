@@ -4,33 +4,52 @@ using namespace std;
 
 void Grid::init(size_t n) {
     if (n == 0) {
-        this->level = new Level0(); // add notes based on level code
+        this->level = new levelzero(); // add notes based on level code
     } else if (n == 1) {
-        this->level = new Level1(); 
+        this->level = new levelone(); 
     } else if (n == 2) {
-        this->level = new Level2(); 
+        this->level = new leveltwo(); 
     } else if (n == 3) {
-        this->level = new Level3(); 
+        this->level = new levelthree(); 
     } else if (n == 4) {
-        this->level = new Level4(); 
-    } else if (n == 5) {
+        this->level = new levelfour(); 
+    } /*else if (n == 5) {
         this->level = new Level5(); 
     } else if (n == 6) {
        this->level = new Level6();
-    } 
-    this->td = new TextDisplay (this->level);
+    } */
+    this->td = new TextDisplay{this->level};
     for (int i = 0; i < 15; ++i) {
         vector<Cell> c;
         this->theGrid.emplace_back(c);
         for (int k = 0; k < 11; ++k) {
-            this->theGrid.at(i).emplace_back(new Cell(i, k));
+            this->theGrid.at(i).emplace_back(new Cell{i,k});
         }
     }
 }
 
+void Grid::changeLevel(int n) {
+    delete this->level;
+    if (n == 0) {
+        this->level = new levelzero(); // add notes based on level code
+    } else if (n == 1) {
+        this->level = new levelone(); 
+    } else if (n == 2) {
+        this->level = new leveltwo(); 
+    } else if (n == 3) {
+        this->level = new levelthree(); 
+    } else if (n == 4) {
+        this->level = new levelfour(); 
+    } /*else if (n == 5) {
+        this->level = new Level5(); 
+    } else if (n == 6) {
+       this->level = new Level6();
+    } */
+}
+
 bool Grid::isRowFull(int n) { 
     for (int i = 0; i < 11; ++i) {
-        if (this->theDisplay.at(n).at(k).isEmpty == true) {
+        if (this->theGrid.at(n).at(i).isEmpty == true) {
             return false;
         }
     } return true;
@@ -56,5 +75,4 @@ ostream &operator<<(ostream &out, const Grid &gr) {
 Grid::~Grid() { 
     delete this->level;
     delete this->td;
-    this->theDisplay.clear;
 }

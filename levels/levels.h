@@ -1,11 +1,11 @@
+#ifndef LEVEL_H
+#define LEVEL_H
 #include <iostream>
 #include <string>
 #include <vector>
 #include <fstream>
 #include <sstream>
-//#include "Blocks.h"
-#ifndef LEVEL_H
-#define LEVEL_H
+#include "block.h"
 
 // Factor Design Method implementation
 
@@ -19,7 +19,7 @@ class levels {
     virtual void blocksFromFile(std::string filename); 
     virtual bool isHeavy()=0; 
     virtual ~levels(); 
-}
+};
 
 #endif
 

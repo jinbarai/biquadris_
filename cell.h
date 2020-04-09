@@ -1,12 +1,13 @@
 #ifndef CELL_H
 #define CELL_H
-using namespace std;
+
 class Cell{
-    pair <int, int> coords;
+    int x; 
+    int y;
     
     public:
-        Cell(pair <int, int> coord);
-
+        Cell(int x, int y);
+        bool isEmpty = false;
         void updateBy(int x, int y);
         void set(int x, int y);
         int getX();
