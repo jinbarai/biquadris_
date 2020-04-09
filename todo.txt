@@ -1,0 +1,3 @@
+- Merge levels and blocks
+- Work on generating coordinates (height, width, spawn_coords) for each block 
+- Controller
