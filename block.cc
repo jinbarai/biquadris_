@@ -25,7 +25,5 @@ bool Block::isHeavy(){
     return this->heavy;
 }
 
-Block::~Block() {
-
-}
+Block::~Block() {}
 

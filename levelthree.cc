@@ -42,6 +42,7 @@ Block* levelthree::makeBlocks(char type, bool isHeavy) {
     // depends on how the block class is made
     // return a block pointer 
     Block *p;
+    //  will initalize to make a Block! 
     return p; 
 } 
 

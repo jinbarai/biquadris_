@@ -20,6 +20,7 @@ Block* levelzero::createBlock() {
        return this->makeBlocks(nowBlock, this->isHeavy()); 
 }
 
+
 // Implementing methods 
 Block* levelzero::makeBlocks(char type, bool isHeavy) {
     // create a new block pointer inside level 0
@@ -29,16 +30,20 @@ Block* levelzero::makeBlocks(char type, bool isHeavy) {
     return p; 
 } 
 
+/*
 // Read from file 
 void levelzero::blocksFromFile(string filename) {
+    //  controller will pass these to level
     ifstream file{filename};
     string t; 
     while(file>>t) {
         block_file.emplace_back(t); 
     }
 }
+*/
 
-bool levelzero::isHeavy() { return false; } 
+bool levelzero::isHeavy() { 
+    return false; 
+} 
 
 levelzero::~levelzero() {}
-

@@ -1,5 +1,3 @@
-#ifndef ZERO_H
-#define ZERO_H
 #include <iostream>
 #include <string>
 #include <vector>
@@ -9,12 +7,15 @@
 #include "levels.h"
 #include <random>
 
+#ifndef ZERO_H
+#define ZERO_H
+
 class levelzero: public levels {
-    int curseq; 
+    int curseq = 0;
     Block *createBlock() override; 
-    Block *makeBlocks(char type, bool isHeavy) override;
-    void blocksFromFile(std::string filename) override; 
+    Block *makeBlocks(char type, bool isHeavy) override; 
     bool isHeavy() override; 
+    //void blocksFromFile(std::string filename);
     ~levelzero();
 };
 

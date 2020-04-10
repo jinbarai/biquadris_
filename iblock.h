@@ -6,7 +6,7 @@
 class IBlock : public Block {
     public:
         IBlock(bool isHeavy);
-        ~IBlock();
+        ~IBlock() = default;
         void rotate(int direction) override;
         char getType() const override;
 };

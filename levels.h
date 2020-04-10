@@ -11,14 +11,13 @@
 
 class levels {
     protected:
-    std::vector <char> block_file;  
+    std::vector<char> block_file;  // sequence from file
     public:
     int curLevel;
     virtual Block *createBlock() = 0; 
     virtual Block *makeBlocks(char type, bool isHeavy) = 0;
-    virtual void blocksFromFile(std::string filename); 
     virtual bool isHeavy()=0; 
-    virtual ~levels(); 
+    virtual ~levels() = 0; 
 };
 
 #endif
@@ -35,3 +34,4 @@ int current = l->curLevel. Since curLevel is a field of the class Levels it shou
 - Need to figure where and when getBlocksFromFile will be called. Do we also need a  
 
 */
+

@@ -1,5 +1,4 @@
 #include "cell.h"
-using namespace std;
 
 Cell::Cell(int x, int y) : x{x}, y{y} {}
 
