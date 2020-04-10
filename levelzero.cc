@@ -34,7 +34,7 @@ Block* levelzero::makeBlocks(char type, bool isHeavy) {
 void levelzero::blocksFromFile(string filename) {
     //  controller will pass these to level
     ifstream file{filename};
-    string t; 
+    char t; 
     while(file>>t) {
         block_file.emplace_back(t); 
     }
