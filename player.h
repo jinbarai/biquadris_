@@ -2,6 +2,12 @@
 #define PLAYER_H
 #include <string>
 #include "levels.h"
+#include "levelzero.h"
+#include "levelone.h"
+#include "leveltwo.h"
+#include "levelthree.h"
+#include "levelfour.h"
+
 
 
 class Player { 
@@ -10,13 +16,13 @@ class Player {
     levels *l;
     int level;
     public:
-    Player(int, std::string, levels *, int);
+    Player(int, std::string, int);
     int getScore();
     void addScore(int);
     std::string getName();
     levels *getPtrLevel();
     int getLevel();
-    void changeLevel(levels *, int);
+    void changeLevel(int);
 };
 
 

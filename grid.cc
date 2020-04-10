@@ -23,7 +23,7 @@ void Grid::init(Player *p1, Player *p2) {
     }
     cout << *this;
 }
-
+/*
 void Grid::changeLevel(int n, string s) {
     Player *p;
     if (s == "p1") {
@@ -45,8 +45,9 @@ void Grid::changeLevel(int n, string s) {
         this->level = new Level5(); 
     } else if (n == 6) {
        this->level = new Level6();
-    } */
+    } 
 }
+*/
 
 bool Grid::isRowFull(int n, string s) { 
     if (s == "p1") { 
@@ -82,6 +83,13 @@ bool Grid::isFull(string s) {
 
 void Grid::clear() {
 // add a lot of code
+}
+
+Player *Grid::getPlayer(string s) {
+    if (s == "p1") { 
+        return this->p1;
+    }
+    else return this->p2;
 }
 
 ostream &operator<<(ostream &out, const Grid &gr) { 
