@@ -10,23 +10,27 @@
 #include "levelthree.h"
 #include "levelfour.h"
 #include "controller.h"
+#include "player.h"
+#include <string>
 
 class InvalidMove{}; // for exceptions
 
 class Grid { 
-    levels *level;
+    Player *p1;
+    Player *p2;
     TextDisplay *td = nullptr; // to add TextDisplay
     //Graphics *gr = nullptr; //  to add Graphics
-    std::vector<std::vector<Cell>> theGrid; 
+    std::vector<std::vector<Cell>> theGridp1; 
+    std::vector<std::vector<Cell>> theGridp2; 
     // vector of vectors of rows of cells 
     public: 
     ~Grid();
     friend std::ostream &operator<<(std::ostream &out, const Grid &gr);
     // for output
     void clear(); // clears any full row 
-    bool isFull(); // will determine whether or not the board is full 
-    void init(int n); // n is the level
-    bool isRowFull(int n); // n is the row you want to check
-    void changeLevel(int n);
+    bool isFull(std::string s); // will determine whether or not the board is full 
+    void init(Player *p1, Player *p2);
+    bool isRowFull(int n, std::string s); // n is the row you want to check
+    void changeLevel(int n, std::string s);
 };
 #endif
