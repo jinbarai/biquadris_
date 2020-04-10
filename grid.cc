@@ -1,9 +1,9 @@
 #include "grid.h"
 #include <iostream>
-#include "levels.h"
 using namespace std;
 
 void Grid::init(Player *p1, Player *p2) {
+    delete this->td;
     this->p1 = p1;
     this->p2 =p2;
     this->td = new TextDisplay(this->p1, this->p2);
@@ -41,7 +41,7 @@ void Grid::changeLevel(int n, string s) {
         p->changeLevel(new levelthree, 3);
     } else if (n == 4) {
         p->changeLevel(new levelfour, 4);
-    } /*else if (n == 5) {
+    } else if (n == 5) {
         this->level = new Level5(); 
     } else if (n == 6) {
        this->level = new Level6();

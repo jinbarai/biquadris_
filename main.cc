@@ -15,10 +15,8 @@
 using namespace std;
 
 int main() { 
-    levels *l = new levelzero();
-    Player *p1 = new Player{0, "he", l, 0};
-    levels *l2 = new levelzero();
-    Player *p2 = new Player{0, "hi", l2, 0};
+    Player *p1 = new Player{0, "he", 0};
+    Player *p2 = new Player{0, "hi", 0};
     Grid gr;
     gr.init(p1, p2);
     return 0;
