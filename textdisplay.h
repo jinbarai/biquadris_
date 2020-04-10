@@ -4,14 +4,18 @@
 #include "cell.h"
 #include "levels.h"
 #include "controller.h"
+#include "player.h"
+#include <string>
 
 class TextDisplay { 
-    levels *l = nullptr;
-    std::vector<std::vector<char>> theDisplay;
+    Player *p1;
+    Player *p2;
+    std::vector<std::vector<char>> theDisplayp1;
+    std::vector<std::vector<char>> theDisplayp2;
     public: 
-    TextDisplay(levels *l); //ctor 
+    TextDisplay(Player *p1, Player *p2); //ctor 
     friend std::ostream &operator<<(std::ostream &out, const TextDisplay &td);
-    void notify(int row, int col, char c); // call notify on all cells
+    void notify(std::string s, int row, int col, char c); // call notify on all cells
     ~TextDisplay();
 };
 
