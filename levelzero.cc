@@ -30,7 +30,6 @@ Block* levelzero::makeBlocks(char type, bool isHeavy) {
     return p; 
 } 
 
-/*
 // Read from file 
 void levelzero::blocksFromFile(string filename) {
     //  controller will pass these to level
@@ -40,7 +39,7 @@ void levelzero::blocksFromFile(string filename) {
         block_file.emplace_back(t); 
     }
 }
-*/
+
 
 bool levelzero::isHeavy() { 
     return false; 
