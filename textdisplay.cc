@@ -19,6 +19,7 @@ TextDisplay::TextDisplay(levels *l) {
 
 void TextDisplay::notify(int row, int col, char c) { 
     theDisplay.at(row).at(col) = c;
+    cout << *this;
 }
 
 ostream &operator<<(std::ostream &out, const TextDisplay &td) {

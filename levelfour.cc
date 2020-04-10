@@ -45,7 +45,9 @@ Block* levelfour::makeBlocks(char type, bool isHeavy) {
     return p; 
 } 
 
-bool levelfour::isHeavy() { return true; } 
+bool levelfour::isHeavy() { 
+    return true; 
+} 
 
 levelfour::~levelfour() {}
 

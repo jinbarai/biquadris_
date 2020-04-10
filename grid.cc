@@ -1,5 +1,6 @@
 #include "grid.h"
 #include <iostream>
+#include "levels.h"
 using namespace std;
 
 void Grid::init(int n) {
@@ -26,12 +27,13 @@ void Grid::init(int n) {
             this->theGrid.at(i).emplace_back(Cell(i,k));
         }
     }
+    cout << *this;
 }
 
 void Grid::changeLevel(int n) {
     delete this->level;
     if (n == 0) {
-        this->level = new levelzero(); // add notes based on level code
+        this->level = new levelzero; // add notes based on level code
     } else if (n == 1) {
         this->level = new levelone(); 
     } else if (n == 2) {

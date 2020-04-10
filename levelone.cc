@@ -48,7 +48,9 @@ Block* levelone::makeBlocks(char type, bool isHeavy) {
     return p; 
 } 
 
-bool levelone::isHeavy() { return false; } 
+bool levelone::isHeavy() {
+     return false; 
+} 
 
 levelone::~levelone() {}
 
