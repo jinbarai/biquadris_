@@ -38,10 +38,15 @@ int main() {
             return 0;
         }
     }
+    cout << "Welcome to Biquadris " << s1 << " and " << s2 << "!" << endl;
     Player *p1 = new Player{0, s1, 0};
     Player *p2 = new Player{0, s2, 0};
     Grid *gr = new Grid();
     gr->init(p1, p2);
     Controller c(gr);
+    
+
+
     return 0;
 }
+

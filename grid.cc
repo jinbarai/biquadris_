@@ -11,17 +11,16 @@ void Grid::init(Player *p1, Player *p2) {
         vector<Cell> c;
         this->theGridp1.emplace_back(c);
         for (int k = 0; k < 11; ++k) {
-            this->theGridp1.at(i).emplace_back(Cell(i,k));
+            this->theGridp1.at(i).emplace_back(Cell(i,k,' '));
         }
     }
     for (int i = 0; i < 15; ++i) {
         vector<Cell> c;
         this->theGridp2.emplace_back(c);
         for (int k = 0; k < 11; ++k) {
-            this->theGridp2.at(i).emplace_back(Cell(i,k));
+            this->theGridp2.at(i).emplace_back(Cell(i,k,' '));
         }
     }
-    cout << *this;
 }
 /*
 void Grid::changeLevel(int n, string s) {
@@ -81,6 +80,7 @@ bool Grid::isFull(string s) {
     }
 }
 
+
 void Grid::score(string s, int n, int level) { 
     int score = 1 * level;
     for (int i = 0; i < n; ++i) {
@@ -93,8 +93,22 @@ void Grid::clear(string s) {
     int level;
     int n = 0;
     level = this->getPlayer(s)->getLevel();
+    if (s == "p1") { 
+        for (int i = 0; i < 15; ++i) {
+            if (isRowFull(i, s)) { 
+                ++n;
+                for (int k = i + 1; k < 15; ++k) {
+                    for (int j = 0; j < 11; ++j) {
+                        
+                    }
+                }
+            }
+        }
+    }
 }
 
+                        
+    
 Player *Grid::getPlayer(string s) {
     if (s == "p1") { 
         return this->p1;

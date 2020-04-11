@@ -4,12 +4,16 @@
 class Cell{
     int x; 
     int y;
+    char type;
     public:
-        Cell(int x, int y);
-        bool isEmpty = false;
+        Cell(int x, int y, char c);
+        bool isEmpty = true;
         void updateBy(int x, int y);
         void set(int x, int y);
         int getX();
         int getY();
+        char getType();
+        void setType(char c);
 };
+
 #endif
