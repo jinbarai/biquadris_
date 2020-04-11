@@ -14,7 +14,7 @@ using namespace std;
 IBlock::IBlock(bool heavy):
 Block(I_BLOCK_HEIGHT, I_BLOCK_WIDTH, BLOCK_SPAWN_X, BLOCK_SPAWN_Y, 
 {{BLOCK_SPAWN_X,BLOCK_SPAWN_Y}, {BLOCK_SPAWN_X,BLOCK_SPAWN_Y+1}, 
-{BLOCK_SPAWN_X,BLOCK_SPAWN_Y+2}, {BLOCK_SPAWN_X,BLOCK_SPAWN_Y+3}}, heavy)
+{BLOCK_SPAWN_X,BLOCK_SPAWN_Y+2}, {BLOCK_SPAWN_X,BLOCK_SPAWN_Y+3}}, 'I', heavy)
 {
     this->orientation = orientationClass::v;
 }

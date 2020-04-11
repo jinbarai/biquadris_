@@ -4,7 +4,7 @@
 #include "block.h"
 
 class IBlock : public Block {
-    char type = 'I';
+    char type;
     orientationClass orientation;
     public:
         IBlock(bool isHeavy);

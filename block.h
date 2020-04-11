@@ -19,11 +19,12 @@ const int BLOCK_SPAWN_Y = 15;
 
 class Block{
     int xPos, yPos, height, width;
+    char type;
     bool heavy;
     vector <unique_ptr <Cell>> blockVector;
     vector < pair<int, int>> coords;
     public:
-        Block(int height, int width, int x, int y, vector <pair <int, int>> cellCoords, bool isHeavy);
+        Block(int height, int width, int x, int y, vector <pair <int, int>> cellCoords, bool isHeavy, char type);
         virtual ~Block() = 0;
         virtual void rotate (int direction) = 0;
         void move (int direction);
