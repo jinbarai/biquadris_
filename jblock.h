@@ -1,14 +1,14 @@
-#ifndef _IBLOCK_
-#define _IBLOCK_
+#ifndef _JBLOCK_
+#define _JBLOCK_
 #include <string>
 #include "block.h"
 
-class IBlock : public Block {
-    char type = 'I';
+class JBlock : public Block {
+    char type = 'J';
     orientationClass orientation;
     public:
-        IBlock(bool isHeavy);
-        ~IBlock() = default;
+        JBlock(bool isHeavy);
+        ~JBlock() = default;
         void rotate(int direction) override;
         char getType() const override;
 };
