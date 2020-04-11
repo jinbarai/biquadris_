@@ -1,6 +1,8 @@
 #include "cell.h"
 
-Cell::Cell(int x, int y) : x{x}, y{y} {}
+Cell::Cell(int x, int y, char c) : x{x}, y{y}, type{c} {
+    this->isEmpty = false;
+}
 
 void Cell::updateBy(int x, int y){
     this->x += x;
@@ -19,3 +21,12 @@ int Cell::getX(){
 int Cell::getY(){
     return this->y;
 }
+
+char Cell::getType() {
+    return this->type;
+}
+
+void Cell::setType(char c) {
+    this->type = c;
+}
+
