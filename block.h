@@ -14,8 +14,8 @@ const int COUNTER_CLOCKWISE = 3;
 const int LEFT = -1;
 const int RIGHT = 1;
 
-const int BLOCK_SPAWN_X = 1;
-const int BLOCK_SPAWN_Y = 15;
+const int BLOCK_SPAWN_X = 0;
+const int BLOCK_SPAWN_Y = 14;
 
 class Block{
     int xPos, yPos, height, width;
@@ -31,6 +31,6 @@ class Block{
         vector <pair <int, int>> getCoords();
         void setCoords(vector <pair <int, int>> coords);
         bool isHeavy();
-        virtual char getType() const = 0;
+        char getType();
 };
 #endif

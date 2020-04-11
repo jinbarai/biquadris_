@@ -43,12 +43,17 @@ int main(int argc, char *argv[]) {
         while(true) { 
             cin >> cmd;
             if (cmd == "startlevel" || cmd == "starlevel" || cmd == "starlevle" || 
-            cmd == "start level" || cmd == "startlevle") { 
+            cmd == "start level" || cmd == "startlevle" || cmd == "startl") { 
                 int n = 0;
                 cin >> n;
                 c.startlevel(n);
+            } else if (cmd == "start") { // player has to move
+                c.generate(); // find a way to move effectively 
+                
             }
-
+            else if (false) { // write later
+                // for special commands 
+            } 
         }
     } 
     catch (ios::failure &) {}  // Any I/O failure quits, from a4q4 main

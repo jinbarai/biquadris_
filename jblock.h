@@ -10,7 +10,6 @@ class JBlock : public Block {
         JBlock(bool isHeavy);
         ~JBlock() = default;
         void rotate(int direction) override;
-        char getType() const override;
 };
 
 #endif

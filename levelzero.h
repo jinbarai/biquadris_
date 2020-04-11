@@ -21,6 +21,7 @@
 
 class levelzero: public levels {
     int curseq = 0;
+    public:
     Block *createBlock() override; 
     Block *makeBlocks(char type, bool isHeavy) override; 
     bool isHeavy() override; 

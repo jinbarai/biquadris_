@@ -14,11 +14,10 @@ using namespace std;
 IBlock::IBlock(bool heavy):
 Block(I_BLOCK_HEIGHT, I_BLOCK_WIDTH, BLOCK_SPAWN_X, BLOCK_SPAWN_Y, 
 {{BLOCK_SPAWN_X,BLOCK_SPAWN_Y}, {BLOCK_SPAWN_X,BLOCK_SPAWN_Y+1}, 
-{BLOCK_SPAWN_X,BLOCK_SPAWN_Y+2}, {BLOCK_SPAWN_X,BLOCK_SPAWN_Y+3}}, 'I', heavy)
+{BLOCK_SPAWN_X,BLOCK_SPAWN_Y+2}, {BLOCK_SPAWN_X,BLOCK_SPAWN_Y+3}}, heavy, 'I')
 {
     this->orientation = orientationClass::v;
 }
-
 
 
 void IBlock::rotate(int direction){
@@ -30,7 +29,7 @@ void IBlock::rotate(int direction){
             int x = oldCoords[0].first + i;
             int y = oldCoords[0].second;
             coords.emplace_back(make_pair(x, y));
-            if (x > 11) possible = false;
+            if (x > 10) possible = false;
         }
         if (possible) this->orientation = orientationClass::h;
     } else {
@@ -43,9 +42,5 @@ void IBlock::rotate(int direction){
     if (!possible) coords = oldCoords;
     
     this->setCoords(coords);
-}
-
-char IBlock::getType() const {
-    return this->type;
 }
 

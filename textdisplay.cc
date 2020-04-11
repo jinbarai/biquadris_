@@ -27,10 +27,8 @@ TextDisplay::TextDisplay(Player *p1, Player *p2) : p1{p1}, p2{p2} {
 void TextDisplay::notify(string s, int row, int col, char c) { 
     if (s == "p1") { 
         theDisplayp1.at(row).at(col) = c;
-        cout << *this;
     } else { 
         theDisplayp2.at(row).at(col) = c;
-        cout << *this;
     }
 }
 
@@ -54,7 +52,8 @@ ostream &operator<<(std::ostream &out, const TextDisplay &td) {
     for (int i = 0; i < 11; ++i) { out <<  '-'; }
     for (int i = 0; i < 8; ++i) { out <<  ' '; } // creates the top border
     for (int i = 0; i < 11; ++i) { out <<  '-'; }
-    for (int i = 0; i < 18; ++i) {
+    out << endl;
+    for (int i = 17; i >= 0; --i) {
         for (int k = 0; k < 11; ++k) {
             out << td.theDisplayp1.at(i).at(k);
         }

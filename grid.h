@@ -10,9 +10,11 @@
 #include "levelthree.h"
 #include "levelfour.h"
 #include "player.h"
+#include "block.h"
+#include "iblock.h"
+#include "jblock.h"
 #include <string>
 
-class InvalidMove{}; // for exceptions
 
 class Grid { 
     Player *p1;
@@ -31,6 +33,7 @@ class Grid {
     bool isFull(std::string s); // will determine whether or not the board is full 
     void init(Player *p1, Player *p2);
     void score(std::string s, int n, int level);
+    void update(std::string, Block *b);
     // where s is the player, n is the # of rows, level is the level of the player
     bool isRowFull(int n, std::string s); // n is the row you want to check
     //void changeLevel(int n, std::string s);

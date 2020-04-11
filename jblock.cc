@@ -34,8 +34,3 @@ void JBLOCK::rotate(int direction){
     
     this->setCoords(coords);
 }
-
-char JBLOCK::getType() const {
-    return this->type;
-}
-

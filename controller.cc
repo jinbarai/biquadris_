@@ -37,11 +37,6 @@ void Controller::leveldown() {
     this->gr->getPlayer(s)->changeLevel(level);
 }
   
-  void Controller:: left() {
-
-  }
-
-
   void Controller::startlevel(int n) { 
       this->gr->getPlayer("p1")->changeLevel(n);
       this->gr->getPlayer("p2")->changeLevel(n);
@@ -49,3 +44,25 @@ void Controller::leveldown() {
 
 //void right();
 // void down();
+
+
+void Controller::generate() { 
+    string s;
+    if (this->turn == State::p1) {
+        s = "p1";
+    } else { 
+        s = "p2";
+    }
+    int n  = this->gr->getPlayer(s)->getLevel();
+    if (n == 0) { 
+        levelzero *l = new levelzero();
+        l->blocksFromFile("sequence1.txt");
+        this->gr->update(s, l->createBlock());
+    } else { 
+        levels *level = this->gr->getPlayer(s)->getPtrLevel();
+        this->gr->update(s, level->createBlock());
+    }
+    // pass the player and a block 
+    cout << *(this->gr); // 
+}
+

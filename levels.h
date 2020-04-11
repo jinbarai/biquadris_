@@ -13,7 +13,6 @@ class levels {
     protected:
     std::vector<char> block_file;  // sequence from file
     public:
-    int curLevel;
     virtual Block *createBlock() = 0; 
     virtual Block *makeBlocks(char type, bool isHeavy) = 0;
     virtual bool isHeavy()=0; 

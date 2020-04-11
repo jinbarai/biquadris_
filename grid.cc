@@ -1,20 +1,23 @@
 #include "grid.h"
 #include <iostream>
+#include "controller.h"
 using namespace std;
 
 void Grid::init(Player *p1, Player *p2) {
     delete this->td;
+    this->theGridp1.clear();
+    this->theGridp2.clear();
     this->p1 = p1;
-    this->p2 =p2;
+    this->p2 = p2;
     this->td = new TextDisplay(this->p1, this->p2);
-    for (int i = 0; i < 15; ++i) {
+    for (int i = 0; i < 18; ++i) {
         vector<Cell> c;
         this->theGridp1.emplace_back(c);
-        for (int k = 0; k < 11; ++k) {
+    for (int k = 0; k < 11; ++k) {
             this->theGridp1.at(i).emplace_back(Cell(i,k,' '));
         }
     }
-    for (int i = 0; i < 15; ++i) {
+    for (int i = 0; i < 18; ++i) {
         vector<Cell> c;
         this->theGridp2.emplace_back(c);
         for (int k = 0; k < 11; ++k) {
@@ -48,6 +51,35 @@ void Grid::changeLevel(int n, string s) {
 }
 */
 
+void Grid::update(string s, Block *b) {
+    vector <pair <int, int>> coords = b->getCoords();
+    char type = b->getType();
+    if (s == "p1") { 
+        for (int i = 0; i < 4; ++i) {
+            int x = coords.at(i).first;
+            int y = coords.at(i).second;
+            if (theGridp1.at(y).at(x).getType() != ' ') {
+                throw GameOver{State::p1};
+            }  else { 
+                theGridp1.at(y).at(x).setType(type);
+                this->td->notify("p1", y, x, type);
+            }
+        }
+    } else { 
+        for (int i = 0; i < 4; ++i) {
+            int x = coords.at(i).first;
+            int y = coords.at(i).second;
+            if (theGridp2.at(y).at(x).getType() != ' ') {
+                throw GameOver{State::p2};
+            }  else { 
+                theGridp2.at(y).at(x).setType(type);
+                this->td->notify("p2", y, x, type);
+            }
+        }
+    } 
+}
+
+
 bool Grid::isRowFull(int n, string s) { 
     if (s == "p1") { 
         for (int i = 0; i < 11; ++i) {
@@ -66,13 +98,13 @@ bool Grid::isRowFull(int n, string s) {
 
 bool Grid::isFull(string s) { 
     if  (s == "p1") { 
-        for (int i = 0; i < 15; ++i) { 
+        for (int i = 0; i < 18; ++i) { 
             if (isRowFull(i, s) == false) {
                 return false;
             }
         } return true;
     } else { 
-        for (int i = 0; i < 15; ++i) { 
+        for (int i = 0; i < 18; ++i) { 
             if (isRowFull(i, "p2") == false) {
                 return false;
             }
@@ -94,10 +126,10 @@ void Grid::clear(string s) {
     int n = 0;
     level = this->getPlayer(s)->getLevel();
     if (s == "p1") { 
-        for (int i = 0; i < 15; ++i) {
+        for (int i = 0; i < 18; ++i) {
             if (isRowFull(i, s)) { 
                 ++n;
-                for (int k = i + 1; k < 15; ++k) {
+                for (int k = i + 1; k < 18; ++k) {
                     for (int j = 0; j < 11; ++j) {
                         
                     }

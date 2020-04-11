@@ -4,6 +4,11 @@ using namespace std;
 Player::Player(int x, string s, int lev) {
     this->score = x;
     this->name = s;
+    if (lev < 0) { 
+        lev = 0;
+    } else if (lev > 4) { 
+        lev = 0;
+    }
     this->level = lev;
     if (lev == 0) {
         this->l =  new levelzero(); // add notes based on level code
@@ -39,6 +44,11 @@ int Player::getLevel() {
 }
 
 void Player::changeLevel(int lev) {
+    if (lev > 4) {
+        return;
+    } else if (lev < 0) {
+        return;
+    }
     delete this->l;
     this->level = lev;
     if (lev == 0) {

@@ -7,6 +7,13 @@
 #include "levels.h"
 
 enum class State { p1 , p2 };
+class InvalidMove{}; // for exceptions
+
+struct GameOver{
+    State player;
+}; 
+
+// when you cannot spot
 
 class Controller { 
     Grid *gr;
@@ -29,10 +36,9 @@ class Controller {
     void blind();
     void heavy();
     void force();
+    void generate();
     void startlevel(int n);
 };
 
 #endif
-
-
 
