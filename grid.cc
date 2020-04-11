@@ -81,8 +81,18 @@ bool Grid::isFull(string s) {
     }
 }
 
-void Grid::clear() {
-// add a lot of code
+void Grid::score(string s, int n, int level) { 
+    int score = 1 * level;
+    for (int i = 0; i < n; ++i) {
+        score *= 10;
+    }
+    this->getPlayer(s)->addScore(score);
+}
+
+void Grid::clear(string s) {
+    int level;
+    int n = 0;
+    level = this->getPlayer(s)->getLevel();
 }
 
 Player *Grid::getPlayer(string s) {
