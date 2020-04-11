@@ -27,9 +27,11 @@ class Grid {
     Player *getPlayer(std::string s);
     friend std::ostream &operator<<(std::ostream &out, const Grid &gr);
     // for output
-    void clear(); // clears any full row 
+    void clear(std::string s); // clears any full row 
     bool isFull(std::string s); // will determine whether or not the board is full 
     void init(Player *p1, Player *p2);
+    void score(std::string s, int n, int level);
+    // where s is the player, n is the # of rows, level is the level of the player
     bool isRowFull(int n, std::string s); // n is the row you want to check
     //void changeLevel(int n, std::string s);
 };
