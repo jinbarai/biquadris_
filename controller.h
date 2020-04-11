@@ -29,6 +29,7 @@ class Controller {
     void blind();
     void heavy();
     void force();
+    void startlevel(int n);
 };
 
 #endif

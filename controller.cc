@@ -41,5 +41,11 @@ void Controller::leveldown() {
 
   }
 
+
+  void Controller::startlevel(int n) { 
+      this->gr->getPlayer("p1")->changeLevel(n);
+      this->gr->getPlayer("p2")->changeLevel(n);
+  }
+
 //void right();
 // void down();
