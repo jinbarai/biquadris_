@@ -1,9 +1,9 @@
 #include "grid.h"
 #include <iostream>
-#include "levels.h"
 using namespace std;
 
 void Grid::init(Player *p1, Player *p2) {
+    delete this->td;
     this->p1 = p1;
     this->p2 =p2;
     this->td = new TextDisplay(this->p1, this->p2);
