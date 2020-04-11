@@ -36,5 +36,10 @@ void Controller::leveldown() {
     --level;
     this->gr->getPlayer(s)->changeLevel(level);
 }
+  
+  void Controller:: left() {
 
+  }
 
+//void right();
+// void down();
