@@ -7,6 +7,7 @@
 #include "levels.h"
 #include "levelfour.h"
 #include <random>
+#include "iblock.h"
 /*
 #include "jblock.h"
 #include "oblock.h"
