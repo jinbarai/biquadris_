@@ -51,5 +51,6 @@ void Player::changeLevel(int lev) {
         this->l  = new levelthree();
     } else if (lev == 4) {
         this->l  = new levelfour();
+    }
 }
 

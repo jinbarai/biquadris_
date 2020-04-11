@@ -3,6 +3,8 @@
 
 #include "player.h"
 #include "grid.h"
+#include "block.h"
+#include "levels.h"
 
 enum class State { p1 , p2 };
 
@@ -11,7 +13,7 @@ class Controller {
     State turn; //  either p1, or p2
     // Graphics *g;
     public: 
-    Controller(Grid *gr); // grid will make a textdisplay! 
+    Controller(Grid *g); // grid will make a textdisplay! 
     // main will make player pointers and pass the grid to the controller. 
     void changeTurn();
     void text(); // will cancel graphics

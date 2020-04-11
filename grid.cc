@@ -41,7 +41,7 @@ void Grid::changeLevel(int n, string s) {
         p->changeLevel(new levelthree, 3);
     } else if (n == 4) {
         p->changeLevel(new levelfour, 4);
-    } /*else if (n == 5) {
+    } else if (n == 5) {
         this->level = new Level5(); 
     } else if (n == 6) {
        this->level = new Level6();
