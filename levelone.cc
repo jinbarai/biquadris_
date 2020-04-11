@@ -7,6 +7,14 @@
 #include "levels.h"
 #include "levelone.h"
 #include <random>
+/*
+#include "jblock.h"
+#include "oblock.h"
+#include "lblock.h"
+#include "sblock.h"
+#include "tblock.h"
+#include "zblock.h"
+*/
 
 using namespace std; 
 
@@ -41,10 +49,18 @@ Block* levelone::createBlock() {
 
 // Implementing methods 
 Block* levelone::makeBlocks(char type, bool isHeavy) {
-    // create a new block pointer inside level 0
-    // depends on how the block class is made
-    // return a block pointer 
-    Block *p;
+    Block *p; 
+    switch(type) {
+    case 'I': p = new IBlock(isHeavy); 
+    /*
+    case 'J': p = new JBlock(isHeavy);
+    case 'L': p = new LBlock(isHeavy);
+    case 'O': p = new OBlock(isHeavy);
+    case 'S': p = new SBlock(isHeavy);
+    case 'T': p = new TBlock(isHeavy);
+    default: p = new ZBlock(isHeavy)
+    */
+    }
     return p; 
 } 
 
