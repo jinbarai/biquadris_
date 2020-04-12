@@ -16,9 +16,10 @@ height{h}, width{w}, xPos{x}, yPos{y}, heavy{isHeavy}, coords{coords}, type{c}, 
 }
 
 void Block::move(int direction){
-    for (auto &cell: this->blockVector){
-        cell->updateBy(direction, 0);
-        if (this->heavy) cell->updateBy(0, 1);
+    for (int i = 0; i < 4; ++i) { 
+        this->blockVector.at(i)->updateBy(direction, 0);
+        this->coords.at(i).first += direction;
+        if (this->heavy) this->blockVector.at(i)->updateBy(0, 1);
     }
 }
 

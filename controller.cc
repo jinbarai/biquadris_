@@ -43,13 +43,16 @@ void Controller::leveldown() {
   }
 
 // called to move a block right 
-void Controller::right() { 
-
-}
-
-// called to move a block left 
-void Controller::left() { 
-
+void Controller::move(int n, int dir) { 
+    string s;
+    if (this->turn == State::p1) {
+        s = "p1";
+    } else { 
+        s = "p2";
+    }
+    for (int i = 0; i < n; ++i) {
+        this->gr->move(this->turn, this->gr->getPlayer(s)->getBlock(), dir);
+    }
 }
 
 // Need this for norandom file command since it also allows levels 3 and 4 to have blocks generated in sequence from file

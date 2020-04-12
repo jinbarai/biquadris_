@@ -50,7 +50,13 @@ int main(int argc, char *argv[]) {
                 c.generate();
             } else if (cmd == "start" || cmd == "s") { 
                 c.generate();
-            }  if (false) { // write later
+                continue;
+            } else if (cmd == "left") {
+                c.move(1, LEFT);
+            } else if (cmd == "right") {
+                c.move(1, RIGHT);
+            }
+            if (false) { // write later
                 // for special commands 
             }
         }
