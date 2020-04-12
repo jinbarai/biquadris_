@@ -15,6 +15,7 @@
 #include "jblock.h"
 #include <string>
 
+enum class State;
 
 class Grid { 
     Player *p1;
@@ -36,7 +37,7 @@ class Grid {
     // where s is the player, n is the # of rows, level is the level of the player
     bool isRowFull(int n, std::string s); // n is the row you want to check
     //void changeLevel(int n, std::string s);
-    void move();
+    bool move(State p, Block *b, int dir);
     ~Grid();
 };
 #endif

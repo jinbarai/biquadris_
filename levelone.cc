@@ -29,7 +29,10 @@ Block* levelone::createBlock() {
     generateLucky = dist6(rng);
   //  generateLucky = rand() % 6;
     if (generateLucky == 0) {
-        int n = rand()% 2 + 1; 
+        random_device dev2;
+        mt19937 rng2(dev2());
+        uniform_int_distribution<mt19937::result_type> dist2(1,2); // distribution in range [1, 2]
+        int n = dist2(rng2);
         if (n == 1) {
             return this->makeBlocks('S', this->isHeavy());
         }

@@ -25,8 +25,7 @@ class Controller {
     void changeTurn();
     void text(); // will cancel graphics
     void left();
-    void right();
-    void down();
+    void move(int n, int dir);
     void cw(); // clockwise
     void ccw(); // counterclockwise
     void drop();
