@@ -23,6 +23,15 @@ Player::Player(int x, string s, int lev) {
     }
 }
 
+Block *Player::getBlock() {
+    return this->b;
+}
+
+void Player::setBlock(Block *b) { 
+    delete this->b;
+    this->b = b;
+}
+
 int Player::getScore() { 
     return this->score;
 }
@@ -64,3 +73,6 @@ void Player::changeLevel(int lev) {
     }
 }
 
+Player::~Player() { 
+    delete this->b;
+}

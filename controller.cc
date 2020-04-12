@@ -42,11 +42,23 @@ void Controller::leveldown() {
       this->gr->getPlayer("p2")->changeLevel(n);
   }
 
-//void right();
-// void down();
+// called to move a block right 
+void Controller::right() { 
+
+}
+
+// called to move a block left 
+void Controller::left() { 
+
+}
 
 // Need this for norandom file command since it also allows levels 3 and 4 to have blocks generated in sequence from file
 void Controller::readFromFile(string filename, levels *l) {
+
+}
+
+void Controller::restart() {
+
 }
 
 void Controller::generate() { 
@@ -72,7 +84,13 @@ void Controller::generate() {
  
     try { 
         l->blocksFromFile(filename); 
-        this->gr->update(s, l->createBlock());
+        Block *b = l->createBlock();
+        if (s == "p1") { 
+            this->gr->getPlayer(s)->setBlock(b);
+        } else { 
+            this->gr->getPlayer(s)->setBlock(b);
+        }
+        this->gr->update(s, b);
     }
     catch (string &c) { cout << c <<endl; }
     cout << *(this->gr); 
