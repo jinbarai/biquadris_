@@ -79,6 +79,9 @@ void Grid::update(string s, Block *b) {
     }
 }
 
+void Grid::move() { 
+    
+}
 
 bool Grid::isRowFull(int n, string s) { 
     if (s == "p1") { 
