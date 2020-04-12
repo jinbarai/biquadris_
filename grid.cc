@@ -1,27 +1,16 @@
 #include "grid.h"
 #include <iostream>
-#include "controller.h"
 using namespace std;
 
-void Grid::init(Player *p1, Player *p2) {
+Grid::Grid(Player *p) {
     delete this->td;
-    this->theGridp1.clear();
-    this->theGridp2.clear();
-    this->p1 = p1;
-    this->p2 = p2;
-    this->td = new TextDisplay(this->p1, this->p2);
+    this->theGrid.clear();
+    this->p = p;
     for (int i = 0; i < 18; ++i) {
         vector<Cell> c;
-        this->theGridp1.emplace_back(c);
-    for (int k = 0; k < 11; ++k) {
-            this->theGridp1.at(i).emplace_back(Cell(i,k,' '));
-        }
-    }
-    for (int i = 0; i < 18; ++i) {
-        vector<Cell> c;
-        this->theGridp2.emplace_back(c);
+        this->theGrid.emplace_back(c);
         for (int k = 0; k < 11; ++k) {
-            this->theGridp2.at(i).emplace_back(Cell(i,k,' '));
+            this->theGrid.at(i).emplace_back(Cell(i,k,' '));
         }
     }
 }
@@ -51,30 +40,17 @@ void Grid::changeLevel(int n, string s) {
 }
 */
 
-void Grid::update(string s, Block *b) {
+void Grid::update(State p, Block *b) {
     vector <pair <int, int>> coords = b->getCoords();
-    char type = b->getType();
-    if (s == "p1") { 
-        for (int i = 0; i < 4; ++i) {
-            int x = coords.at(i).first;
-            int y = coords.at(i).second;
-            if (theGridp1.at(y).at(x).getType() != ' ') {
-                throw GameOver{State::p1};
-            }  else { 
-                theGridp1.at(y).at(x).setType(type);
-                this->td->notify("p1", y, x, type);
-            }
-        }
-    } else { 
-        for (int i = 0; i < 4; ++i) {
-            int x = coords.at(i).first;
-            int y = coords.at(i).second;
-            if (theGridp2.at(y).at(x).getType() != ' ') {
-                throw GameOver{State::p2};
-            }  else { 
-                theGridp2.at(y).at(x).setType(type);
-                this->td->notify("p2", y, x, type);
-            }
+    char type = b->getType(); 
+    for (int i = 0; i < 4; ++i) {
+        int x = coords.at(i).first;
+        int y = coords.at(i).second;
+        if (theGrid.at(y).at(x).getType() != ' ') {
+            throw GameOver{p};
+        }  else { 
+            theGrid.at(y).at(x).setType(type);
+            this->td->notify(p, y, x, type);
         }
     }
 }
@@ -85,53 +61,15 @@ bool Grid::move(State p, Block *b, int dir) {
     vector <pair<int, int>> coords = b->getCoords();
     b->move(dir);
     vector <pair<int, int>> newcoords = b->getCoords();
-    if (p == State::p1) { 
-        for (int i = 0; i < 4; ++i) {
-            int x = newcoords.at(i).first;
-            int y = newcoords.at(i).second;
-            if (x > 10 || x < 0) {
-                b->setCoords(coords);
-                return false;
-            } if (this->theGridp1.at(y).at(x).getType() != ' ') { 
-            int flag = 1;
-            for (int k = 0; k < 4; ++k) {
-                if (x == coords.at(k).first && y == coords.at(k).second) { 
-                    flag = 0;
-                    break;
-                } 
-            } if (flag == 1) { 
-            b->setCoords(coords);
-            return false;
-            }
-        }
-    } 
     for (int i = 0; i < 4; ++i) {
-        int x1 = newcoords.at(i).first;
-        int y1 = newcoords.at(i).second;
-        int oldx = coords.at(i).first;
-        int oldy = coords.at(i).second;
-        this->theGridp1.at(oldy).at(oldx).setType(' ');
-        this->theGridp1.at(y1).at(x1).setType(b->getType());
-        this->td->notify("p1", y1, x1, b->getType());
-        bool flag = true;
-        for (int k = 0; k < 4; ++k) { 
-              if (oldx == newcoords.at(k).first && oldy == newcoords.at(k).second) {
-                  flag = false;
-              } 
-        } if (flag == true) { 
-            this->td->notify("p1", oldy, oldx, ' ');
-        }
-    }
-     cout << *this;
-     return true;
-    } else { 
-        for (int i = 0; i < 4; ++i) {
+        // check to make sure new coordinatres are valid 
         int x = newcoords.at(i).first;
         int y = newcoords.at(i).second;
         if (x > 10 || x < 0) {
             b->setCoords(coords);
             return false;
-        } if (this->theGridp2.at(y).at(x).getType() != ' ') { 
+        } 
+        if (this->theGrid.at(y).at(x).getType() != ' ') { 
             int flag = 1;
             for (int k = 0; k < 4; ++k) {
                 if (x == coords.at(k).first && y == coords.at(k).second) { 
@@ -139,99 +77,105 @@ bool Grid::move(State p, Block *b, int dir) {
                     break;
                 } 
             } if (flag == 1) { 
-            b->setCoords(coords);
-            return false;
+                b->setCoords(coords);
+                return false;
             }
         }
-    } for (int i = 0; i < 4; ++i) {
+    } 
+    for (int i = 0; i < 4; ++i) {
+        int oldx = coords.at(i).first;
+        int oldy = coords.at(i).second;
+        this->clear(p, oldy, oldx);
+    }
+    for (int k = 0; k < 4; ++k) {
+        int x = newcoords.at(k).first;
+        int y = newcoords.at(k).second;
+        char c = b->getType();
+        this->theGrid.at(y).at(x).setType(c);
+        this->td->notify(p, y, x, c);
+    }
+    cout << *this;
+    return true;
+}
+
+    /*
+    for (int i = 0; i < 4; ++i) {
         int x1 = newcoords.at(i).first;
         int y1 = newcoords.at(i).second;
         int oldx = coords.at(i).first;
         int oldy = coords.at(i).second;
-        this->theGridp2.at(oldy).at(oldx).setType(' ');
-        this->theGridp2.at(y1).at(x1).setType(b->getType());
-        this->td->notify("p2", y1, x1, b->getType());
+        this->theGrid.at(oldy).at(oldx).setType(' ');
+        this->theGrid.at(y1).at(x1).setType(b->getType());
+        this->td->notify(p, y1, x1, b->getType());
         bool flag = true;
         for (int k = 0; k < 4; ++k) { 
               if (oldx == newcoords.at(k).first && oldy == newcoords.at(k).second) {
                   flag = false;
               } 
         } if (flag == true) { 
-            this->td->notify("p1", oldy, oldx, ' ');
-        } 
+            this->td->notify(p, oldy, oldx, ' ');
+        }
     }
-        cout << *this;
-        return true;
-    }
+     cout << *this;
+     return true;
+    } 
+    */
+
+void Grid::clear(State p, int row, int col) {
+    char c = ' ';
+    this->theGrid.at(row).at(col).setType(c);
+    this->td->notify(p, row, col, c);
 }
 
-bool Grid::isRowFull(int n, string s) { 
-    if (s == "p1") { 
-        for (int i = 0; i < 11; ++i) {
-            if (this->theGridp1.at(n).at(i).isEmpty == true) {
-                return false;
-            }
-        } return true;
-    } else { 
-        for (int i = 0; i < 11; ++i) {
-            if (this->theGridp2.at(n).at(i).isEmpty == true) {
-                return false;
-            }
-        } return true;
-    }
-}
-    
+bool Grid::isRowFull(int n) { 
+    for (int i = 0; i < 11; ++i) {
+         if (this->theGrid.at(n).at(i).isEmpty == true) {
+            return false;
+        }
+    } 
+    return true;
+}     
 
-bool Grid::isFull(string s) { 
-    if  (s == "p1") { 
-        for (int i = 0; i < 18; ++i) { 
-            if (isRowFull(i, s) == false) {
-                return false;
-            }
-        } return true;
-    } else { 
-        for (int i = 0; i < 18; ++i) { 
-            if (isRowFull(i, "p2") == false) {
-                return false;
-            }
-        } return true;
-    }
+bool Grid::isFull() {  
+    for (int i = 0; i < 18; ++i) { 
+        if (isRowFull(i) == false) {
+            return false;
+        }
+    } 
+    return true;
 }
 
 
-void Grid::score(string s, int n, int level) { 
+void Grid::score(int n, int level) { 
     int score = 1 * level;
     for (int i = 0; i < n; ++i) {
         score *= 10;
     }
-    this->getPlayer(s)->addScore(score);
+    this->getPlayer()->addScore(score);
 }
 
-void Grid::clear(string s) {
+void Grid::rowclear() {
     int level;
     int n = 0;
-    level = this->getPlayer(s)->getLevel();
-    if (s == "p1") { 
-        for (int i = 0; i < 18; ++i) {
-            if (isRowFull(i, s)) { 
-                ++n;
-                for (int k = i + 1; k < 18; ++k) {
-                    for (int j = 0; j < 11; ++j) {
+    level = this->getPlayer()->getLevel();
+    for (int i = 0; i < 18; ++i) {
+        if (isRowFull(i)) { 
+            ++n;
+            for (int k = i + 1; k < 18; ++k) {
+                 for (int j = 0; j < 11; ++j) {
                         
-                    }
                 }
             }
         }
     }
 }
 
-                        
-    
-Player *Grid::getPlayer(string s) {
-    if (s == "p1") { 
-        return this->p1;
-    }
-    else return this->p2;
+void Grid::setTD(TextDisplay *td) { 
+    this->td = td;
+}
+                    
+Player *Grid::getPlayer() {
+    return this->p;
 }
 
 ostream &operator<<(ostream &out, const Grid &gr) { 
@@ -240,8 +184,7 @@ ostream &operator<<(ostream &out, const Grid &gr) {
 }
 
 Grid::~Grid() { 
-    delete this->p1;
-    delete this->p2;
+    delete this->p;
     delete this->td;
 }
 

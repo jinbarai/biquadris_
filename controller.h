@@ -5,22 +5,18 @@
 #include "grid.h"
 #include "block.h"
 #include "levels.h"
-
-enum class State { p1 , p2 };
-class InvalidMove{}; // for exceptions
-
-struct GameOver{
-    State player;
-}; 
+#include "state.h"
 
 // when you cannot spot
 
 class Controller { 
-    Grid *gr;
+    Grid *g1;
+    Grid *g2;
     State turn; //  either p1, or p2
     // Graphics *g;
     public: 
-    Controller(Grid *g); // grid will make a textdisplay! 
+    Grid *getGrid();
+    Controller(Grid *g1, Grid *g2); 
     // main will make player pointers and pass the grid to the controller. 
     void changeTurn();
     void text(); // will cancel graphics

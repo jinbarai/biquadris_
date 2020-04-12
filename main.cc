@@ -1,18 +1,22 @@
-#include "cell.h"
 #include "levels.h"
+#include "grid.h"
+#include "block.h"
+#include "iblock.h"
+#include "jblock.h"
+#include "oblock.h"
+#include "lblock.h"
+#include "tblock.h"
+#include "zblock.h"
+#include "sblock.h"
+#include "controller.h"
+#include "player.h"
+#include <string>
+#include <iostream>
 #include "levelzero.h"
 #include "levelone.h"
 #include "leveltwo.h"
 #include "levelthree.h"
 #include "levelfour.h"
-#include "grid.h"
-#include "textdisplay.h"
-#include "block.h"
-#include "iblock.h"
-#include "controller.h"
-#include "player.h"
-#include <string>
-#include <iostream>
 using namespace std;
 
 int main(int argc, char *argv[]) { 
@@ -34,11 +38,14 @@ int main(int argc, char *argv[]) {
         s2 = s2.substr(0,5);
     }
     cout << "Welcome to Biquadris " << s1 << " and " << s2 << "!" << endl;
-    Player *p1 = new Player{0, s1, 0};
-    Player *p2 = new Player{0, s2, 0};
-    Grid *gr = new Grid();
-    gr->init(p1, p2);
-    Controller c(gr);
+    Player *p1 = new Player(0, s1, 0);
+    Player *p2 = new Player(0, s2, 0);
+    Grid *g1 = new Grid(p1);
+    Grid *g2 = new Grid(p2);
+    TextDisplay *td =  new TextDisplay{p1, p2};
+    g1->setTD(td);
+    g2->setTD(td);
+    Controller c(g1, g2);
     try { 
         while(true) { 
             cin >> cmd;
