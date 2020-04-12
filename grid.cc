@@ -76,7 +76,7 @@ void Grid::update(string s, Block *b) {
                 this->td->notify("p2", y, x, type);
             }
         }
-    } 
+    }
 }
 
 

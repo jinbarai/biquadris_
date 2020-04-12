@@ -16,12 +16,15 @@ class Player {
     levels *l;
     int level;
     Block *b = nullptr;
+    Block *bnext = nullptr;
     public:
     Player(int, std::string, int);
     int getScore();
     void addScore(int);
     Block *getBlock();
+    Block *getNextBlock();
     void setBlock(Block *b);
+    void setNextBlock(Block *b);
     std::string getName();
     levels *getPtrLevel();
     int getLevel();

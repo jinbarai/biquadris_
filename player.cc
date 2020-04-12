@@ -27,9 +27,17 @@ Block *Player::getBlock() {
     return this->b;
 }
 
+Block *Player::getNextBlock() {
+    return this->bnext;
+}
+
 void Player::setBlock(Block *b) { 
-    delete this->b;
     this->b = b;
+}
+
+void Player::setNextBlock(Block *b) { 
+    this->bnext = b;
+
 }
 
 int Player::getScore() { 
@@ -75,4 +83,6 @@ void Player::changeLevel(int lev) {
 
 Player::~Player() { 
     delete this->b;
+    delete this->bnext;
 }
+
