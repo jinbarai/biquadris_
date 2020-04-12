@@ -60,6 +60,11 @@ Block* levelthree::makeBlocks(char type, bool isHeavy) {
     return p; 
 } 
 
+void levelthree::blocksFromFile(string filename) {
+     cout << "Oops! Can't read" << endl; 
+    //throw InvalidMove();
+}
+
 bool levelthree::isHeavy() { return true; } 
 
 levelthree::~levelthree() {}

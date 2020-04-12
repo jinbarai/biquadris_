@@ -54,14 +54,16 @@ void Controller::generate() {
         s = "p2";
     }
     int n  = this->gr->getPlayer(s)->getLevel();
-    if (n == 0) { 
-        levelzero *l = new levelzero();
-        l->blocksFromFile("sequence1.txt");
-        this->gr->update(s, l->createBlock());
-    } else { 
-        levels *level = this->gr->getPlayer(s)->getPtrLevel();
-        this->gr->update(s, level->createBlock());
-    }
+    // if (n == 0) { 
+    //     levelzero *l = new levelzero();
+
+    levels *l = this->gr->getPlayer(s)->getPtrLevel();
+    l->blocksFromFile("sequence1.txt");
+    this->gr->update(s, l->createBlock());
+    // else { 
+    //     levels *level = this->gr->getPlayer(s)->getPtrLevel();
+    //     this->gr->update(s, level->createBlock());
+    // }
     // pass the player and a block 
     cout << *(this->gr); // 
 }

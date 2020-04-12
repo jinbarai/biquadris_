@@ -9,7 +9,6 @@
 #include "levelfour.h"
 
 
-
 class Player { 
     int score;
     string name;

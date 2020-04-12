@@ -62,6 +62,11 @@ Block* levelfour::makeBlocks(char type, bool isHeavy) {
     return p; 
 } 
 
+void levelfour::blocksFromFile(string filename) {
+     cout << "Oops! Can't read" << endl; 
+    //throw InvalidMove();
+}
+
 bool levelfour::isHeavy() { 
     return true; 
 } 

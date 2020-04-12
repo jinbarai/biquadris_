@@ -13,6 +13,7 @@ class levels {
     protected:
     std::vector<char> block_file;  // sequence from file
     public:
+    virtual void blocksFromFile(std::string filename) = 0; 
     virtual Block *createBlock() = 0; 
     virtual Block *makeBlocks(char type, bool isHeavy) = 0;
     virtual bool isHeavy()=0; 

@@ -18,11 +18,13 @@
 #ifndef ONE_H
 #define ONE_H
 
+//class InvalidMove{};
 
 class levelone: public levels { 
     Block *createBlock() override; 
     Block *makeBlocks(char type, bool isHeavy) override; 
     bool isHeavy() override; 
+    void blocksFromFile(std::string filename) override; 
     ~levelone();
 };
 

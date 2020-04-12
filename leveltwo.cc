@@ -61,6 +61,11 @@ Block* leveltwo::makeBlocks(char type, bool isHeavy) {
     return p; 
 } 
 
+void leveltwo::blocksFromFile(string filename) {
+     cout << "Oops! Can't read" << endl; 
+    //throw InvalidMove();
+}
+
 bool leveltwo::isHeavy() { return false; } 
 
 leveltwo::~leveltwo() {}

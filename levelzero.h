@@ -25,7 +25,7 @@ class levelzero: public levels {
     Block *createBlock() override; 
     Block *makeBlocks(char type, bool isHeavy) override; 
     bool isHeavy() override; 
-    void blocksFromFile(std::string filename);
+    void blocksFromFile(std::string filename) override;
     ~levelzero();
 };
 

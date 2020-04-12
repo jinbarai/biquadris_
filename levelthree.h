@@ -19,9 +19,12 @@
 #ifndef THREE_H
 #define THREE_H
 
+//class InvalidMove{};
+
 class levelthree: public levels { 
     Block *createBlock() override; 
     Block *makeBlocks(char type, bool isHeavy) override; 
+    void blocksFromFile(std::string filename) override; 
     bool isHeavy() override; 
     ~levelthree();
 };
