@@ -21,10 +21,11 @@
 
 class levelzero: public levels {
     int curseq = 0;
-    public:
-    Block *createBlock() override; 
     Block *makeBlocks(char type, bool isHeavy) override; 
     bool isHeavy() override; 
+    bool is_file_exist(const string file); 
+    public:
+    Block *createBlock() override; 
     void blocksFromFile(std::string filename) override;
     ~levelzero();
 };

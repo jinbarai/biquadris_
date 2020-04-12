@@ -47,9 +47,9 @@ int main(int argc, char *argv[]) {
                 int n = 0;
                 cin >> n;
                 c.startlevel(n);
+                c.generate();
             } else if (cmd == "start") { // player has to move
                 c.generate(); // find a way to move effectively 
-                
             }
             else if (false) { // write later
                 // for special commands 

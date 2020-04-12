@@ -65,9 +65,8 @@ Block* levelone::makeBlocks(char type, bool isHeavy) {
 } 
 
 void levelone::blocksFromFile(string filename) {
-    
-    cout << "Oops! Can't read" << endl; 
-    //throw InvalidMove();
+    string s = "Invalid level for reading from file";
+    throw (s); 
 }
 
 bool levelone::isHeavy() {

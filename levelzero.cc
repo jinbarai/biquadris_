@@ -47,13 +47,29 @@ Block* levelzero::makeBlocks(char type, bool isHeavy) {
     return p; 
 } 
 
+// check if file exists 
+bool levelzero::is_file_exist(const string file) {
+    std::ifstream infile(file);  
+    return infile.good();
+}
+
 // Read from file 
 void levelzero::blocksFromFile(string filename) {
     //  controller will pass these to level
-    ifstream file{filename};
-    char t; 
-    while(file>>t) {
-        block_file.emplace_back(t); 
+    if (is_file_exist(filename)) {
+        ifstream file{filename};
+        char t; 
+        while(file>>t) {
+            block_file.emplace_back(t); 
+        }
+    }
+    else {
+        string s; 
+        if (filename!="") {
+        s = "File does not exist or is not readable";
+        }
+        else { s = "Empty filename"; }
+        throw(s);
     }
 }
 

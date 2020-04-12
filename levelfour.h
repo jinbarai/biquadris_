@@ -21,10 +21,12 @@
 //class InvalidMove{};
 
 class levelfour: public levels { 
-    Block *createBlock() override; 
     Block *makeBlocks(char type, bool isHeavy) override; 
-    void blocksFromFile(std::string filename) override; 
     bool isHeavy() override; 
+    public: 
+    Block *createBlock() override; 
+    bool is_file_exist(const std::string file); 
+    void blocksFromFile(std::string filename) override; 
     ~levelfour();
 };
 

@@ -61,10 +61,33 @@ Block* levelfour::makeBlocks(char type, bool isHeavy) {
     }
     return p; 
 } 
+// check if file exists 
+bool levelfour::is_file_exist(const string file) {
+    std::ifstream infile(file);  
+    return infile.good();
+}
 
 void levelfour::blocksFromFile(string filename) {
-     cout << "Oops! Can't read" << endl; 
-    //throw InvalidMove();
+    string s = "Invalid level for reading from file";
+    throw (s);
+    //  controller will pass these to level
+    /*
+    if (is_file_exist(filename)) {
+        ifstream file{filename};
+        char t; 
+        while(file>>t) {
+            block_file.emplace_back(t); 
+        }
+    }
+    else {
+        string s; 
+        if (filename!="") {
+        s = "File does not exist or is not readable";
+        }
+        else { s = "Empty filename"; }
+        throw(s);
+    }
+    */
 }
 
 bool levelfour::isHeavy() { 

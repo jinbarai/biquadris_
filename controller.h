@@ -38,6 +38,8 @@ class Controller {
     void force();
     void generate();
     void startlevel(int n);
+    void restart(); 
+    void readFromFile(std::string file, levels *l); 
 };
 
 #endif
