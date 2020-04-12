@@ -5,11 +5,10 @@
 
 class IBlock : public Block {
     char type;
-    orientationClass orientation;
     public:
         IBlock(bool isHeavy);
         ~IBlock() = default;
-        void rotate(int direction) override;
+      //  void rotate(int direction) override;
 };
 
 #endif

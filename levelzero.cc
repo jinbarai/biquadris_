@@ -8,14 +8,13 @@
 #include "levelzero.h"
 #include <random>
 #include "iblock.h"
-/*
 #include "jblock.h"
 #include "oblock.h"
 #include "lblock.h"
 #include "sblock.h"
 #include "tblock.h"
 #include "zblock.h"
-*/
+
 
 using namespace std; 
 
@@ -35,14 +34,12 @@ Block* levelzero::makeBlocks(char type, bool isHeavy) {
     Block *p; 
     switch(type) {
     case 'I': p = new IBlock(isHeavy); 
-    /*
     case 'J': p = new JBlock(isHeavy);
     case 'L': p = new LBlock(isHeavy);
     case 'O': p = new OBlock(isHeavy);
     case 'S': p = new SBlock(isHeavy);
     case 'T': p = new TBlock(isHeavy);
-    default: p = new ZBlock(isHeavy)
-    */
+    default: p = new ZBlock(isHeavy);
     }
     return p; 
 } 

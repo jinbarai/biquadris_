@@ -87,7 +87,9 @@ void Controller::generate() {
     }
     try { 
         levels *l = this->gr->getPlayer(s)->getPtrLevel();
-        this->readFromFile(filename, l); // throws a string 
+        if(this->gr->getPlayer(s)->getLevel() == 0){
+            this->readFromFile(filename, l); // throws a string 
+        }
         if (this->gr->getPlayer(s)->getNextBlock() == nullptr) { 
             this->gr->getPlayer(s)->setNextBlock(l->createBlock());
         } 

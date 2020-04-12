@@ -21,16 +21,20 @@ class Block{
     int xPos, yPos, height, width;
     char type;
     bool heavy;
+    orientationClass orient;
     vector <unique_ptr <Cell>> blockVector;
     vector < pair<int, int>> coords;
     public:
-        Block(int height, int width, int x, int y, vector <pair <int, int>> cellCoords, bool isHeavy, char type);
+        Block(int height, int width, int x, int y, vector <pair <int, int>> cellCoords, 
+              bool isHeavy, char type, orientationClass orient);
         virtual ~Block() = 0;
-        virtual void rotate (int direction) = 0;
+        vector < pair<int, int>> rotate (int direction);
         void move (int direction);
         vector <pair <int, int>> getCoords();
         void setCoords(vector <pair <int, int>> coords);
+        pair <int, int> getPos();
         bool isHeavy();
+        void setOrientation(orientationClass);
         char getType();
 };
 #endif

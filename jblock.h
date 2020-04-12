@@ -5,11 +5,9 @@
 
 class JBlock : public Block {
     char type = 'J';
-    orientationClass orientation;
     public:
         JBlock(bool isHeavy);
         ~JBlock() = default;
-        void rotate(int direction) override;
 };
 
 #endif
