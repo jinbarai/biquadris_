@@ -23,6 +23,23 @@ Player::Player(int x, string s, int lev) {
     }
 }
 
+Block *Player::getBlock() {
+    return this->b;
+}
+
+Block *Player::getNextBlock() {
+    return this->bnext;
+}
+
+void Player::setBlock(Block *b) { 
+    this->b = b;
+}
+
+void Player::setNextBlock(Block *b) { 
+    this->bnext = b;
+
+}
+
 int Player::getScore() { 
     return this->score;
 }
@@ -62,5 +79,10 @@ void Player::changeLevel(int lev) {
     } else if (lev == 4) {
         this->l  = new levelfour();
     }
+}
+
+Player::~Player() { 
+    delete this->b;
+    delete this->bnext;
 }
 

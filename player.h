@@ -7,6 +7,7 @@
 #include "leveltwo.h"
 #include "levelthree.h"
 #include "levelfour.h"
+#include "block.h"
 
 
 class Player { 
@@ -14,14 +15,21 @@ class Player {
     string name;
     levels *l;
     int level;
+    Block *b = nullptr;
+    Block *bnext = nullptr;
     public:
     Player(int, std::string, int);
     int getScore();
     void addScore(int);
+    Block *getBlock();
+    Block *getNextBlock();
+    void setBlock(Block *b);
+    void setNextBlock(Block *b);
     std::string getName();
     levels *getPtrLevel();
     int getLevel();
     void changeLevel(int);
+    ~Player();
 };
 
 

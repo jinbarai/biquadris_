@@ -42,11 +42,23 @@ void Controller::leveldown() {
       this->gr->getPlayer("p2")->changeLevel(n);
   }
 
-//void right();
-// void down();
+// called to move a block right 
+void Controller::right() { 
+
+}
+
+// called to move a block left 
+void Controller::left() { 
+
+}
 
 // Need this for norandom file command since it also allows levels 3 and 4 to have blocks generated in sequence from file
 void Controller::readFromFile(string filename, levels *l) {
+    l->blocksFromFile(filename); 
+}
+
+void Controller::restart() {
+
 }
 
 void Controller::generate() { 
@@ -65,16 +77,27 @@ void Controller::generate() {
     //     this->gr->update(s, level->createBlock());
     // }
     // pass the player and a block 
-    levels *l = this->gr->getPlayer(s)->getPtrLevel();
 
     // Need to figure out a better way to accept string filename 
-    string filename = "sequence1.txt";
- 
-    try { 
-        l->blocksFromFile(filename); 
-        this->gr->update(s, l->createBlock());
+    string filename;
+    if (s == "p1") { 
+        filename = "sequence1.txt";
+    } else if (s == "p2") {
+        filename = "sequence2.txt";
     }
-    catch (string &c) { cout << c <<endl; }
+    try { 
+        levels *l = this->gr->getPlayer(s)->getPtrLevel();
+        this->readFromFile(filename, l); // throws a string 
+        if (this->gr->getPlayer(s)->getNextBlock() == nullptr) { 
+            this->gr->getPlayer(s)->setNextBlock(l->createBlock());
+        } 
+        Block *b = this->gr->getPlayer(s)->getNextBlock();
+        delete this->gr->getPlayer(s)->getBlock();
+        this->gr->getPlayer(s)->setBlock(b);
+        this->gr->getPlayer(s)->setNextBlock(l->createBlock());
+        this->gr->update(s, b);
+    }
+    catch (string &c) { cout << c << endl; }
     cout << *(this->gr); 
 }
 

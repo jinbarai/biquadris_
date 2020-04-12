@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     } if (s1.length() > 5) {
         s1 = s1.substr(0,5);
     }
-    cout << "Please enter player 2's name (up  to 5 characters)" << endl;
+    cout << "Please enter player 2's name (up to 5 characters)" << endl;
     if (!(cin >> s2)) {
         return 0;
     }
@@ -43,17 +43,16 @@ int main(int argc, char *argv[]) {
         while(true) { 
             cin >> cmd;
             if (cmd == "startlevel" || cmd == "starlevel" || cmd == "starlevle" || 
-            cmd == "start level" || cmd == "startlevle" || cmd == "startl") { 
+            cmd == "start level" || cmd == "startlevle" || cmd == "startl" || cmd == "sl") { 
                 int n = 0;
                 cin >> n;
                 c.startlevel(n);
                 c.generate();
-            } else if (cmd == "start") { // player has to move
-                c.generate(); // find a way to move effectively 
-            }
-            else if (false) { // write later
+            } else if (cmd == "start" || cmd == "s") { 
+                c.generate();
+            }  if (false) { // write later
                 // for special commands 
-            } 
+            }
         }
     } 
     catch (ios::failure &) {}  // Any I/O failure quits, from a4q4 main
