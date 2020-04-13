@@ -33,13 +33,27 @@ Block* levelzero::createBlock() {
 Block* levelzero::makeBlocks(char type, bool isHeavy) {
     Block *p; 
     switch(type) {
-    case 'I': p = new IBlock(isHeavy); 
-    case 'J': p = new JBlock(isHeavy);
-    case 'L': p = new LBlock(isHeavy);
-    case 'O': p = new OBlock(isHeavy);
-    case 'S': p = new SBlock(isHeavy);
-    case 'T': p = new TBlock(isHeavy);
-    default: p = new ZBlock(isHeavy);
+    case 'I': 
+        p = new IBlock(isHeavy);
+        break;
+    case 'J': 
+        p = new JBlock(isHeavy);
+        break;
+    case 'L': 
+        p = new LBlock(isHeavy);
+        break;
+    case 'O': 
+        p = new OBlock(isHeavy);
+        break;
+    case 'S': 
+        p = new SBlock(isHeavy);
+        break;
+    case 'Z': 
+        p = new ZBlock(isHeavy);
+        break;
+    default: 
+        p = new TBlock(isHeavy);
+        break;
     }
     return p; 
 } 

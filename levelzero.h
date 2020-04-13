@@ -6,6 +6,13 @@
 #include "block.h"
 #include "levels.h"
 #include <random>
+#include "iblock.h"
+#include "jblock.h"
+#include "oblock.h"
+#include "lblock.h"
+#include "sblock.h"
+#include "tblock.h"
+#include "zblock.h"
 
 #ifndef ZERO_H
 #define ZERO_H

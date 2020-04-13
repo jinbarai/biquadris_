@@ -21,26 +21,29 @@ using namespace std;
 
 Block* levelfour::createBlock() {
   // generate a number from 0-8 
-    int generateLucky = rand()% 8;
-    if (generateLucky == 0 || generateLucky == 2) {
+    random_device dev;
+    mt19937 rng(dev());
+    uniform_int_distribution<mt19937::result_type> dist6(1,9); // distribution in range [1, 9]
+    int generateLucky = dist6(rng);
+    if (generateLucky == 1 || generateLucky == 2) {
         return this->makeBlocks('S', this->isHeavy());
     }
-    else if (generateLucky==1 || generateLucky == 3) {
+    else if (generateLucky== 3 || generateLucky == 4) {
         return this->makeBlocks('Z', this->isHeavy()); 
     }
-    else if(generateLucky==4) {
+    else if(generateLucky==5) {
         return this->makeBlocks('I', this->isHeavy());
     } 
-    else if(generateLucky==5) {
+    else if(generateLucky==6) {
         return this->makeBlocks('J', this->isHeavy());
     }
-    else if(generateLucky==6) {
+    else if(generateLucky==7) {
         return this->makeBlocks('L', this->isHeavy());
     } 
-    else if(generateLucky==7) {
+    else if(generateLucky==8) {
         return this->makeBlocks('O', this->isHeavy());
     } 
-    else if(generateLucky==8) {
+    else if(generateLucky==9) {
         return this->makeBlocks('T', this->isHeavy());
     }
 }
@@ -49,15 +52,27 @@ Block* levelfour::createBlock() {
 Block* levelfour::makeBlocks(char type, bool isHeavy) {
     Block *p; 
     switch(type) {
-    case 'I': p = new IBlock(isHeavy); 
-    /*
-    case 'J': p = new JBlock(isHeavy);
-    case 'L': p = new LBlock(isHeavy);
-    case 'O': p = new OBlock(isHeavy);
-    case 'S': p = new SBlock(isHeavy);
-    case 'T': p = new TBlock(isHeavy);
-    default: p = new ZBlock(isHeavy)
-    */
+    case 'I': 
+        p = new IBlock(isHeavy);
+        break;
+    case 'J': 
+        p = new JBlock(isHeavy);
+        break;
+    case 'L': 
+        p = new LBlock(isHeavy);
+        break;
+    case 'O': 
+        p = new OBlock(isHeavy);
+        break;
+    case 'S': 
+        p = new SBlock(isHeavy);
+        break;
+    case 'Z': 
+        p = new ZBlock(isHeavy);
+        break;
+    default: 
+        p = new TBlock(isHeavy);
+        break;
     }
     return p; 
 } 
