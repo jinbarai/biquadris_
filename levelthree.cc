@@ -39,7 +39,7 @@ Block* levelthree::createBlock() {
     else if(generateLucky==8) {
         return this->makeBlocks('O', this->isHeavy());
     } 
-    else if(generateLucky==9) {
+    else {
         return this->makeBlocks('T', this->isHeavy());
     }
 }

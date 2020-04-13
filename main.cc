@@ -58,10 +58,14 @@ int main(int argc, char *argv[]) {
             } else if (cmd == "start" || cmd == "s") { 
                 c.generate();
                 continue;
-            } else if (cmd == "left" || cmd == "lef") {
+            } else if (cmd == "left" || cmd == "lef" || cmd == "lf") {
                 c.move(1, LEFT);
             } else if (cmd == "right" || cmd == "ri" || cmd == "rig" || cmd == "righ") {
                 c.move(1, RIGHT);
+            } else if (cmd == "down" || cmd == "do") {
+                c.down(1);
+            } else if (cmd == "drop" || cmd == "dr" || cmd == "dro") {
+                c.drop();
             }
             if (false) { // write later
                 // for special commands 

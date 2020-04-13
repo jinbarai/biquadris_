@@ -23,12 +23,15 @@ class Grid {
     void rowclear(); // clears any full row 
     bool isFull(); // will determine whether or not the board is full 
     void score(int n, int level);
-    void update(State p, Block *b);
+    void update(State p);
     void setTD(TextDisplay *td);
     // where s is the player, n is the # of rows, level is the level of the player
     bool isRowFull(int n); // n is the row you want to check
     //void changeLevel(int n, std::string s);
-    bool move(State p, Block *b, int dir);
+    bool move(State p, int dir);
+    bool validate(int x, int y);
+    void drop(State p);
+    int down(State p);
     ~Grid();
 };
 #endif

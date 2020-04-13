@@ -16,14 +16,27 @@ height{h}, width{w}, xPos{x}, yPos{y}, coords{coords}, heavy{isHeavy}, type{c}, 
 }
 
 void Block::move(int direction){
-    for (int i = 0; i < 4; ++i) { 
-        this->blockVector.at(i)->updateBy(direction, 0);
-        this->coords.at(i).first += direction;
-        if (this->heavy) this->blockVector.at(i)->updateBy(0, 1);
+    if (direction != DOWN) { 
+        for (int i = 0; i < 4; ++i) { 
+            this->blockVector.at(i)->updateBy(direction, 0);
+            this->coords.at(i).first += direction;
+            if (this->heavy) this->blockVector.at(i)->updateBy(0, -1);
+        }
+    } else { 
+        for (int i = 0; i < 4; ++i) { 
+            this->blockVector.at(i)->updateBy(0, -1);
+            this->coords.at(i).second -= 1;
+            cout<<"got to move in block" << endl;
+            if (this->heavy) this->blockVector.at(i)->updateBy(0, -1);
+        }
+
     }
 }
 
 vector<pair<int, int>> Block::getCoords(){
+    //for (int i = 0; i <4 ; i++){
+    //    cout << coords.at(i).first << ", " << coords.at(i).second << endl;
+   // }
     return this->coords;
 }
 
