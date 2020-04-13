@@ -26,7 +26,6 @@ void Block::move(int direction){
         for (int i = 0; i < 4; ++i) { 
             this->blockVector.at(i)->updateBy(0, -1);
             this->coords.at(i).second -= 1;
-            cout<<"got to move in block" << endl;
             if (this->heavy) this->blockVector.at(i)->updateBy(0, -1);
         }
 

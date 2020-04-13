@@ -20,7 +20,6 @@ class Controller {
     // main will make player pointers and pass the grid to the controller. 
     void changeTurn();
     void text(); // will cancel graphics
-    void left();
     void move(int n, int dir);
     void cw(); // clockwise
     void ccw(); // counterclockwise
