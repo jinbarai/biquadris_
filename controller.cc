@@ -1,57 +1,50 @@
 #include "controller.h"
 
-Controller::Controller(Grid *g) {
-    this->gr = g;
+Controller::Controller(Grid *g1, Grid *g2) {
+    this->g1 = g1;
+    this->g2 = g2;
     this->turn = State::p1;
+}
+
+Grid *Controller::getGrid() {
+    if  (this->turn == State::p1) {
+        return this->g1;
+    } else  { 
+        return this->g2;
+    }
 }
 
 void Controller::changeTurn() {
     if (this->turn == State::p1) {
         this->turn = State::p2;
         return;
-    } 
-    this->turn = State::p1;
+    } else { 
+        this->turn = State::p1;
+        return;
+    }
 }
 
 void Controller::levelup() {
-    string s;
-    if (this->turn == State::p1) {
-        s = "p1";
-    } else { 
-        s = "p2";
-    }
-    int level = this->gr->getPlayer(s)->getLevel();
+    int level = this->getGrid()->getPlayer()->getLevel();
     ++level;
-    this->gr->getPlayer(s)->changeLevel(level);
+    this->getGrid()->getPlayer()->changeLevel(level);
 }
 
 void Controller::leveldown() {
-    string s;
-    if (this->turn == State::p1) {
-        s = "p1";
-    } else { 
-        s = "p2";
-    }
-    int level = this->gr->getPlayer(s)->getLevel();
+    int level = this->getGrid()->getPlayer()->getLevel();
     --level;
-    this->gr->getPlayer(s)->changeLevel(level);
+    this->getGrid()->getPlayer()->changeLevel(level);
 }
   
   void Controller::startlevel(int n) { 
-      this->gr->getPlayer("p1")->changeLevel(n);
-      this->gr->getPlayer("p2")->changeLevel(n);
+      this->getGrid()->getPlayer()->changeLevel(n);
+      this->getGrid()->getPlayer()->changeLevel(n);
   }
 
 // called to move a block right 
 void Controller::move(int n, int dir) { 
-    string s;
-    if (this->turn == State::p1) {
-        s = "p1";
-    } else { 
-        s = "p2";
-    }
     for (int i = 0; i < n; ++i) {
-        this->gr->move(this->turn, this->gr->getPlayer(s)->getBlock(), dir);
+        this->getGrid()->move(this->turn, this->getGrid()->getPlayer()->getBlock(), dir);
     }
 }
 
@@ -65,12 +58,6 @@ void Controller::restart() {
 }
 
 void Controller::generate() { 
-    string s;
-    if (this->turn == State::p1) {
-        s = "p1";
-    } else { 
-        s = "p2";
-    }
     // int n  = this->gr->getPlayer(s)->getLevel();
     // if (n == 0) { 
     //     levelzero *l = new levelzero();
@@ -83,26 +70,26 @@ void Controller::generate() {
 
     // Need to figure out a better way to accept string filename 
     string filename;
-    if (s == "p1") { 
+    if (this->turn == State::p1) { 
         filename = "sequence1.txt";
-    } else if (s == "p2") {
+    } else {
         filename = "sequence2.txt";
     }
     try { 
-        levels *l = this->gr->getPlayer(s)->getPtrLevel();
-        if(this->gr->getPlayer(s)->getLevel() == 0){
+        levels *l = this->getGrid()->getPlayer()->getPtrLevel();
+        if(this->getGrid()->getPlayer()->getLevel() == 0){
             this->readFromFile(filename, l); // throws a string 
         }
-        if (this->gr->getPlayer(s)->getNextBlock() == nullptr) { 
-            this->gr->getPlayer(s)->setNextBlock(l->createBlock());
+        if (this->getGrid()->getPlayer()->getNextBlock() == nullptr) { 
+            this->getGrid()->getPlayer()->setNextBlock(l->createBlock());
         } 
-        Block *b = this->gr->getPlayer(s)->getNextBlock();
-        delete this->gr->getPlayer(s)->getBlock();
-        this->gr->getPlayer(s)->setBlock(b);
-        this->gr->getPlayer(s)->setNextBlock(l->createBlock());
-        this->gr->update(s, b);
+        Block *b = this->getGrid()->getPlayer()->getNextBlock();
+        delete this->getGrid()->getPlayer()->getBlock();
+        this->getGrid()->getPlayer()->setBlock(b);
+        this->getGrid()->getPlayer()->setNextBlock(l->createBlock());
+        this->getGrid()->update(this->turn, b);
     }
     catch (string &c) { cout << c << endl; }
-    cout << *(this->gr); 
+    cout << *(this->getGrid()); 
 }
 

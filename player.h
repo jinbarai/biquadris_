@@ -2,12 +2,12 @@
 #define PLAYER_H
 #include <string>
 #include "levels.h"
+#include "block.h"
 #include "levelzero.h"
 #include "levelone.h"
 #include "leveltwo.h"
 #include "levelthree.h"
 #include "levelfour.h"
-#include "block.h"
 
 
 class Player { 

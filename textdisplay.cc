@@ -2,7 +2,6 @@
 #include <iostream>
 using namespace std;
 
-
 TextDisplay::TextDisplay(Player *p1, Player *p2) : p1{p1}, p2{p2} {
     theDisplayp1.clear();
     theDisplayp2.clear();
@@ -24,8 +23,8 @@ TextDisplay::TextDisplay(Player *p1, Player *p2) : p1{p1}, p2{p2} {
     }
 }
 
-void TextDisplay::notify(string s, int row, int col, char c) { 
-    if (s == "p1") { 
+void TextDisplay::notify(State p, int row, int col, char c) { 
+    if (p == State::p1) { 
         theDisplayp1.at(row).at(col) = c;
     } else { 
         theDisplayp2.at(row).at(col) = c;

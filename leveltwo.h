@@ -6,7 +6,6 @@
 #include "block.h"
 #include "levels.h"
 #include <random>
-#include "iblock.h"
 /*
 #include "jblock.h"
 #include "oblock.h"
@@ -18,7 +17,7 @@
 #ifndef TWO_H
 #define TWO_H
 
-//class InvalidMove{};
+//class InvalidMove{}; // use state.h instead
 
 class leveltwo: public levels { 
     Block *makeBlocks(char type, bool isHeavy) override; 
