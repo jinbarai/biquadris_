@@ -34,6 +34,7 @@ class Controller {
     void generate();
     void startlevel(int n);
     void restart(); 
+    void down(int n);
     void readFromFile(std::string file, levels *l); 
 };
 

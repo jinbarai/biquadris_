@@ -44,13 +44,23 @@ void Controller::leveldown() {
 // called to move a block right 
 void Controller::move(int n, int dir) { 
     for (int i = 0; i < n; ++i) {
-        this->getGrid()->move(this->turn, this->getGrid()->getPlayer()->getBlock(), dir);
+        this->getGrid()->move(this->turn, dir);
     }
 }
 
 // Need this for norandom file command since it also allows levels 3 and 4 to have blocks generated in sequence from file
 void Controller::readFromFile(string filename, levels *l) {
     l->blocksFromFile(filename); 
+}
+
+void Controller::down(int n) { 
+    for (int i = 0; i < n; ++i) {
+        int val = this->getGrid()->down(this->turn);
+        if (val != 1) {
+            this->changeTurn();
+            break;
+        } 
+    }
 }
 
 void Controller::restart() {
@@ -87,7 +97,7 @@ void Controller::generate() {
         delete this->getGrid()->getPlayer()->getBlock();
         this->getGrid()->getPlayer()->setBlock(b);
         this->getGrid()->getPlayer()->setNextBlock(l->createBlock());
-        this->getGrid()->update(this->turn, b);
+        this->getGrid()->update(this->turn);
     }
     catch (string &c) { cout << c << endl; }
     cout << *(this->getGrid()); 

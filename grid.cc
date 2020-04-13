@@ -40,7 +40,8 @@ void Grid::changeLevel(int n, string s) {
 }
 */
 
-void Grid::update(State p, Block *b) {
+void Grid::update(State p) {
+    Block *b = this->getPlayer()->getBlock();
     vector <pair <int, int>> coords = b->getCoords();
     char type = b->getType(); 
     for (int i = 0; i < 4; ++i) {
@@ -56,7 +57,8 @@ void Grid::update(State p, Block *b) {
 }
 
 // moves left & right 
-bool Grid::move(State p, Block *b, int dir) { 
+bool Grid::move(State p, int dir) { 
+    Block *b = this->getPlayer()->getBlock();
     // block and dir come from controller
     vector <pair<int, int>> coords = b->getCoords();
     b->move(dir);
@@ -65,7 +67,7 @@ bool Grid::move(State p, Block *b, int dir) {
         // check to make sure new coordinatres are valid 
         int x = newcoords.at(i).first;
         int y = newcoords.at(i).second;
-        if (x > 10 || x < 0) {
+        if (!validate(x, y)) {
             b->setCoords(coords);
             return false;
         } 
@@ -96,6 +98,76 @@ bool Grid::move(State p, Block *b, int dir) {
     }
     cout << *this;
     return true;
+}
+
+bool Grid::validate(int x, int y)  {
+    if (x > 10 || x < 0) {
+        return false;
+    } else if (y > 17 || y < 0) {
+        return false;
+    } 
+    return true;
+}
+
+int Grid::down(State p) {
+    Block *b = this->getPlayer()->getBlock();
+    vector <pair<int, int>> coords = b->getCoords();
+    b->move(DOWN);
+    vector <pair<int, int>> newcoords = b->getCoords();
+    for (int i = 0; i < 4; ++i) {
+        int x = newcoords.at(i).first;
+        int y = newcoords.at(i).second;
+        if (!validate(x, y)) {
+            b->setCoords(coords);
+            return false;
+        } 
+        if (this->theGrid.at(y).at(x).getType() != ' ') { 
+            int flag = 1;
+            for (int k = 0; k < 4; ++k) {
+                if (x == coords.at(k).first && y == coords.at(k).second) { 
+                    flag = 0;
+                    break;
+                } 
+            } if (flag == 1) { 
+                b->setCoords(coords);
+                return false;
+            }
+        }
+    } 
+    for (int i = 0; i < 4; ++i) {
+        int oldx = coords.at(i).first;
+        int oldy = coords.at(i).second;
+        this->clear(p, oldy, oldx);
+    }
+    for (int k = 0; k < 4; ++k) {
+        int x = newcoords.at(k).first;
+        int y = newcoords.at(k).second;
+        char c = b->getType();
+        this->theGrid.at(y).at(x).setType(c);
+        this->td->notify(p, y, x, c);
+    }
+    cout << *this;
+    for (int i = 0; i < 4; ++i) {
+        int x = newcoords.at(i).first;
+        int y = newcoords.at(i).second;
+        if (y == 0) {
+            return -1;
+        } else if (this->theGrid.at(y - 1).at(x).getType() != ' ') {
+            bool flag = true;
+            for (int k = 0; k < 4; ++k) {
+                int newx = newcoords.at(k).first;
+                int newy = newcoords.at(k).second;
+                if (newx == x && newy == y - 1) { 
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag == true) {
+                return -1;
+            }
+        }
+    }
+    return 1;
 }
 
     /*

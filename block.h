@@ -13,6 +13,7 @@ const int CLOCKWISE = 2;
 const int COUNTER_CLOCKWISE = 3;
 const int LEFT = -1;
 const int RIGHT = 1;
+const int DOWN = 5;
 
 const int BLOCK_SPAWN_X = 0;
 const int BLOCK_SPAWN_Y = 14;
