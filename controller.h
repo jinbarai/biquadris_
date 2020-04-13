@@ -24,7 +24,6 @@ class Controller {
     void move(int n, int dir);
     void cw(); // clockwise
     void ccw(); // counterclockwise
-    void drop();
     void levelup();
     void leveldown();
     // Special Actions
@@ -34,6 +33,7 @@ class Controller {
     void generate();
     void startlevel(int n);
     void restart(); 
+    void drop();
     void down(int n);
     void readFromFile(std::string file, levels *l); 
 };

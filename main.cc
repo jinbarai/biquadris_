@@ -64,6 +64,8 @@ int main(int argc, char *argv[]) {
                 c.move(1, RIGHT);
             } else if (cmd == "down" || cmd == "do") {
                 c.down(1);
+            } else if (cmd == "drop" || cmd == "dr" || cmd == "dro") {
+                c.drop();
             }
             if (false) { // write later
                 // for special commands 

@@ -56,11 +56,17 @@ void Controller::readFromFile(string filename, levels *l) {
 void Controller::down(int n) { 
     for (int i = 0; i < n; ++i) {
         int val = this->getGrid()->down(this->turn);
+        cout << *this->getGrid();
         if (val != 1) {
             this->changeTurn();
             break;
         } 
     }
+}
+
+void Controller::drop() {
+    this->getGrid()->drop(this->turn);
+    this->changeTurn();
 }
 
 void Controller::restart() {

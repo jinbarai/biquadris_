@@ -146,7 +146,6 @@ int Grid::down(State p) {
         this->theGrid.at(y).at(x).setType(c);
         this->td->notify(p, y, x, c);
     }
-    cout << *this;
     for (int i = 0; i < 4; ++i) {
         int x = newcoords.at(i).first;
         int y = newcoords.at(i).second;
@@ -168,6 +167,14 @@ int Grid::down(State p) {
         }
     }
     return 1;
+}
+
+void Grid::drop(State p) {
+    int val = 1;
+    while (val == 1) {
+        val =  this->down(p);
+    }
+    cout << *this;
 }
 
     /*
