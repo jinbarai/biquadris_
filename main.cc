@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
             } else if (cmd == "start" || cmd == "s") { 
                 c.generate();
                 continue;
-            } else if (cmd == "left" || cmd == "lef") {
+            } else if (cmd == "left" || cmd == "lef" || cmd == "lf") {
                 c.move(1, LEFT);
             } else if (cmd == "right" || cmd == "ri" || cmd == "rig" || cmd == "righ") {
                 c.move(1, RIGHT);
