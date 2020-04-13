@@ -58,9 +58,9 @@ int main(int argc, char *argv[]) {
             } else if (cmd == "start" || cmd == "s") { 
                 c.generate();
                 continue;
-            } else if (cmd == "left") {
+            } else if (cmd == "left" || cmd == "lef") {
                 c.move(1, LEFT);
-            } else if (cmd == "right") {
+            } else if (cmd == "right" || cmd == "ri" || cmd == "rig" || cmd == "righ") {
                 c.move(1, RIGHT);
             }
             if (false) { // write later
