@@ -16,10 +16,19 @@ height{h}, width{w}, xPos{x}, yPos{y}, heavy{isHeavy}, coords{coords}, type{c}, 
 }
 
 void Block::move(int direction){
-    for (int i = 0; i < 4; ++i) { 
-        this->blockVector.at(i)->updateBy(direction, 0);
-        this->coords.at(i).first += direction;
-        if (this->heavy) this->blockVector.at(i)->updateBy(0, 1);
+    if (direction != DOWN) { 
+        for (int i = 0; i < 4; ++i) { 
+            this->blockVector.at(i)->updateBy(direction, 0);
+            this->coords.at(i).first += direction;
+            if (this->heavy) this->blockVector.at(i)->updateBy(0, -1);
+        }
+    } else { 
+        for (int i = 0; i < 4; ++i) { 
+            this->blockVector.at(i)->updateBy(0, -1);
+            this->coords.at(i).second -= 1;
+            if (this->heavy) this->blockVector.at(i)->updateBy(0, -1);
+        }
+
     }
 }
 
