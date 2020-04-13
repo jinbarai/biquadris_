@@ -4,7 +4,6 @@
 #include "block.h"
 
 class TBlock : public Block {
-    char type = 'T';
     public:
         TBlock(bool isHeavy);
         ~TBlock() = default;

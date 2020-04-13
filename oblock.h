@@ -4,7 +4,6 @@
 #include "block.h"
 
 class OBlock : public Block {
-    char type = 'O';
     public:
         OBlock(bool isHeavy);
         ~OBlock() = default;

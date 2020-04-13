@@ -8,7 +8,7 @@
 using namespace std;
 
 Block::Block(int h, int w, int x, int y, vector<pair<int, int>> coords, bool isHeavy, char c, orientationClass o): 
-height{h}, width{w}, xPos{x}, yPos{y}, heavy{isHeavy}, coords{coords}, type{c}, orient{o}{
+height{h}, width{w}, xPos{x}, yPos{y}, coords{coords}, heavy{isHeavy}, type{c}, orient{o}{
     this->blockVector.emplace_back(make_unique<Cell> (coords.at(0).first, coords.at(0).second, c));
     this->blockVector.emplace_back(make_unique<Cell> (coords[1].first, coords[1].second, c));
     this->blockVector.emplace_back(make_unique<Cell> (coords[2].first, coords[2].second, c));
