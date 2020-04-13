@@ -41,7 +41,7 @@ Block *leveltwo::createBlock() {
     else if(generateLucky==6) {
         return this->makeBlocks('O', this->isHeavy());
     } 
-    else if(generateLucky==7) {
+    else {
         return this->makeBlocks('T', this->isHeavy());
     }
 }

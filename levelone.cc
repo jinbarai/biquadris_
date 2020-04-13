@@ -32,7 +32,7 @@ Block* levelone::createBlock() {
         if (n == 1) {
             return this->makeBlocks('S', this->isHeavy());
         }
-        else if (n == 2){
+        else {
             return this->makeBlocks('Z', this->isHeavy()); 
         }
     }
@@ -48,7 +48,7 @@ Block* levelone::createBlock() {
     else if(generateLucky==5) {
         return this->makeBlocks('O', this->isHeavy());
     } 
-    else if(generateLucky==6) {
+    else {
         return this->makeBlocks('T', this->isHeavy());
     }
 }
