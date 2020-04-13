@@ -111,8 +111,6 @@ bool Grid::validate(int x, int y)  {
 
 int Grid::down(State p) {
     Block *b = this->getPlayer()->getBlock();
-    //cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << endl;
-    //cout << b->getType() << endl;
     vector <pair<int, int>> coords = b->getCoords();
     b->move(DOWN);
     vector <pair<int, int>> newcoords = b->getCoords();
@@ -121,7 +119,6 @@ int Grid::down(State p) {
         int y = newcoords.at(i).second;
         if (!validate(x, y)) {
             b->setCoords(coords);
-            cout << "returned False in line 124" << endl;
             return false;
         } 
         if (this->theGrid.at(y).at(x).getType() != ' ') { 
@@ -133,7 +130,6 @@ int Grid::down(State p) {
                 } 
             } if (flag == 1) { 
                 b->setCoords(coords);
-                cout << "returned False in line 136" << endl;
                 return false;
             }
         }
@@ -155,14 +151,22 @@ int Grid::down(State p) {
         int x = newcoords.at(i).first;
         int y = newcoords.at(i).second;
         if (y == 0) {
-            cout << "returned -1 in line 159" << endl;
             return -1;
-        } else if (this->theGrid.at(y - 2).at(x).getType() != ' ') {
-            cout << "returned -1 in line 161" << endl;
-            return -1;
+        } else if (this->theGrid.at(y - 1).at(x).getType() != ' ') {
+            bool flag = true;
+            for (int k = 0; k < 4; ++k) {
+                int newx = newcoords.at(k).first;
+                int newy = newcoords.at(k).second;
+                if (newx == x && newy == y - 1) { 
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag == true) {
+                return -1;
+            }
         }
     }
-    cout << "returned 1 in line 165" << endl;
     return 1;
 }
 
