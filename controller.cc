@@ -18,9 +18,11 @@ Grid *Controller::getGrid() {
 void Controller::changeTurn() {
     if (this->turn == State::p1) {
         this->turn = State::p2;
+        this->generate();
         return;
     } else { 
         this->turn = State::p1;
+        this->generate();
         return;
     }
 }
@@ -38,8 +40,8 @@ void Controller::leveldown() {
 }
   
   void Controller::startlevel(int n) { 
-      this->getGrid()->getPlayer()->changeLevel(n);
-      this->getGrid()->getPlayer()->changeLevel(n);
+      this->g1->getPlayer()->changeLevel(n);
+      this->g2->getPlayer()->changeLevel(n);
   }
 
 // called to move a block right 
