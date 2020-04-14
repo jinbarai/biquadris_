@@ -75,17 +75,6 @@ void Controller::restart() {
 }
 
 void Controller::generate() { 
-    // int n  = this->gr->getPlayer(s)->getLevel();
-    // if (n == 0) { 
-    //     levelzero *l = new levelzero();
-    //}
-    // else { 
-    //     levels *level = this->gr->getPlayer(s)->getPtrLevel();
-    //     this->gr->update(s, level->createBlock());
-    // }
-    // pass the player and a block 
-
-    // Need to figure out a better way to accept string filename 
     string filename;
     if (this->turn == State::p1) { 
         filename = "sequence1.txt";
