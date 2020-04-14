@@ -33,9 +33,6 @@ void Block::move(int direction){
 }
 
 vector<pair<int, int>> Block::getCoords(){
-    //for (int i = 0; i <4 ; i++){
-    //    cout << coords.at(i).first << ", " << coords.at(i).second << endl;
-   // }
     return this->coords;
 }
 
