@@ -15,7 +15,7 @@ class Grid {
     std::vector<std::vector<Cell>> theGrid;
     // vector of vectors of rows of cells 
     public: 
-    Grid(Player *p);
+    void init(Player *p);
     Player *getPlayer();
     friend std::ostream &operator<<(std::ostream &out, const Grid &gr);
     // for output

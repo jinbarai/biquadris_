@@ -41,8 +41,10 @@ int main(int argc, char *argv[]) {
     cout << "Welcome to Biquadris " << s1 << " and " << s2 << "!" << endl;
     Player *p1 = new Player(0, s1, 0);
     Player *p2 = new Player(0, s2, 0);
-    Grid *g1 = new Grid(p1);
-    Grid *g2 = new Grid(p2);
+    Grid *g1 = new Grid;
+    Grid *g2 = new Grid;
+    g1->init(p1);
+    g2->init(p2);
     TextDisplay *td =  new TextDisplay{p1, p2};
     g1->setTD(td);
     g2->setTD(td);

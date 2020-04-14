@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-Grid::Grid(Player *p) {
+void Grid::init(Player *p) {
     delete this->td;
     this->theGrid.clear();
     this->p = p;
