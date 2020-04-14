@@ -177,15 +177,11 @@ void Grid::drop(State p) {
     cout << *this;
 }
 
-void Grid::rotate(State p, int dir) {
+void Grid::rotate(State p) {
     Block *b = this->p->getBlock();
     vector <pair<int, int>> coords = b->getCoords();
-    b->setCoords(b->rotate(dir));
+    b->setCoords(b->rotate());
     vector <pair<int, int>> newCoords = b->getCoords();
-    for (int i = 0; i < 4; ++i) {
-        cout << "oldx: " << coords.at(i).first << " oldy: " << coords.at(i).second << endl;
-        cout << "x: " << newCoords.at(i).first << " y: " << newCoords.at(i).second << endl;
-    }
     for (int i = 0; i < 4; ++i) {
         int x = newCoords.at(i).first;
         int y = newCoords.at(i).second;

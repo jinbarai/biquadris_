@@ -30,7 +30,7 @@ class Grid {
     //void changeLevel(int n, std::string s);
     bool move(State p, int dir);
     bool validate(int x, int y);
-    void rotate(State p, int dir);
+    void rotate(State p);
     void drop(State p);
     int down(State p);
     ~Grid();

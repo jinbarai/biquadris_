@@ -2,8 +2,6 @@
 #include <vector>
 #include <memory>
 
-const int O_BLOCK_WIDTH = 2;
-const int O_BLOCK_HEIGHT = 2;
 
 using namespace std;
 

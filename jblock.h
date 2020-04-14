@@ -3,6 +3,10 @@
 #include <string>
 #include "block.h"
 
+const int J_BLOCK_WIDTH = 3;
+const int J_BLOCK_HEIGHT = 2;
+
+
 class JBlock : public Block {
     public:
         JBlock(bool isHeavy);

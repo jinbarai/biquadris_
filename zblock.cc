@@ -2,9 +2,6 @@
 #include <vector>
 #include <memory>
 
-const int Z_BLOCK_WIDTH = 3;
-const int Z_BLOCK_HEIGHT = 2;
-
 using namespace std;
 
 //intializing learned from https://www.geeksforgeeks.org/multiple-inheritance-in-c/

@@ -3,10 +3,6 @@
 #include <memory>
 #include <iostream>
 
-const int I_BLOCK_WIDTH = 1;
-const int I_BLOCK_HEIGHT = 4;
-
-
 using namespace std;
 
 //intializing learned from https://www.geeksforgeeks.org/multiple-inheritance-in-c/

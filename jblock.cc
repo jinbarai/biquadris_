@@ -2,9 +2,6 @@
 #include <vector>
 #include <memory>
 
-const int J_BLOCK_WIDTH = 4;
-const int J_BLOCK_HEIGHT = 2;
-
 using namespace std;
 
 //intializing learned from https://www.geeksforgeeks.org/multiple-inheritance-in-c/

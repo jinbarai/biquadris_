@@ -68,12 +68,13 @@ void Controller::down(int n) {
 }
 
 void Controller::cw() {
-    this->getGrid()->rotate(this->turn, CLOCKWISE);
+    this->getGrid()->rotate(this->turn);
     cout << *this->getGrid();
 }
 
 void Controller::ccw() {
-    this->getGrid()->rotate(this->turn, COUNTER_CLOCKWISE);
+    for (int i = 0; i < 3; i++)
+        this->getGrid()->rotate(this->turn);
     cout << *this->getGrid();
 }
 

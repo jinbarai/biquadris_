@@ -9,7 +9,6 @@ class Cell;
 enum class orientationClass { v , h };
 
 const int CLOCKWISE = 2;
-const int COUNTER_CLOCKWISE = 3;
 const int LEFT = -1;
 const int RIGHT = 1;
 const int DOWN = 5;
@@ -28,7 +27,7 @@ class Block{
         Block(int height, int width, int x, int y, std::vector <std::pair <int, int>> cellCoords, 
               bool isHeavy, char type, orientationClass orient);
         virtual ~Block() = 0;
-        std::vector < std::pair<int, int>> rotate (int direction);
+        std::vector < std::pair<int, int>> rotate ();
         void move (int direction);
         std::vector <std::pair <int, int>> getCoords();
         void setCoords(std::vector <std::pair <int, int>> coords);
