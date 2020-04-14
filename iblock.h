@@ -6,6 +6,7 @@
 class IBlock : public Block {
     public:
         IBlock(bool isHeavy);
+        void printBlock(bool n) override;
         ~IBlock() = default;
       //  void rotate(int direction) override;
 };

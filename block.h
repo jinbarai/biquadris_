@@ -3,8 +3,7 @@
 
 #include <vector>
 #include <memory>
-
-using namespace std;
+#include <iostream>
 
 class Cell;
 enum class orientationClass { v , h };
@@ -19,23 +18,24 @@ const int BLOCK_SPAWN_X = 0;
 const int BLOCK_SPAWN_Y = 14;
 
 class Block{
-    vector <unique_ptr <Cell>> blockVector;    
+    std::vector <std::unique_ptr <Cell>> blockVector;    
     int height, width, xPos, yPos;
-    vector < pair<int, int>> coords;
+    std::vector < std::pair<int, int>> coords;
     bool heavy; 
     char type;
     orientationClass orient;
     public:
-        Block(int height, int width, int x, int y, vector <pair <int, int>> cellCoords, 
+        Block(int height, int width, int x, int y, std::vector <std::pair <int, int>> cellCoords, 
               bool isHeavy, char type, orientationClass orient);
         virtual ~Block() = 0;
-        vector < pair<int, int>> rotate (int direction);
+        std::vector < std::pair<int, int>> rotate (int direction);
         void move (int direction);
-        vector <pair <int, int>> getCoords();
-        void setCoords(vector <pair <int, int>> coords);
-        pair <int, int> getPos();
+        std::vector <std::pair <int, int>> getCoords();
+        void setCoords(std::vector <std::pair <int, int>> coords);
+        std::pair <int, int> getPos();
         bool isHeavy();
         void setOrientation(orientationClass);
         char getType();
+        virtual void printBlock(bool n) = 0; 
 };
 #endif

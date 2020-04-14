@@ -7,6 +7,7 @@ class LBlock : public Block {
     public:
         LBlock(bool isHeavy);
         ~LBlock() = default;
+        void printBlock(bool n) override;
 };
 
 #endif

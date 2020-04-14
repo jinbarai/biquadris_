@@ -7,6 +7,7 @@ class OBlock : public Block {
     public:
         OBlock(bool isHeavy);
         ~OBlock() = default;
+        void printBlock(bool n) override;
 };
 
 #endif

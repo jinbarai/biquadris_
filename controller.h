@@ -6,7 +6,7 @@
 #include "block.h"
 #include "levels.h"
 #include "state.h"
-
+using namespace std;
 // when you cannot spot
 
 class Controller { 
