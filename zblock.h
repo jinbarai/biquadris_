@@ -7,6 +7,7 @@ class ZBlock : public Block {
     public:
         ZBlock(bool isHeavy);
         ~ZBlock() = default;
+        void printBlock(bool n) override;
 };
 
 #endif

@@ -12,7 +12,7 @@
 
 class Player { 
     int score;
-    string name;
+    std::string name;
     levels *l;
     int level;
     Block *b = nullptr;

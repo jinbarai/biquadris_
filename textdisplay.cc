@@ -66,6 +66,33 @@ ostream &operator<<(std::ostream &out, const TextDisplay &td) {
     for (int i = 0; i < 8; ++i) { out <<  ' '; } // creates the bottom border
     for (int i = 0; i < 11; ++i) { out <<  '-'; }
     out << endl;
+    out << "Next:";
+    for (int i = 0; i < 14; ++i) { out <<  ' '; } 
+    out << "Next:" << endl;
+    if (td.p1->getNextBlock()) { 
+        td.p1->getNextBlock()->printBlock(0);
+    } else { 
+        for (int i = 0; i < 11; ++i) { out <<  ' '; }
+    } 
+    for (int i = 0; i < 8; ++i) { out <<  ' '; }
+    if (td.p2->getNextBlock()) {
+        td.p2->getNextBlock()->printBlock(0);
+    } else { 
+        for (int i = 0; i < 11; ++i) { out <<  ' '; }
+    }
+    out << endl;
+    if (td.p1->getNextBlock()) { 
+        td.p1->getNextBlock()->printBlock(1);
+    } else { 
+        for (int i = 0; i < 11; ++i) { out <<  ' '; }
+    } 
+    for (int i = 0; i < 8; ++i) { out <<  ' '; }
+    if (td.p2->getNextBlock()) {
+        td.p2->getNextBlock()->printBlock(1);
+    } else { 
+        for (int i = 0; i < 11; ++i) { out <<  ' '; }
+    }
+    out << endl;
     return out;
 }
 

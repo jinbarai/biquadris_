@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
         while(true) { 
             cin >> cmd;
             if (cmd == "startlevel" || cmd == "starlevel" || cmd == "starlevle" || 
-            cmd == "start level" || cmd == "startlevle" || cmd == "startl" || cmd == "sl") { 
+            cmd == "start level" || cmd == "startlevle" || cmd == "startl" || cmd == "sl") {
                 int n = 0;
                 cin >> n;
                 c.startlevel(n);
