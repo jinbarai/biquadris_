@@ -17,6 +17,7 @@
 #include "leveltwo.h"
 #include "levelthree.h"
 #include "levelfour.h"
+
 using namespace std;
 
 int main(int argc, char *argv[]) { 
@@ -49,6 +50,7 @@ int main(int argc, char *argv[]) {
     try { 
         while(true) { 
             cin >> cmd;
+            // OPTIONAL accept startlevel3
             if (cmd == "startlevel" || cmd == "starlevel" || cmd == "starlevle" || 
             cmd == "start level" || cmd == "startlevle" || cmd == "startl" || cmd == "sl") {
                 int n = 0;
@@ -58,6 +60,7 @@ int main(int argc, char *argv[]) {
             } else if (cmd == "start" || cmd == "s") { 
                 c.generate();
                 continue;
+                // MANDATORY: 3left , 3lef, 3ri, 3right, 3rig
             } else if (cmd == "left" || cmd == "lef" || cmd == "lf") {
                 c.move(1, LEFT);
             } else if (cmd == "right" || cmd == "ri" || cmd == "rig" || cmd == "righ") {
