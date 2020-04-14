@@ -264,6 +264,5 @@ ostream &operator<<(ostream &out, const Grid &gr) {
 
 Grid::~Grid() { 
     delete this->p;
-    delete this->td;
 }
 

@@ -1,8 +1,9 @@
 #include "controller.h"
 
-Controller::Controller(Grid *g1, Grid *g2) {
+Controller::Controller(Grid *g1, Grid *g2, TextDisplay *td) {
     this->g1 = g1;
     this->g2 = g2;
+    this->td =  td;
     this->turn = State::p1;
 }
 
@@ -109,3 +110,8 @@ void Controller::generate() {
     cout << *(this->getGrid()); 
 }
 
+Controller::~Controller() {
+    delete this->g1;
+    delete this->g2;
+    delete this->td;
+}

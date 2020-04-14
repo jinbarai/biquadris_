@@ -12,11 +12,12 @@
 class Controller { 
     Grid *g1;
     Grid *g2;
+    TextDisplay *td;
     State turn; //  either p1, or p2
     // Graphics *g;
     public: 
     Grid *getGrid();
-    Controller(Grid *g1, Grid *g2); 
+    Controller(Grid *g1, Grid *g2, TextDisplay *td); 
     // main will make player pointers and pass the grid to the controller. 
     void changeTurn();
     void text(); // will cancel graphics
@@ -35,6 +36,7 @@ class Controller {
     void drop();
     void down(int n);
     void readFromFile(std::string file, levels *l); 
+    ~Controller();
 };
 
 #endif
