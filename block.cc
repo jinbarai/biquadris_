@@ -21,7 +21,8 @@ void Block::move(int direction){
             this->coords.at(i).first += direction;
             if (this->heavy) this->blockVector.at(i)->updateBy(0, -1);
         }
-    } else { 
+        this->xPos += direction;
+    }  else { 
         for (int i = 0; i < 4; ++i) { 
             this->blockVector.at(i)->updateBy(0, -1);
             this->coords.at(i).second -= 1;
@@ -58,6 +59,11 @@ vector<pair<int, int>> Block::rotate(int direction){
         oldCoords.at(i).first =  oldCoords.at(i).first - this->xPos + 1;
         oldCoords.at(i).second = oldCoords.at(i).second - this->yPos + 1;
     }
+     for (int i = 0 ; i < 4; ++i){
+        cout << "oldx: " << oldCoords.at(i).first; 
+        cout << " oldy: " << oldCoords.at(i).second << endl;
+    }
+
     if (direction == CLOCKWISE){
         coords = rotateCoordsCW(oldCoords);
     }
@@ -66,9 +72,9 @@ vector<pair<int, int>> Block::rotate(int direction){
     }
 
     for (int i = 0 ; i< 4; ++i){
-        if (this->orient == orientationClass::v){
+        if (this->orient == orientationClass::h){
             coords.at(i).second = coords.at(i).second + this->yPos + this->width;
-        } else if (this->orient == orientationClass::h){
+        } else if (this->orient == orientationClass::v){
             coords.at(i).second = coords.at(i).second + this->yPos + this->height;
         }   
     }
@@ -82,8 +88,12 @@ void Block::setCoords(vector <pair <int, int>> coords){
     }
 }
 
-void Block::setOrientation(orientationClass o){
-    this->orient = o;
+void Block::switchOrientation() {
+    if (this->orient == orientationClass::h) {
+        this->orient = orientationClass::v;
+        return;
+    }
+    this->orient = orientationClass::h;
 }
 
 char Block::getType() {
