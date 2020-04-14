@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     TextDisplay *td =  new TextDisplay{p1, p2};
     g1->setTD(td);
     g2->setTD(td);
-    Controller c(g1, g2);
+    Controller c(g1, g2, td);
     try { 
         while(true) { 
             cin >> cmd;
