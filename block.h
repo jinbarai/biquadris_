@@ -34,7 +34,7 @@ class Block{
         void setCoords(std::vector <std::pair <int, int>> coords);
         std::pair <int, int> getPos();
         bool isHeavy();
-        void setOrientation(orientationClass);
+        void switchOrientation();
         char getType();
         virtual void printBlock(bool n) = 0; 
 };

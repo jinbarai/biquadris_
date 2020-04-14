@@ -67,6 +67,16 @@ void Controller::down(int n) {
     }
 }
 
+void Controller::cw() {
+    this->getGrid()->rotate(this->turn, CLOCKWISE);
+    cout << *this->getGrid();
+}
+
+void Controller::ccw() {
+    this->getGrid()->rotate(this->turn, COUNTER_CLOCKWISE);
+    cout << *this->getGrid();
+}
+
 void Controller::drop() {
     this->getGrid()->drop(this->turn);
     this->changeTurn();

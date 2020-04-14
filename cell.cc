@@ -1,7 +1,10 @@
 #include "cell.h"
 
-Cell::Cell(int x, int y, char c) : x{x}, y{y}, type{c} {
-    this->isEmpty = false;
+Cell::Cell(int x, int y, char c) : x{x}, y{y}, type{c} {}
+
+bool Cell::isEmpty() {
+    if (this->type == ' ') return true;
+    return false;
 }
 
 void Cell::updateBy(int x, int y){

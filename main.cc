@@ -69,6 +69,10 @@ int main(int argc, char *argv[]) {
                 c.down(1);
             } else if (cmd == "drop" || cmd == "dr" || cmd == "dro") {
                 c.drop();
+            } else if (cmd == "clockwise" || cmd ==  "cw") {
+                c.cw();
+            } else if (cmd == "counterclockwise" || cmd ==  "ccw") {
+                c.ccw();
             }
             if (false) { // write later
                 // for special commands 

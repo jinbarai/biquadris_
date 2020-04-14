@@ -47,7 +47,7 @@ void Grid::update(State p) {
     for (int i = 0; i < 4; ++i) {
         int x = coords.at(i).first;
         int y = coords.at(i).second;
-        if (theGrid.at(y).at(x).getType() != ' ') {
+        if (!theGrid.at(y).at(x).isEmpty()) {
             throw GameOver{p};
         }  else { 
             theGrid.at(y).at(x).setType(type);
@@ -71,7 +71,7 @@ bool Grid::move(State p, int dir) {
             b->setCoords(coords);
             return false;
         } 
-        if (this->theGrid.at(y).at(x).getType() != ' ') { 
+        if (!this->theGrid.at(y).at(x).isEmpty()) { 
             int flag = 1;
             for (int k = 0; k < 4; ++k) {
                 if (x == coords.at(k).first && y == coords.at(k).second) { 
@@ -121,7 +121,7 @@ int Grid::down(State p) {
             b->setCoords(coords);
             return false;
         } 
-        if (this->theGrid.at(y).at(x).getType() != ' ') { 
+        if (!this->theGrid.at(y).at(x).isEmpty()) { 
             int flag = 1;
             for (int k = 0; k < 4; ++k) {
                 if (x == coords.at(k).first && y == coords.at(k).second) { 
@@ -151,7 +151,7 @@ int Grid::down(State p) {
         int y = newcoords.at(i).second;
         if (y == 0) {
             return -1;
-        } else if (this->theGrid.at(y - 1).at(x).getType() != ' ') {
+        } else if (!this->theGrid.at(y - 1).at(x).isEmpty()) {
             bool flag = true;
             for (int k = 0; k < 4; ++k) {
                 int newx = newcoords.at(k).first;
@@ -177,28 +177,49 @@ void Grid::drop(State p) {
     cout << *this;
 }
 
-    /*
+void Grid::rotate(State p, int dir) {
+    Block *b = this->p->getBlock();
+    vector <pair<int, int>> coords = b->getCoords();
+    b->setCoords(b->rotate(dir));
+    vector <pair<int, int>> newCoords = b->getCoords();
     for (int i = 0; i < 4; ++i) {
-        int x1 = newcoords.at(i).first;
-        int y1 = newcoords.at(i).second;
-        int oldx = coords.at(i).first;
-        int oldy = coords.at(i).second;
-        this->theGrid.at(oldy).at(oldx).setType(' ');
-        this->theGrid.at(y1).at(x1).setType(b->getType());
-        this->td->notify(p, y1, x1, b->getType());
-        bool flag = true;
-        for (int k = 0; k < 4; ++k) { 
-              if (oldx == newcoords.at(k).first && oldy == newcoords.at(k).second) {
-                  flag = false;
-              } 
-        } if (flag == true) { 
-            this->td->notify(p, oldy, oldx, ' ');
+        cout << "oldx: " << coords.at(i).first << " oldy: " << coords.at(i).second << endl;
+        cout << "x: " << newCoords.at(i).first << " y: " << newCoords.at(i).second << endl;
+    }
+    for (int i = 0; i < 4; ++i) {
+        int x = newCoords.at(i).first;
+        int y = newCoords.at(i).second;
+        if (!validate(x, y)) {
+            b->setCoords(coords);
+            return;
+        }
+        if (!this->theGrid.at(y).at(x).isEmpty()) { 
+            int flag = 1;
+            for (int k = 0; k < 4; ++k) {
+                if (x == coords.at(k).first && y == coords.at(k).second) { 
+                    flag = 0;
+                    break;
+                } 
+            } if (flag == 1) { 
+                b->setCoords(coords);
+                return;
+            }
         }
     }
-     cout << *this;
-     return true;
+    b->switchOrientation();
+    for (int i = 0; i < 4; ++i) {
+        int oldx = coords.at(i).first;
+        int oldy = coords.at(i).second;
+        this->clear(p, oldy, oldx);
+    }
+    for (int k = 0; k < 4; ++k) {
+        int x = newCoords.at(k).first;
+        int y = newCoords.at(k).second;
+        char c = b->getType();
+        this->theGrid.at(y).at(x).setType(c);
+        this->td->notify(p, y, x, c);
     } 
-    */
+}
 
 void Grid::clear(State p, int row, int col) {
     char c = ' ';
@@ -208,7 +229,7 @@ void Grid::clear(State p, int row, int col) {
 
 bool Grid::isRowFull(int n) { 
     for (int i = 0; i < 11; ++i) {
-         if (this->theGrid.at(n).at(i).isEmpty == true) {
+         if (this->theGrid.at(n).at(i).isEmpty() == true) {
             return false;
         }
     } 

@@ -7,7 +7,7 @@ class Cell{
     char type;
     public:
         Cell(int x, int y, char c);
-        bool isEmpty = true;
+        bool isEmpty();
         void updateBy(int x, int y);
         void set(int x, int y);
         int getX();
