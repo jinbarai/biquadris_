@@ -18,14 +18,18 @@ void Block::move(int direction){
         for (int i = 0; i < 4; ++i) { 
             this->blockVector.at(i)->updateBy(direction, 0);
             this->coords.at(i).first += direction;
-            if (this->heavy) this->blockVector.at(i)->updateBy(0, -1);
+            if (this->heavy) {
+                this->blockVector.at(i)->updateBy(0, -1 * this->heavyBy);
+                this->coords.at(i).second += -1 * this->heavyBy;
+
+            }
         }
         this->xPos += direction;
     }  else { 
         for (int i = 0; i < 4; ++i) { 
             this->blockVector.at(i)->updateBy(0, -1);
             this->coords.at(i).second += -1;
-            if (this->heavy) this->blockVector.at(i)->updateBy(0, -1);
+            if (this->heavy) this->blockVector.at(i)->updateBy(0, -1*this->heavyBy);
         }
         this->yPos += -1;
 
@@ -83,6 +87,11 @@ void Block::setCoords(vector <pair <int, int>> coords){
     for (int i = 0; i < 4; ++i){
         this->blockVector[i]->set(coords[i].first, coords[i].second);
     }
+}
+
+void Block::setHeavy(int n){
+    this->heavy = true;
+    this->heavyBy = n;
 }
 
 void Block::switchOrientation() {

@@ -35,16 +35,27 @@ void Controller::levelup() {
 
 void Controller::leveldown() {
     int level = this->getGrid()->getPlayer()->getLevel();
+    if (level == 0) return;
     --level;
     this->getGrid()->getPlayer()->changeLevel(level);
 }
   
-  void Controller::startlevel(int n) { 
-      this->g1->getPlayer()->changeLevel(n);
-      this->g2->getPlayer()->changeLevel(n);
-  }
+void Controller::startlevel(int n) { 
+    this->g1->getPlayer()->changeLevel(n);
+    this->g2->getPlayer()->changeLevel(n);
+}
 
-// called to move a block right 
+void Controller::heavy(){
+    cout << "entered here" << endl;
+    if (this->turn == State::p1) {
+        this->g2->getPlayer()->setSpecialHeavy(true);
+        cout << "entered 52" << endl;
+    } else { 
+        this->g1->getPlayer()->setSpecialHeavy(true);
+        cout << "entered 55" << endl;
+    }
+}
+
 void Controller::move(int n, int dir) { 
     for (int i = 0; i < n; ++i) {
         this->getGrid()->move(this->turn, dir);
@@ -61,6 +72,9 @@ void Controller::down(int n) {
         int val = this->getGrid()->down(this->turn);
         cout << *this->getGrid();
         if (val != 1) {
+            if (this->getGrid()->getPlayer()->isSpecialHeavy()){
+                this->getGrid()->getPlayer()->setSpecialHeavy(false);
+            }
             this->changeTurn();
             break;
         } 
@@ -85,6 +99,9 @@ void Controller::ccw(int n) {
 
 void Controller::drop() {
     this->getGrid()->drop(this->turn);
+    if (this->getGrid()->getPlayer()->isSpecialHeavy()){
+        this->getGrid()->getPlayer()->setSpecialHeavy(false);
+    }
     this->changeTurn();
 }
 

@@ -60,6 +60,15 @@ int Player::getLevel() {
     return this->level;
 }
 
+void Player::setSpecialHeavy(bool n){
+    this->specialCommandHeavy = n;
+}
+
+bool Player::isSpecialHeavy(){
+    return this->specialCommandHeavy;
+}
+
+
 void Player::changeLevel(int lev) {
     if (lev > 4) {
         return;

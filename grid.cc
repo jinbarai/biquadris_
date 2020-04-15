@@ -17,6 +17,12 @@ void Grid::init(Player *p) {
 
 void Grid::update(State p) {
     Block *b = this->getPlayer()->getBlock();
+   // cout << "entered line 2 of update" << endl;
+    if (this->getPlayer()->isSpecialHeavy()){
+        cout << "entered line 22 of update" << endl;
+        this->getPlayer()->getBlock()->setHeavy(2);
+    }
+
     vector <pair <int, int>> coords = b->getCoords();
     char type = b->getType(); 
     for (int i = 0; i < 4; ++i) {
@@ -74,6 +80,7 @@ bool Grid::move(State p, int dir) {
     cout << *this;
     return true;
 }
+
 
 bool Grid::validate(int x, int y)  {
     if (x > 10 || x < 0) {

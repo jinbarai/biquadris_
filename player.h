@@ -17,6 +17,7 @@ class Player {
     int level;
     Block *b = nullptr;
     Block *bnext = nullptr;
+    bool specialCommandHeavy = false;
     public:
     Player(int, std::string, int);
     int getScore();
@@ -25,6 +26,8 @@ class Player {
     Block *getNextBlock();
     void setBlock(Block *b);
     void setNextBlock(Block *b);
+    void setSpecialHeavy(bool);
+    bool isSpecialHeavy();
     std::string getName();
     levels *getPtrLevel();
     int getLevel();

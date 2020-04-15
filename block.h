@@ -21,6 +21,7 @@ class Block{
     int height, width, xPos, yPos;
     std::vector < std::pair<int, int>> coords;
     bool heavy; 
+    int heavyBy = 0;
     char type;
     orientationClass orient;
     public:
@@ -33,6 +34,7 @@ class Block{
         void setCoords(std::vector <std::pair <int, int>> coords);
         std::pair <int, int> getPos();
         bool isHeavy();
+        void setHeavy(int n);
         void switchOrientation();
         char getType();
         virtual void printBlock(bool n) = 0; 

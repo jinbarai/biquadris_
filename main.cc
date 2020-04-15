@@ -75,6 +75,8 @@ int main(int argc, char *argv[]) {
                 c.cw();
             } else if (cmd == "counterclockwise" || cmd ==  "ccw") {
                 c.ccw();
+            } else if (cmd == "heavy"){
+                c.heavy();
             }
             if (false) { // write later
                 // for special commands 
