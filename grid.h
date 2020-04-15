@@ -20,7 +20,7 @@ class Grid {
     friend std::ostream &operator<<(std::ostream &out, const Grid &gr);
     // for output
     void clear(State p, int row, int col);
-    void rowclear(); // clears any full row 
+    void rowclear(State p); // clears any full row 
     bool isFull(); // will determine whether or not the board is full 
     void score(int n, int level);
     void update(State p);

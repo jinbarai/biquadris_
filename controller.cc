@@ -67,15 +67,20 @@ void Controller::down(int n) {
     }
 }
 
-void Controller::cw() {
-    this->getGrid()->rotate(this->turn);
+void Controller::cw(int n) {
+    for (int i = 0; i < n; ++i) {
+        this->getGrid()->rotate(this->turn);
+    }
     cout << *this->getGrid();
 }
 
-void Controller::ccw() {
-    for (int i = 0; i < 3; i++)
-        this->getGrid()->rotate(this->turn);
-    cout << *this->getGrid();
+void Controller::ccw(int n) {
+    for (int k = 0; k < n; ++k) {
+        for (int i = 0; i < 3; i++) {
+            this->getGrid()->rotate(this->turn);
+        }
+        cout << *this->getGrid();
+    }
 }
 
 void Controller::drop() {

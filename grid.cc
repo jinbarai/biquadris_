@@ -14,31 +14,6 @@ void Grid::init(Player *p) {
         }
     }
 }
-/*
-void Grid::changeLevel(int n, string s) {
-    Player *p;
-    if (s == "p1") {
-        p =  this->p1;
-    } else { 
-        p = this->p2;
-    }
-    if (n == 0) {
-        p->changeLevel(new levelzero, 0); // add notes based on level code
-    } else if (n == 1) {
-        p->changeLevel(new levelone, 1); 
-    } else if (n == 2) {
-        p->changeLevel(new leveltwo, 2);
-    } else if (n == 3) {
-        p->changeLevel(new levelthree, 3);
-    } else if (n == 4) {
-        p->changeLevel(new levelfour, 4);
-    } else if (n == 5) {
-        this->level = new Level5(); 
-    } else if (n == 6) {
-       this->level = new Level6();
-    } 
-}
-*/
 
 void Grid::update(State p) {
     Block *b = this->getPlayer()->getBlock();
@@ -150,6 +125,7 @@ int Grid::down(State p) {
         int x = newcoords.at(i).first;
         int y = newcoords.at(i).second;
         if (y == 0) {
+            rowclear(p);
             return -1;
         } else if (!this->theGrid.at(y - 1).at(x).isEmpty()) {
             bool flag = true;
@@ -162,6 +138,9 @@ int Grid::down(State p) {
                 }
             }
             if (flag == true) {
+                // this means that the block is unable to be moved 
+                // further down 
+                rowclear(p);
                 return -1;
             }
         }
@@ -243,6 +222,9 @@ bool Grid::isFull() {
 
 
 void Grid::score(int n, int level) { 
+    if (n == 0) {
+        return;
+    }
     int score = 1 * level;
     for (int i = 0; i < n; ++i) {
         score *= 10;
@@ -250,20 +232,25 @@ void Grid::score(int n, int level) {
     this->getPlayer()->addScore(score);
 }
 
-void Grid::rowclear() {
-    int level;
-    int n = 0;
-    level = this->getPlayer()->getLevel();
+void Grid::rowclear(State p) {
+    int level = this->getPlayer()->getLevel(); // level of player
+    int n = 0; // # of rows cleared
     for (int i = 0; i < 18; ++i) {
         if (isRowFull(i)) { 
             ++n;
-            for (int k = i + 1; k < 18; ++k) {
-                 for (int j = 0; j < 11; ++j) {
-                        
+            for (int k = i; k < 16; ++k) {
+                for (int j = 0; j < 11; ++j) {
+                    char c = this->theGrid.at(k+1).at(j).getType();
+                    this->theGrid.at(k).at(j).setType(c); 
+                    this->td->notify(p, k, j, c);
                 }
+            }
+            for (int m = 0; m < 11; ++m) {
+                clear(p, 17, m);
             }
         }
     }
+    score(n, level);
 }
 
 void Grid::setTD(TextDisplay *td) { 

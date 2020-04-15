@@ -22,8 +22,8 @@ class Controller {
     void changeTurn();
     void text(); // will cancel graphics
     void move(int n, int dir);
-    void cw(); // clockwise
-    void ccw(); // counterclockwise
+    void cw(int n = 1); // clockwise
+    void ccw(int n = 1); // counterclockwise
     void levelup();
     void leveldown();
     // Special Actions
@@ -34,7 +34,7 @@ class Controller {
     void startlevel(int n);
     void restart(); 
     void drop();
-    void down(int n);
+    void down(int n = 1);
     void readFromFile(std::string file, levels *l); 
     ~Controller();
 };

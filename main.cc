@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
             } else if (cmd == "right" || cmd == "ri" || cmd == "rig" || cmd == "righ") {
                 c.move(1, RIGHT);
             } else if (cmd == "down" || cmd == "do") {
-                c.down(1);
+                c.down();
             } else if (cmd == "drop" || cmd == "dr" || cmd == "dro") {
                 c.drop();
             } else if (cmd == "clockwise" || cmd ==  "cw") {
