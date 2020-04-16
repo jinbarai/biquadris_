@@ -194,11 +194,11 @@ int main(int argc, char *argv[])
             char num = getNum(cmd);
 
             if ((command).compare("end")== 0)
-            {
-                cout << "Thank you for playing with us" << endl;
+            {   
                 system("clear");
-                cout << "Player 1:" << p1->getScore() << endl;
-                cout << "Player 2:" << p2->getScore() << endl;
+                cout << "Thank you for playing with us! <3" << endl;
+                cout << "Player 1: " << p1->getScore() << endl;
+                cout << "Player 2: " << p2->getScore() << endl;
                 break;
             }
 
@@ -288,7 +288,7 @@ int main(int argc, char *argv[])
             }
         }
     }
-
+    catch (GameOver(State p)) {}
     catch (ios::failure &)
     {
         cout << " oh we failed" << endl;
