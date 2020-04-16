@@ -17,9 +17,8 @@ void Grid::init(Player *p) {
 
 void Grid::update(State p) {
     Block *b = this->getPlayer()->getBlock();
-   // cout << "entered line 2 of update" << endl;
+    // cout << "entered line 2 of update" << endl;
     if (this->getPlayer()->isSpecialHeavy()){
-        cout << "entered line 22 of update" << endl;
         this->getPlayer()->getBlock()->setHeavy(2);
     }
 
