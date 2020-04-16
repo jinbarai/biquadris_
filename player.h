@@ -8,6 +8,8 @@
 #include "leveltwo.h"
 #include "levelthree.h"
 #include "levelfour.h"
+#include "levelfive.h"
+#include "levelsix.h"
 
 
 class Player { 

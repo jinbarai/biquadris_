@@ -35,7 +35,7 @@ class Grid {
     bool move(State p, int dir);
     bool validate(int x, int y);
     void rotate(State p);
-    void brown(State p);
+    void brown(State p, int n);
     Graphics *getGraphics();
     bool drop(State p);
     int down(State p);

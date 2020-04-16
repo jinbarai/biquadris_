@@ -20,6 +20,10 @@ Player::Player(int x, string s, int lev) {
         this->l  = new levelthree();
     } else if (lev == 4) {
         this->l  = new levelfour();
+    }  else if (lev == 5) {
+        this->l =  new levelfive();
+    } else if (lev == 6) {
+        this->l = new levelsix();
     }
 }
 
@@ -70,7 +74,7 @@ bool Player::isSpecialHeavy(){
 
 
 void Player::changeLevel(int lev) {
-    if (lev > 4) {
+    if (lev > 6) {
         return;
     } else if (lev < 0) {
         return;
@@ -87,6 +91,10 @@ void Player::changeLevel(int lev) {
         this->l  = new levelthree();
     } else if (lev == 4) {
         this->l  = new levelfour();
+    } else if (lev == 5) {
+        this->l =  new levelfive();
+    } else if (lev == 6) {
+        this->l = new levelsix();
     }
 }
 

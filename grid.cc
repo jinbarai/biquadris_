@@ -171,7 +171,7 @@ bool Grid::drop(State p) {
     if ((this->counter != 0) && (this->counter % 5 == 0) && (this->p->getLevel() >= 4)) {
         // if the counter is not zero, the counter is divisible by 5 and the level is 4 or greater
         // we need to drop a brown block 
-        this->brown(p);
+        this->brown(p, this->p->getLevel());
     }
     cout << *this;
     if (row) {
@@ -180,21 +180,50 @@ bool Grid::drop(State p) {
     return false;
 }
 
-void Grid::brown(State p) { 
-    bool flag = true;
-    for (int i = 0; i < 14; ++i) {
-        if (this->theGrid.at(i).at(5).isEmpty()) {
-            flag = false;
-            this->theGrid.at(i).at(5).setType('*');
-            this->td->notify(p, i, 5, '*');
-            if (this->text && this->gr) { // to see if text mode is activated 
-                this->gr->notify(p, i, 5, '*');
+void Grid::brown(State p, int n) { 
+    if (n == 4) { 
+        bool flag = true;
+        for (int i = 0; i < 14; ++i) {
+            if (this->theGrid.at(i).at(5).isEmpty()) {
+                flag = false;
+                this->theGrid.at(i).at(5).setType('*');
+                this->td->notify(p, i, 5, '*');
+                if (this->text && this->gr) { // to see if text mode is activated 
+                    this->gr->notify(p, i, 5, '*');
+                }
+                break;
             }
-            break;
         }
-    }
-    if (flag) { 
-        throw GameOver{p};
+        if (flag == true) {
+            throw GameOver{p};
+        }
+    } else { 
+        for (int k = 0; k < 11; ++k) {
+            bool flag = true;
+            for (int i = 14; i >= 0; --i) {
+                if (this->theGrid.at(i).at(k).isEmpty()) {
+                    flag = false;
+                    if (i == 0) { 
+                        this->theGrid.at(i).at(k).setType('*');
+                        this->td->notify(p, i, k, '*');
+                        if (this->text && this->gr) { // to see if text mode is activated 
+                            this->gr->notify(p, i, k, '*');
+                        }
+                        break;
+                    } else if (!this->theGrid.at(i-1).at(k).isEmpty()) {
+                        this->theGrid.at(i).at(k).setType('*');
+                        this->td->notify(p, i, k, '*');
+                        if (this->text && this->gr) { // to see if text mode is activated 
+                         this->gr->notify(p, i, k, '*');
+                        }
+                        break;
+                    }
+                }
+            }
+            if (flag == true) {
+                    throw GameOver{p};
+            }
+        }
     }
 }
 

@@ -70,7 +70,7 @@ void Controller::move(int n, int dir) {
     }
 }
 
-// Need this for norandom file command since it also allows levels 3 and 4 to have blocks generated in sequence from file
+// Need this for norandom file command since it also allows levels 3 - 6 to have blocks generated in sequence from file
 void Controller::readFromFile(string filename, levels *l) {
     l->blocksFromFile(filename); 
 }
@@ -115,9 +115,8 @@ void Controller::restart() {
 }
 
 void Controller::random() {
-    // If the pointer level is 3 or 4 only then the random function can be toggled on/off
-    if((this->getGrid()->getPlayer()->getLevel()==3) || 
-    (this->getGrid()->getPlayer()->getLevel()==4)) {
+    // If the pointer level is 3 - 6 only then the random function can be toggled on/off
+    if (this->getGrid()->getPlayer()->getLevel() >= 3) {
         this->getGrid()->getPlayer()->getPtrLevel()->setRandom(false);
     } else {
         string s = "Wrong level for toggling random/norandom option";
@@ -126,9 +125,8 @@ void Controller::random() {
 }
 
 void Controller::norandom(){ 
-    // If the pointer level is 3 or 4 only then the random function can be toggled on/off
-    if((this->getGrid()->getPlayer()->getLevel()==3) || 
-    (this->getGrid()->getPlayer()->getLevel()==4)) {
+    // If the pointer level is 3 - 6 only then the random function can be toggled on/off
+    if (this->getGrid()->getPlayer()->getLevel() >= 3) {
         this->getGrid()->getPlayer()->getPtrLevel()->setRandom(true); 
 
     } else {
@@ -152,7 +150,7 @@ void Controller::generate() {
     try { 
         levels *l = this->getGrid()->getPlayer()->getPtrLevel();
         if(l->getRandom() == true) {
-            this->readFromFile(filename, l); // throws a string 
+            this->readFromFile(filename, l); // outputs a string 
         }
         if (this->getGrid()->getPlayer()->getNextBlock() == nullptr) { 
             this->getGrid()->getPlayer()->setNextBlock(l->createBlock());
