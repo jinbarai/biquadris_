@@ -174,17 +174,26 @@ void Controller::ccw(int n) {
 }
 
 void Controller::drop() {
-    bool val = this->getGrid()->drop(this->turn);
-    cout << "Row Clear Bool: " << val << endl;
-    if (this->getGrid()->getPlayer()->isSpecialHeavy()){
-        this->getGrid()->getPlayer()->setSpecialHeavy(false);
+    bool flag = false;
+    int n = 1; // change n to be a parameter taken into drop function 
+    for (int i = 0; i < n; ++i) {
+        bool val = this->getGrid()->drop(this->turn);
+        if (val) {
+          flag = true;
+         }
+        if (this->getGrid()->getPlayer()->isSpecialHeavy()){
+            this->getGrid()->getPlayer()->setSpecialHeavy(false);
+        }
+        if (this->getGrid()->getPlayer()->isBlind()) {
+            this->getGrid()->getPlayer()->setBlind();
+            this->getGrid()->fixBlind(this->turn);
+        }
+        if (i != n - 1) { 
+            this->generate();
+        }
     }
-    if (val) {
+    if (flag) {
         this->specialAction();
-    }
-    if (this->getGrid()->getPlayer()->isBlind()) {
-        this->getGrid()->getPlayer()->setBlind();
-        this->getGrid()->fixBlind(this->turn);
     }
     this->changeTurn();
 }
