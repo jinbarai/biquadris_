@@ -37,26 +37,18 @@ void Controller::specialAction() {
 }
 
 void Controller::blind() {
-    cout << "HELLO I MADE IT!" << endl;
     if (this->turn == State::p1) {
         this->g2->getPlayer()->setBlind();
-        cout << "hello i set player to blind" << endl;
         this->gr->drawBlind(State::p2);
-        cout << "made it end it first loop: line 44" << endl;
     } else { 
         this->g1->getPlayer()->setBlind();
         this->gr->drawBlind(State::p1);
     }
-    cout << "I MADE IT BRO: line 48 controller" << endl;
     cout << *this->getGrid(); // does not matter which Grid, just want to show blind 
 }
 
 /*
 void Controller::force() {
-
-}
-
-void Controller::heavy() {
 
 }
 */
