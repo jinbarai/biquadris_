@@ -31,7 +31,7 @@ class Controller {
     void specialAction();
     void blind();
     void heavy();
-    void force();
+    void force(char c);
     void generate();
     void startlevel(int n);
     void restart(); 

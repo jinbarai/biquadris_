@@ -348,7 +348,7 @@ bool Grid::rowclear(State p) {
         this->counter = 0;
     }
     score(n, level);
-    if (n >= 2) {
+    if (n >= 1) {
         return true;
     }
     return false;

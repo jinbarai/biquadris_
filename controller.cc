@@ -31,8 +31,10 @@ void Controller::specialAction() {
         cout << "You have selected: Heavy" << endl;
         //this->heavy();
     } else if (c == 'F' || c == 'f') {
-        cout << "You have selected: Force" << endl;
-        //this->force();
+        char c;
+        cin >> c;
+        cout << "You have selected: Force" << c << endl;
+        this->force(c);
     }
 }
 
@@ -47,11 +49,43 @@ void Controller::blind() {
     cout << *this->getGrid(); // does not matter which Grid, just want to show blind 
 }
 
-/*
-void Controller::force() {
-
+void Controller::force(char c) {
+    Player *p;
+    if (this->turn == State::p1) { 
+        p = g2->getPlayer();
+    } else {  
+        p = g1->getPlayer();
+    }
+    Bool b = false;
+    // to determine if it is heavy
+    if (p->getLevel() >= 3) {
+        b = true;
+    }
+    if (c == 'Z' || c == 'z') { 
+        delete p->getNextBlock();
+        p->setNextBlock(new ZBlock(b));
+    } else if (c == 'T' || c == 't') {
+        delete p->getNextBlock();
+        p->setNextBlock(new TBlock(b));
+    } else if (c == 'O' || c == 'o') {
+        delete p->getNextBlock();
+        p->setNextBlock(new OBlock(b));
+    } else if (c == 'S' || c == 's') {
+        delete p->getNextBlock();
+        p->setNextBlock(new SBlock(b));
+    } else if (c == 'I' || c == 'i') {
+        delete p->getNextBlock();
+        p->setNextBlock(new IBlock(b));
+    } else if (c == 'J' || c == 'j') {
+        delete p->getNextBlock();
+        p->setNextBlock(new TBlock(b));
+    } else if (c == 'T' || c == 't') {
+        delete p->getNextBlock();
+        p->setNextBlock(new TBlock(b));
+    } else { 
+        cout << "Invalid char, Force cancelled" << endl;
+    }
 }
-*/
 
 void Controller::changeTurn() {
     if (this->turn == State::p1) {
