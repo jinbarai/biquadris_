@@ -4,6 +4,7 @@ using namespace std;
 Player::Player(int x, string s, int lev) {
     this->score = x;
     this->name = s;
+    this->blind = false;
     if (lev < 0) { 
         lev = 0;
     } else if (lev > 4) { 
@@ -79,9 +80,9 @@ bool Player::isBlind() {
 void Player::setBlind() {
     if (this->blind) {
         this->blind = false;
-        return;
+    } else { 
+        this->blind = true;
     }
-    this->blind = true;
 }
 
 void Player::changeLevel(int lev) {

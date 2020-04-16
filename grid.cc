@@ -164,20 +164,17 @@ int Grid::down(State p) {
 bool Grid::drop(State p) {
     int val = 1;
     while (val == 1) {
-        val =  this->down(p);
+        val = this->down(p);
     }
     ++this->counter;
-    bool row = rowclear(p);
     if ((this->counter != 0) && (this->counter % 5 == 0) && (this->p->getLevel() >= 4)) {
         // if the counter is not zero, the counter is divisible by 5 and the level is 4 or greater
         // we need to drop a brown block 
         this->brown(p, this->p->getLevel());
     }
+    const bool row = rowclear(p);
     cout << *this;
-    if (row) {
-        return true;
-    }
-    return false;
+    return row;
 }
 
 void Grid::brown(State p, int n) { 
@@ -232,6 +229,15 @@ void Grid::brown(State p, int n) {
         }
     }
 }
+
+void Grid::fixBlind(State p) {
+    for (int row = 0; row < 18; ++row) {
+        for  (int col = 0; col < 11; ++col) {
+            this->gr->notify(p, row, col, this->theGrid.at(row).at(col).getType());
+        }
+    }
+}
+
 
 void Grid::rotate(State p) {
     Block *b = this->p->getBlock();
@@ -342,7 +348,7 @@ bool Grid::rowclear(State p) {
         this->counter = 0;
     }
     score(n, level);
-    if (n >= 2) {
+    if (n >= 1) {
         return true;
     }
     return false;

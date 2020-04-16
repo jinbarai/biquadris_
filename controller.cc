@@ -22,28 +22,36 @@ void Controller::specialAction() {
     cout << "Blind, Heavy or Force" << endl;
     string s;
     cin >> s;
-    char c = s[0];
+    const char c = s.at(0);
     if (c == 'B' || c == 'b') {
-        cout << "You have selected: Blind";
+        cout << "You have selected: Blind" << endl;
         this->blind();
+        cout << "Hello I made it back after doing blind!" << endl;
     } else if  (c == 'H' || c == 'h') {
-        cout << "You have selected: Heavy";
-        this->heavy();
+        cout << "You have selected: Heavy" << endl;
+        //this->heavy();
     } else if (c == 'F' || c == 'f') {
-        cout << "You have selected: Force";
-        this->force();
+        cout << "You have selected: Force" << endl;
+        //this->force();
     }
-    cout << endl;
 }
 
 void Controller::blind() {
+    cout << "HELLO I MADE IT!" << endl;
     if (this->turn == State::p1) {
-        this->g2->getPlayer->setBlind();
+        this->g2->getPlayer()->setBlind();
+        cout << "hello i set player to blind" << endl;
+        this->gr->drawBlind(State::p2);
+        cout << "made it end it first loop: line 44" << endl;
     } else { 
-        this->g2->getPlayer->setBlind();
+        this->g1->getPlayer()->setBlind();
+        this->gr->drawBlind(State::p1);
     }
+    cout << "I MADE IT BRO: line 48 controller" << endl;
+    cout << *this->getGrid(); // does not matter which Grid, just want to show blind 
 }
 
+/*
 void Controller::force() {
 
 }
@@ -51,6 +59,7 @@ void Controller::force() {
 void Controller::heavy() {
 
 }
+*/
 
 void Controller::changeTurn() {
     if (this->turn == State::p1) {
@@ -139,7 +148,8 @@ void Controller::ccw(int n) {
 }
 
 void Controller::drop() {
-    int val = this->getGrid()->drop(this->turn);
+    bool val = this->getGrid()->drop(this->turn);
+    cout << "Row Clear Bool: " << val << endl;
     if (this->getGrid()->getPlayer()->isSpecialHeavy()){
         this->getGrid()->getPlayer()->setSpecialHeavy(false);
     }
@@ -148,6 +158,7 @@ void Controller::drop() {
     }
     if (this->getGrid()->getPlayer()->isBlind()) {
         this->getGrid()->getPlayer()->setBlind();
+        this->getGrid()->fixBlind(this->turn);
     }
     this->changeTurn();
 }

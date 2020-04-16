@@ -34,6 +34,7 @@ class Grid {
     //void changeLevel(int n, std::string s);
     bool move(State p, int dir);
     bool validate(int x, int y);
+    void fixBlind(State p);
     void rotate(State p);
     void brown(State p, int n);
     Graphics *getGraphics();
