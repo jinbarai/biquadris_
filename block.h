@@ -37,6 +37,8 @@ class Block{
         void setHeavy(int n);
         void switchOrientation();
         char getType();
+        int getBottomX();
+        int getBottomY();
         virtual void printBlock(bool n) = 0; 
 };
 #endif

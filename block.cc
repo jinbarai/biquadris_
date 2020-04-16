@@ -54,13 +54,8 @@ vector<pair<int, int>> Block::rotate(){
     vector<pair<int, int>> coords;
     vector<pair<int, int>> oldCoords = this->coords;
 
-    int xBottomLeft = oldCoords.at(0).first;
-    int yBottomLeft = oldCoords.at(0).second;
-    for (int i = 0; i < 4; i++){
-        if (oldCoords.at(i).first < xBottomLeft) xBottomLeft = oldCoords.at(i).first;
-        if (oldCoords.at(i).second < yBottomLeft) yBottomLeft = oldCoords.at(i).second;
-    }
-
+    int xBottomLeft = this->getBottomX();
+    int yBottomLeft = this->getBottomY();
     //translate block such that bottom left of block is (1,1)
     for (int i = 3 ; i >= 0; --i){
         oldCoords.at(i).first =  oldCoords.at(i).first - xBottomLeft + 1;
@@ -115,6 +110,22 @@ bool Block::isHeavy(){
 //    pair <int, int> pos = make_pair(this->xPos, this->yPos);
 //    return pos;
 //}
+
+int Block::getBottomX() { 
+    int xBottomLeft = this->coords.at(0).first;
+    for (int i = 0; i < 4; i++){
+        if (this->coords.at(i).first < xBottomLeft) xBottomLeft = this->coords.at(i).first;
+    } 
+    return xBottomLeft;
+}
+
+int Block::getBottomY() { 
+    int yBottomLeft  = this->coords.at(0).second;
+    for (int i = 0; i < 4; i++){
+        if (this->coords.at(i).second < yBottomLeft) yBottomLeft = this->coords.at(i).second;
+    } 
+    return yBottomLeft;
+}
 
 Block::~Block() {}
 
