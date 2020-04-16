@@ -22,7 +22,7 @@ class Grid {
     friend std::ostream &operator<<(std::ostream &out, const Grid &gr);
     // for output
     void clear(State p, int row, int col);
-    void rowclear(State p); // clears any full row 
+    bool rowclear(State p); // clears any full row 
     bool isFull(); // will determine whether or not the board is full 
     void score(int n, int level);
     void update(State p);
@@ -35,7 +35,7 @@ class Grid {
     bool validate(int x, int y);
     void rotate(State p);
     Graphics *getGraphics();
-    void drop(State p);
+    bool drop(State p);
     int down(State p);
     ~Grid();
 };

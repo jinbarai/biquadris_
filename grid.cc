@@ -141,7 +141,6 @@ int Grid::down(State p) {
         int x = newcoords.at(i).first;
         int y = newcoords.at(i).second;
         if (y == 0) {
-            rowclear(p);
             return -1;
         } else if (!this->theGrid.at(y - 1).at(x).isEmpty()) {
             bool flag = true;
@@ -156,7 +155,6 @@ int Grid::down(State p) {
             if (flag == true) {
                 // this means that the block is unable to be moved 
                 // further down 
-                rowclear(p);
                 return -1;
             }
         }
@@ -164,12 +162,17 @@ int Grid::down(State p) {
     return 1;
 }
 
-void Grid::drop(State p) {
+bool Grid::drop(State p) {
     int val = 1;
     while (val == 1) {
         val =  this->down(p);
     }
+    bool row = rowclear(p);
     cout << *this;
+    if (row) {
+        return true;
+    }
+    return false;
 }
 
 void Grid::rotate(State p) {
@@ -248,7 +251,7 @@ void Grid::score(int n, int level) {
         return;
     }
     int score = n + level;
-    int score *= score;
+    score *= score;
     this->getPlayer()->addScore(score);
     if (this->text && this->gr) {
         this->gr->notifyScore();
@@ -277,6 +280,10 @@ bool Grid::rowclear(State p) {
         }
     }
     score(n, level);
+    if (n >= 2) {
+        return true;
+    }
+    return false;
 }
 
 void Grid::setTD(TextDisplay *td) { 
