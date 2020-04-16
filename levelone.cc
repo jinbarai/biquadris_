@@ -87,6 +87,14 @@ void levelone::blocksFromFile(string filename) {
     throw (s); 
 }
 
+bool levelone::getRandom() {
+    return this->norandom; 
+}
+
+void levelone::setRandom(bool val) {
+    this->norandom = false; 
+}
+
 bool levelone::isHeavy() {
      return false; 
 } 

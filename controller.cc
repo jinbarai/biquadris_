@@ -114,7 +114,35 @@ void Controller::restart() {
 
 }
 
+void Controller::random() {
+    // If the pointer level is 3 or 4 only then the random function can be toggled on/off
+    if((this->getGrid()->getPlayer()->getLevel()==3) || 
+    (this->getGrid()->getPlayer()->getLevel()==4)) {
+        this->getGrid()->getPlayer()->getPtrLevel()->setRandom(false);
+    } else {
+        string s = "Wrong level for toggling random/norandom option";
+        cout << s << endl; 
+    }
+}
+
+void Controller::norandom(){ 
+    // If the pointer level is 3 or 4 only then the random function can be toggled on/off
+    if((this->getGrid()->getPlayer()->getLevel()==3) || 
+    (this->getGrid()->getPlayer()->getLevel()==4)) {
+        this->getGrid()->getPlayer()->getPtrLevel()->setRandom(true); 
+
+    } else {
+        string s = "Wrong level for toggling random/norandom option";
+        cout << s << endl;
+    }
+}
+
+void Controller::sequence(string filename) {
+
+}
+
 void Controller::generate() { 
+    // pass in a filename to generate?? 
     string filename;
     if (this->turn == State::p1) { 
         filename = "sequence1.txt";
@@ -123,7 +151,7 @@ void Controller::generate() {
     }
     try { 
         levels *l = this->getGrid()->getPlayer()->getPtrLevel();
-        if(this->getGrid()->getPlayer()->getLevel() == 0){
+        if(l->getRandom() == true) {
             this->readFromFile(filename, l); // throws a string 
         }
         if (this->getGrid()->getPlayer()->getNextBlock() == nullptr) { 

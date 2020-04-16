@@ -35,6 +35,9 @@ class Controller {
     void startlevel(int n);
     void restart(); 
     void drop();
+    void random();
+    void norandom();
+    void sequence(std::string filename); 
     void down(int n = 1);
     void readFromFile(std::string file, levels *l); 
     ~Controller();

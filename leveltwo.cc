@@ -80,6 +80,14 @@ void leveltwo::blocksFromFile(string filename) {
     throw (s); 
 }
 
+void leveltwo::setRandom(bool val) {
+    this->norandom = false; 
+}
+
+bool leveltwo::getRandom() {
+    return this->norandom; 
+}
+
 bool leveltwo::isHeavy() { return false; } 
 
 leveltwo::~leveltwo() {}

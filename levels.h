@@ -12,9 +12,12 @@
 class levels {
     virtual Block *makeBlocks(char type, bool isHeavy) = 0;
     virtual bool isHeavy()=0; 
+    bool norandom = false; 
     protected:
     std::vector<char> block_file;  // sequence from file
     public:
+    virtual bool getRandom()=0; 
+    virtual void setRandom(bool val)=0; 
     virtual void blocksFromFile(std::string filename) = 0; 
     virtual Block *createBlock() = 0; 
     virtual ~levels() = 0; 

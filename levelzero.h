@@ -18,11 +18,14 @@
 #define ZERO_H
 
 class levelzero: public levels {
+    bool norandom = true; 
     int curseq = 0;
     Block *makeBlocks(char type, bool isHeavy) override; 
     bool isHeavy() override; 
     bool is_file_exist(const std::string file); 
     public:
+    bool getRandom() override; 
+    void setRandom(bool val) override; 
     Block *createBlock() override; 
     void blocksFromFile(std::string filename) override;
     ~levelzero();
