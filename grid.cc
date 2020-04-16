@@ -33,6 +33,9 @@ void Grid::update(State p) {
         }  else { 
             theGrid.at(y).at(x).setType(type);
             this->td->notify(p, y, x, type);
+            if (this->text && this->gr) {
+                this->gr->notify(p, y, x, type);
+            }
         }
     }
 }
@@ -76,6 +79,9 @@ bool Grid::move(State p, int dir) {
         char c = b->getType();
         this->theGrid.at(y).at(x).setType(c);
         this->td->notify(p, y, x, c);
+        if (this->text && this->gr) {
+            this->gr->notify(p, y, x, c);
+        }
     }
     cout << *this;
     return true;
@@ -127,6 +133,9 @@ int Grid::down(State p) {
         char c = b->getType();
         this->theGrid.at(y).at(x).setType(c);
         this->td->notify(p, y, x, c);
+        if (this->text && this->gr) {
+                this->gr->notify(p, y, x, c);
+         }
     }
     for (int i = 0; i < 4; ++i) {
         int x = newcoords.at(i).first;
@@ -200,6 +209,9 @@ void Grid::rotate(State p) {
         char c = b->getType();
         this->theGrid.at(y).at(x).setType(c);
         this->td->notify(p, y, x, c);
+        if (this->text && this->gr) {
+                this->gr->notify(p, y, x, c);
+        }
     } 
 }
 
@@ -207,6 +219,9 @@ void Grid::clear(State p, int row, int col) {
     char c = ' ';
     this->theGrid.at(row).at(col).setType(c);
     this->td->notify(p, row, col, c);
+    if (this->text && this->gr) {
+        this->gr->notify(p, row, col, c);
+    }
 }
 
 bool Grid::isRowFull(int n) { 
@@ -232,14 +247,15 @@ void Grid::score(int n, int level) {
     if (n == 0) {
         return;
     }
-    int score = 1 * level;
-    for (int i = 0; i < n; ++i) {
-        score *= 10;
-    }
+    int score = n + level;
+    int score *= score;
     this->getPlayer()->addScore(score);
+    if (this->text && this->gr) {
+        this->gr->notifyScore();
+    }
 }
 
-void Grid::rowclear(State p) {
+bool Grid::rowclear(State p) {
     int level = this->getPlayer()->getLevel(); // level of player
     int n = 0; // # of rows cleared
     for (int i = 0; i < 18; ++i) {
@@ -250,6 +266,9 @@ void Grid::rowclear(State p) {
                     char c = this->theGrid.at(k+1).at(j).getType();
                     this->theGrid.at(k).at(j).setType(c); 
                     this->td->notify(p, k, j, c);
+                    if (this->text && this->gr) {
+                        this->gr->notify(p, k, j, c);
+                     }
                 }
             }
             for (int m = 0; m < 11; ++m) {
@@ -262,6 +281,14 @@ void Grid::rowclear(State p) {
 
 void Grid::setTD(TextDisplay *td) { 
     this->td = td;
+}
+
+void Grid::setGraphics(Graphics *gr) { 
+    this->gr = gr;
+}
+
+Graphics *Grid::getGraphics() { 
+    return this->gr;
 }
                     
 Player *Grid::getPlayer() {

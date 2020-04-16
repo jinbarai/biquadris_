@@ -31,6 +31,9 @@ void Controller::levelup() {
     int level = this->getGrid()->getPlayer()->getLevel();
     ++level;
     this->getGrid()->getPlayer()->changeLevel(level);
+    if (this->getGrid()->getGraphics()) {
+        this->getGrid()->getGraphics()->changeLevel();
+    }
 }
 
 void Controller::leveldown() {
@@ -38,11 +41,16 @@ void Controller::leveldown() {
     if (level == 0) return;
     --level;
     this->getGrid()->getPlayer()->changeLevel(level);
+    if (this->getGrid()->getGraphics()) {
+        this->getGrid()->getGraphics()->changeLevel();
+    }
 }
   
 void Controller::startlevel(int n) { 
     this->g1->getPlayer()->changeLevel(n);
     this->g2->getPlayer()->changeLevel(n);
+    this->g1->getGraphics()->changeLevel();
+    this->g2->getGraphics()->changeLevel();
 }
 
 void Controller::heavy(){

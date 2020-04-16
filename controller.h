@@ -5,6 +5,7 @@
 #include "grid.h"
 #include "block.h"
 #include "levels.h"
+#include "graphics.h"
 #include "state.h"
 using namespace std;
 // when you cannot spot

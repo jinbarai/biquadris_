@@ -1,11 +1,11 @@
 CXX = g++
-CXXFLAGS = -std=c++14 -Wall -MMD -g -Werror=vla
+CXXFLAGS = -std=c++14 -Wall -MMD -g -Werror=vla -I/opt/X11/include
 EXEC = biquadris
-OBJECTS = textdisplay.o cell.o main.o controller.o grid.o levels.o block.o jblock.o oblock.o lblock.o sblock.o zblock.o tblock.o levelzero.o levelone.o leveltwo.o levelthree.o levelfour.o iblock.o player.o
+OBJECTS = textdisplay.o cell.o graphics.o window.o main.o controller.o grid.o levels.o block.o jblock.o oblock.o lblock.o sblock.o zblock.o tblock.o levelzero.o levelone.o leveltwo.o levelthree.o levelfour.o iblock.o player.o
 DEPENDS = ${OBJECTS:.o=.d}
 
 ${EXEC}: ${OBJECTS}
-	${CXX} ${CXXFLAGS} ${OBJECTS} -o ${EXEC}
+	${CXX} ${CXXFLAGS} ${OBJECTS} -o ${EXEC} -lX11 -L/usr/X11/lib -I/usr/X11/include
 
 -include ${DEPENDS}
 
