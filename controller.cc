@@ -6,6 +6,7 @@ Controller::Controller(Grid *g1, Grid *g2, TextDisplay *td, Graphics *gr) {
     this->td =  td;
     this->gr = gr;
     this->turn = State::p1;
+    
 }
 
 Grid *Controller::getGrid() {
