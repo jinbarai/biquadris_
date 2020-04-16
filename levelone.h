@@ -22,7 +22,10 @@
 class levelone: public levels { 
     Block *makeBlocks(char type, bool isHeavy) override; 
     bool isHeavy() override; 
+    bool norandom=false; 
     public: 
+    void setRandom(bool val) override;
+    bool getRandom() override; 
     Block *createBlock() override; 
     void blocksFromFile(std::string filename) override; 
     ~levelone();

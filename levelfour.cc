@@ -20,7 +20,17 @@
 using namespace std; 
 
 Block* levelfour::createBlock() {
-  // generate a number from 0-8 
+  // Read from file norandom == true 
+  if (this->norandom) {
+      char nowBlock = block_file.at(this->curseq); 
+       this->curseq++;
+       // go through the same sequence if reached the end of sequence 
+       if (this->curseq >= block_file.size()) { 
+           this->curseq = 0; 
+       } 
+       return this->makeBlocks(nowBlock, this->isHeavy()); 
+  } else {
+    // randomly generate using the probabilities given 
     random_device dev;
     mt19937 rng(dev());
     uniform_int_distribution<mt19937::result_type> dist6(1,9); // distribution in range [1, 9]
@@ -46,6 +56,7 @@ Block* levelfour::createBlock() {
     else {
         return this->makeBlocks('T', this->isHeavy());
     }
+  }
 }
 
 // Implementing methods 
@@ -83,26 +94,33 @@ bool levelfour::is_file_exist(const string file) {
 }
 
 void levelfour::blocksFromFile(string filename) {
-    string s = "Invalid level for reading from file";
-    throw (s);
-    //  controller will pass these to level
-    /*
-    if (is_file_exist(filename)) {
-        ifstream file{filename};
-        char t; 
-        while(file>>t) {
-            block_file.emplace_back(t); 
+    if (this->norandom) { 
+        //  controller will pass these to level
+        if (is_file_exist(filename)) {
+            ifstream file{filename};
+            char t; 
+            while(file>>t) {
+                block_file.emplace_back(t); 
+            }
         }
-    }
-    else {
-        string s; 
-        if (filename!="") {
-        s = "File does not exist or is not readable";
+        else {
+            string s; 
+            if (filename!="") {
+                s = "File does not exist or is not readable";
+            }
+            else { s = "Empty filename"; }
+            throw(s);
         }
-        else { s = "Empty filename"; }
-        throw(s);
-    }
-    */
+   }
+   // Do nothing otherwise; 
+}
+
+void levelfour::setRandom(bool val) {
+    this->norandom = val; 
+}
+
+bool levelfour::getRandom() {
+    return this->norandom;
 }
 
 bool levelfour::isHeavy() { 

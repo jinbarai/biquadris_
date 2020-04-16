@@ -67,6 +67,7 @@ bool levelzero::is_file_exist(const string file) {
 // Read from file 
 void levelzero::blocksFromFile(string filename) {
     //  controller will pass these to level
+    //cout << "LET'S" << endl; 
     if (is_file_exist(filename)) {
         ifstream file{filename};
         char t; 
@@ -87,5 +88,13 @@ void levelzero::blocksFromFile(string filename) {
 bool levelzero::isHeavy() { 
     return false; 
 } 
+
+void levelzero::setRandom(bool val){
+    this->norandom = true; 
+}   
+
+bool levelzero::getRandom() {
+    return this->norandom; 
+}
 
 levelzero::~levelzero() {}
