@@ -17,9 +17,8 @@ void Grid::init(Player *p) {
 
 void Grid::update(State p) {
     Block *b = this->getPlayer()->getBlock();
-   // cout << "entered line 2 of update" << endl;
+    // cout << "entered line 2 of update" << endl;
     if (this->getPlayer()->isSpecialHeavy()){
-        cout << "entered line 22 of update" << endl;
         this->getPlayer()->getBlock()->setHeavy(2);
     }
 
@@ -165,39 +164,80 @@ int Grid::down(State p) {
 bool Grid::drop(State p) {
     int val = 1;
     while (val == 1) {
-        val =  this->down(p);
+        val = this->down(p);
     }
     ++this->counter;
-    bool row = rowclear(p);
     if ((this->counter != 0) && (this->counter % 5 == 0) && (this->p->getLevel() >= 4)) {
         // if the counter is not zero, the counter is divisible by 5 and the level is 4 or greater
         // we need to drop a brown block 
-        this->brown(p);
+        this->brown(p, this->p->getLevel());
     }
+    const bool row = rowclear(p);
     cout << *this;
-    if (row) {
-        return true;
-    }
-    return false;
+    return row;
 }
 
-void Grid::brown(State p) { 
-    bool flag = true;
-    for (int i = 0; i < 14; ++i) {
-        if (this->theGrid.at(i).at(5).isEmpty()) {
-            flag = false;
-            this->theGrid.at(i).at(5).setType('*');
-            this->td->notify(p, i, 5, '*');
-            if (this->text && this->gr) { // to see if text mode is activated 
-                this->gr->notify(p, i, 5, '*');
+void Grid::brown(State p, int n) { 
+    if (n == 4) { 
+        bool flag = true;
+        for (int i = 14; i >= 0; --i) {
+            if (this->theGrid.at(i).at(5).isEmpty()) {
+                flag = false;
+                if (i == 0) { 
+                    this->theGrid.at(i).at(5).setType('*');
+                    this->td->notify(p, i, 5, '*');
+                    if (this->text && this->gr) { // to see if text mode is activated 
+                        this->gr->notify(p, i, 5, '*');
+                    }
+                    break;
+                } else if (!this->theGrid.at(i-1).at(5).isEmpty()) {
+                    this->theGrid.at(i).at(5).setType('*');
+                    this->td->notify(p, i, 5, '*');
+                    if (this->text && this->gr) { // to see if text mode is activated 
+                        this->gr->notify(p, i, 5, '*');
+                    }
+                    break;
+                }
             }
-            break;
+        }
+    } else { 
+        for (int k = 0; k < 11; ++k) {
+            bool flag = true;
+            for (int i = 14; i >= 0; --i) {
+                if (this->theGrid.at(i).at(k).isEmpty()) {
+                    flag = false;
+                    if (i == 0) { 
+                        this->theGrid.at(i).at(k).setType('*');
+                        this->td->notify(p, i, k, '*');
+                        if (this->text && this->gr) { // to see if text mode is activated 
+                            this->gr->notify(p, i, k, '*');
+                        }
+                        break;
+                    } else if (!this->theGrid.at(i-1).at(k).isEmpty()) {
+                        this->theGrid.at(i).at(k).setType('*');
+                        this->td->notify(p, i, k, '*');
+                        if (this->text && this->gr) { // to see if text mode is activated 
+                         this->gr->notify(p, i, k, '*');
+                        }
+                        break;
+                    }
+                }
+            }
+            if (flag == true) {
+                    throw GameOver{p};
+            }
         }
     }
-    if (flag) { 
-        throw GameOver{p};
+}
+
+void Grid::fixBlind(State p) {
+    for (int row = 0; row < 18; ++row) {
+        for  (int col = 0; col < 11; ++col) {
+            this->gr->notify(p, row, col, this->theGrid.at(row).at(col).getType());
+        }
     }
 }
+
 
 void Grid::rotate(State p) {
     Block *b = this->p->getBlock();
@@ -308,7 +348,7 @@ bool Grid::rowclear(State p) {
         this->counter = 0;
     }
     score(n, level);
-    if (n >= 2) {
+    if (n >= 1) {
         return true;
     }
     return false;

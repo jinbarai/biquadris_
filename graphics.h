@@ -15,7 +15,11 @@ class Graphics {
     Graphics(Player *p1, Player *p2);
     void notify(State, int row, int col, char c);
     void notifyScore();
+    void drawBlind(State p);
     int getColour(char c);
+    void next(); // updates the next block
+    void NextBlockp1(char c);
+    void NextBlockp2(char c);
     void changeLevel();
     ~Graphics() = default;
 };

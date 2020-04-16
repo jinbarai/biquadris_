@@ -52,13 +52,33 @@ ostream &operator<<(std::ostream &out, const TextDisplay &td) {
     for (int i = 0; i < 8; ++i) { out <<  ' '; } // creates the top border
     for (int i = 0; i < 11; ++i) { out <<  '-'; }
     out << endl;
+    bool f1 = td.p1->isBlind();
+    bool f2 = td.p2->isBlind();
     for (int i = 17; i >= 0; --i) {
         for (int k = 0; k < 11; ++k) {
-            out << td.theDisplayp1.at(i).at(k);
+            if (f1) {
+                if ((i >= 2 && i <= 11) && (k >= 2 && k <= 8)) {
+                    out << '?';
+                } else {
+                    out << td.theDisplayp1.at(i).at(k);   
+                }
+            }
+            else { 
+                out << td.theDisplayp1.at(i).at(k);
+            }
         }
         for (int i = 0; i < 8; ++i) { out <<  ' '; }
         for (int k = 0; k < 11; ++k) {
-            out << td.theDisplayp2.at(i).at(k);
+            if (f2) {
+                if ((i >= 2 && i <= 11) && (k >= 2 && k <= 8)) {
+                    out << '?';
+                } else {
+                    out << td.theDisplayp2.at(i).at(k);   
+                }
+            }
+            else { 
+                out << td.theDisplayp2.at(i).at(k);
+            }
         }
         out << endl;
     } 
@@ -92,6 +112,7 @@ ostream &operator<<(std::ostream &out, const TextDisplay &td) {
     } else { 
         for (int i = 0; i < 11; ++i) { out <<  ' '; }
     }
+    out << endl;
     out << endl;
     return out;
 }

@@ -1,9 +1,10 @@
 #include "controller.h"
 
-Controller::Controller(Grid *g1, Grid *g2, TextDisplay *td) {
+Controller::Controller(Grid *g1, Grid *g2, TextDisplay *td, Graphics *gr) {
     this->g1 = g1;
     this->g2 = g2;
     this->td =  td;
+    this->gr = gr;
     this->turn = State::p1;
 }
 
@@ -12,6 +13,77 @@ Grid *Controller::getGrid() {
         return this->g1;
     } else  { 
         return this->g2;
+    }
+}
+
+void Controller::specialAction() {
+    cout << "Congratultions on your Special Action!" << endl;
+    cout << "Select one of the following: ";
+    cout << "Blind, Heavy or Force" << endl;
+    string s;
+    cin >> s;
+    const char c = s.at(0);
+    if (c == 'B' || c == 'b') {
+        cout << "You have selected: Blind" << endl;
+        this->blind();
+        cout << "Hello I made it back after doing blind!" << endl;
+    } else if  (c == 'H' || c == 'h') {
+        cout << "You have selected: Heavy" << endl;
+        //this->heavy();
+    } else if (c == 'F' || c == 'f') {
+        char c;
+        cin >> c;
+        cout << "You have selected: Force" << c << endl;
+        this->force(c);
+    }
+}
+
+void Controller::blind() {
+    if (this->turn == State::p1) {
+        this->g2->getPlayer()->setBlind();
+        this->gr->drawBlind(State::p2);
+    } else { 
+        this->g1->getPlayer()->setBlind();
+        this->gr->drawBlind(State::p1);
+    }
+    cout << *this->getGrid(); // does not matter which Grid, just want to show blind 
+}
+
+void Controller::force(char c) {
+    Player *p;
+    if (this->turn == State::p1) { 
+        p = g2->getPlayer();
+    } else {  
+        p = g1->getPlayer();
+    }
+    Bool b = false;
+    // to determine if it is heavy
+    if (p->getLevel() >= 3) {
+        b = true;
+    }
+    if (c == 'Z' || c == 'z') { 
+        delete p->getNextBlock();
+        p->setNextBlock(new ZBlock(b));
+    } else if (c == 'T' || c == 't') {
+        delete p->getNextBlock();
+        p->setNextBlock(new TBlock(b));
+    } else if (c == 'O' || c == 'o') {
+        delete p->getNextBlock();
+        p->setNextBlock(new OBlock(b));
+    } else if (c == 'S' || c == 's') {
+        delete p->getNextBlock();
+        p->setNextBlock(new SBlock(b));
+    } else if (c == 'I' || c == 'i') {
+        delete p->getNextBlock();
+        p->setNextBlock(new IBlock(b));
+    } else if (c == 'J' || c == 'j') {
+        delete p->getNextBlock();
+        p->setNextBlock(new TBlock(b));
+    } else if (c == 'T' || c == 't') {
+        delete p->getNextBlock();
+        p->setNextBlock(new TBlock(b));
+    } else { 
+        cout << "Invalid char, Force cancelled" << endl;
     }
 }
 
@@ -70,7 +142,7 @@ void Controller::move(int n, int dir) {
     }
 }
 
-// Need this for norandom file command since it also allows levels 3 and 4 to have blocks generated in sequence from file
+// Need this for norandom file command since it also allows levels 3 - 6 to have blocks generated in sequence from file
 void Controller::readFromFile(string filename, levels *l) {
     l->blocksFromFile(filename); 
 }
@@ -102,11 +174,18 @@ void Controller::ccw(int n) {
 }
 
 void Controller::drop() {
-    int val = this->getGrid()->drop(this->turn);
+    bool val = this->getGrid()->drop(this->turn);
+    cout << "Row Clear Bool: " << val << endl;
     if (this->getGrid()->getPlayer()->isSpecialHeavy()){
         this->getGrid()->getPlayer()->setSpecialHeavy(false);
     }
-    //if (val);
+    if (val) {
+        this->specialAction();
+    }
+    if (this->getGrid()->getPlayer()->isBlind()) {
+        this->getGrid()->getPlayer()->setBlind();
+        this->getGrid()->fixBlind(this->turn);
+    }
     this->changeTurn();
 }
 
@@ -115,9 +194,8 @@ void Controller::restart() {
 }
 
 void Controller::random() {
-    // If the pointer level is 3 or 4 only then the random function can be toggled on/off
-    if((this->getGrid()->getPlayer()->getLevel()==3) || 
-    (this->getGrid()->getPlayer()->getLevel()==4)) {
+    // If the pointer level is 3 - 6 only then the random function can be toggled on/off
+    if (this->getGrid()->getPlayer()->getLevel() >= 3) {
         this->getGrid()->getPlayer()->getPtrLevel()->setRandom(false);
     } else {
         string s = "Wrong level for toggling random/norandom option";
@@ -126,9 +204,8 @@ void Controller::random() {
 }
 
 void Controller::norandom(){ 
-    // If the pointer level is 3 or 4 only then the random function can be toggled on/off
-    if((this->getGrid()->getPlayer()->getLevel()==3) || 
-    (this->getGrid()->getPlayer()->getLevel()==4)) {
+    // If the pointer level is 3 - 6 only then the random function can be toggled on/off
+    if (this->getGrid()->getPlayer()->getLevel() >= 3) {
         this->getGrid()->getPlayer()->getPtrLevel()->setRandom(true); 
 
     } else {
@@ -152,7 +229,7 @@ void Controller::generate() {
     try { 
         levels *l = this->getGrid()->getPlayer()->getPtrLevel();
         if(l->getRandom() == true) {
-            this->readFromFile(filename, l); // throws a string 
+            this->readFromFile(filename, l); // outputs a string 
         }
         if (this->getGrid()->getPlayer()->getNextBlock() == nullptr) { 
             this->getGrid()->getPlayer()->setNextBlock(l->createBlock());
@@ -161,6 +238,7 @@ void Controller::generate() {
         delete this->getGrid()->getPlayer()->getBlock();
         this->getGrid()->getPlayer()->setBlock(b);
         this->getGrid()->getPlayer()->setNextBlock(l->createBlock());
+        this->gr->next();
         this->getGrid()->update(this->turn);
     }
     catch (string &c) { cout << c << endl; }

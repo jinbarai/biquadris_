@@ -4,6 +4,7 @@ using namespace std;
 Player::Player(int x, string s, int lev) {
     this->score = x;
     this->name = s;
+    this->blind = false;
     if (lev < 0) { 
         lev = 0;
     } else if (lev > 4) { 
@@ -20,6 +21,10 @@ Player::Player(int x, string s, int lev) {
         this->l  = new levelthree();
     } else if (lev == 4) {
         this->l  = new levelfour();
+    }  else if (lev == 5) {
+        this->l =  new levelfive();
+    } else if (lev == 6) {
+        this->l = new levelsix();
     }
 }
 
@@ -68,9 +73,20 @@ bool Player::isSpecialHeavy(){
     return this->specialCommandHeavy;
 }
 
+bool Player::isBlind() {
+    return this->blind;
+}
+
+void Player::setBlind() {
+    if (this->blind) {
+        this->blind = false;
+    } else { 
+        this->blind = true;
+    }
+}
 
 void Player::changeLevel(int lev) {
-    if (lev > 4) {
+    if (lev > 6) {
         return;
     } else if (lev < 0) {
         return;
@@ -87,6 +103,10 @@ void Player::changeLevel(int lev) {
         this->l  = new levelthree();
     } else if (lev == 4) {
         this->l  = new levelfour();
+    } else if (lev == 5) {
+        this->l =  new levelfive();
+    } else if (lev == 6) {
+        this->l = new levelsix();
     }
 }
 
