@@ -173,9 +173,8 @@ void Controller::ccw(int n) {
     }
 }
 
-void Controller::drop() {
-    bool flag = false;
-    int n = 1; // change n to be a parameter taken into drop function 
+void Controller::drop(int n) {
+    bool flag = false; 
     for (int i = 0; i < n; ++i) {
         bool val = this->getGrid()->drop(this->turn);
         if (val) {
