@@ -17,6 +17,7 @@
 #include "leveltwo.h"
 #include "levelthree.h"
 #include "levelfour.h"
+#include "graphics.h"
 
 using namespace std;
 
@@ -45,9 +46,12 @@ int main(int argc, char *argv[]) {
     Grid *g2 = new Grid;
     g1->init(p1);
     g2->init(p2);
-    TextDisplay *td =  new TextDisplay{p1, p2};
+    TextDisplay *td =  new TextDisplay{p1, p2};    
+    Graphics *gr = new Graphics{p1, p2};
     g1->setTD(td);
+    g1->setGraphics(gr);
     g2->setTD(td);
+    g2->setGraphics(gr);
     Controller c(g1, g2, td);
     try { 
         while(true) { 
