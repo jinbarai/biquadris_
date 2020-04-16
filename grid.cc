@@ -167,12 +167,36 @@ bool Grid::drop(State p) {
     while (val == 1) {
         val =  this->down(p);
     }
+    ++this->counter;
     bool row = rowclear(p);
+    if ((this->counter != 0) && (this->counter % 5 == 0) && (this->p->getLevel() >= 4)) {
+        // if the counter is not zero, the counter is divisible by 5 and the level is 4 or greater
+        // we need to drop a brown block 
+        this->brown(p);
+    }
     cout << *this;
     if (row) {
         return true;
     }
     return false;
+}
+
+void Grid::brown(State p) { 
+    bool flag = true;
+    for (int i = 0; i < 14; ++i) {
+        if (this->theGrid.at(i).at(5).isEmpty()) {
+            flag = false;
+            this->theGrid.at(i).at(5).setType('*');
+            this->td->notify(p, i, 5, '*');
+            if (this->text && this->gr) { // to see if text mode is activated 
+                this->gr->notify(p, i, 5, '*');
+            }
+            break;
+        }
+    }
+    if (flag) { 
+        throw GameOver{p};
+    }
 }
 
 void Grid::rotate(State p) {
@@ -278,6 +302,10 @@ bool Grid::rowclear(State p) {
                 clear(p, 17, m);
             }
         }
+    }
+    if (n > 0) {
+        // means a drop occured, and resets the counter 
+        this->counter = 0;
     }
     score(n, level);
     if (n >= 2) {

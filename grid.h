@@ -13,6 +13,7 @@ class Grid {
     Player *p = nullptr;
     TextDisplay *td = nullptr; // to add TextDisplay
     bool text = true;
+    int counter = 0; // # of turns since clear
     Graphics *gr = nullptr; //  to add Graphics
     std::vector<std::vector<Cell>> theGrid;
     // vector of vectors of rows of cells 
@@ -34,6 +35,7 @@ class Grid {
     bool move(State p, int dir);
     bool validate(int x, int y);
     void rotate(State p);
+    void brown(State p);
     Graphics *getGraphics();
     bool drop(State p);
     int down(State p);

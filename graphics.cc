@@ -53,6 +53,8 @@ int Graphics::getColour(char c) {
         return Xwindow::Magenta;
     } else if (c == 'Z') {
         return Xwindow::DarkGreen;
+    } else if (c == '*') { 
+        return Xwindow::Brown;
     } else { // J Block 
         return Xwindow::Blue;
     }
