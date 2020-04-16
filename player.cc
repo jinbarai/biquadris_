@@ -72,6 +72,17 @@ bool Player::isSpecialHeavy(){
     return this->specialCommandHeavy;
 }
 
+bool Player::isBlind() {
+    return this->blind;
+}
+
+void Player::setBlind() {
+    if (this->blind) {
+        this->blind = false;
+        return;
+    }
+    this->blind = true;
+}
 
 void Player::changeLevel(int lev) {
     if (lev > 6) {

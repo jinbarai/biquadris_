@@ -16,6 +16,42 @@ Grid *Controller::getGrid() {
     }
 }
 
+void Controller::specialAction() {
+    cout << "Congratultions on your Special Action!" << endl;
+    cout << "Select one of the following: ";
+    cout << "Blind, Heavy or Force" << endl;
+    string s;
+    cin >> s;
+    char c = s[0];
+    if (c == 'B' || c == 'b') {
+        cout << "You have selected: Blind";
+        this->blind();
+    } else if  (c == 'H' || c == 'h') {
+        cout << "You have selected: Heavy";
+        this->heavy();
+    } else if (c == 'F' || c == 'f') {
+        cout << "You have selected: Force";
+        this->force();
+    }
+    cout << endl;
+}
+
+void Controller::blind() {
+    if (this->turn == State::p1) {
+        this->g2->getPlayer->setBlind();
+    } else { 
+        this->g2->getPlayer->setBlind();
+    }
+}
+
+void Controller::force() {
+
+}
+
+void Controller::heavy() {
+
+}
+
 void Controller::changeTurn() {
     if (this->turn == State::p1) {
         this->turn = State::p2;
@@ -107,7 +143,12 @@ void Controller::drop() {
     if (this->getGrid()->getPlayer()->isSpecialHeavy()){
         this->getGrid()->getPlayer()->setSpecialHeavy(false);
     }
-    //if (val);
+    if (val) {
+        this->specialAction();
+    }
+    if (this->getGrid()->getPlayer()->isBlind()) {
+        this->getGrid()->getPlayer()->setBlind();
+    }
     this->changeTurn();
 }
 

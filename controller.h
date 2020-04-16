@@ -28,6 +28,7 @@ class Controller {
     void levelup();
     void leveldown();
     // Special Actions
+    void specialAction();
     void blind();
     void heavy();
     void force();
@@ -36,6 +37,8 @@ class Controller {
     void restart(); 
     void drop();
     void random();
+    void blind();
+    void force();
     void norandom();
     void sequence(std::string filename); 
     void down(int n = 1);

@@ -17,6 +17,7 @@ class Player {
     std::string name;
     levels *l;
     int level;
+    bool blind;
     Block *b = nullptr;
     Block *bnext = nullptr;
     bool specialCommandHeavy = false;
@@ -25,6 +26,8 @@ class Player {
     int getScore();
     void addScore(int);
     Block *getBlock();
+    bool isBlind();
+    void setBlind();
     Block *getNextBlock();
     void setBlock(Block *b);
     void setNextBlock(Block *b);
