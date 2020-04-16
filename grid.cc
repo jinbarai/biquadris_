@@ -183,19 +183,25 @@ bool Grid::drop(State p) {
 void Grid::brown(State p, int n) { 
     if (n == 4) { 
         bool flag = true;
-        for (int i = 0; i < 14; ++i) {
+        for (int i = 14; i >= 0; --i) {
             if (this->theGrid.at(i).at(5).isEmpty()) {
                 flag = false;
-                this->theGrid.at(i).at(5).setType('*');
-                this->td->notify(p, i, 5, '*');
-                if (this->text && this->gr) { // to see if text mode is activated 
-                    this->gr->notify(p, i, 5, '*');
+                if (i == 0) { 
+                    this->theGrid.at(i).at(5).setType('*');
+                    this->td->notify(p, i, 5, '*');
+                    if (this->text && this->gr) { // to see if text mode is activated 
+                        this->gr->notify(p, i, 5, '*');
+                    }
+                    break;
+                } else if (!this->theGrid.at(i-1).at(5).isEmpty()) {
+                    this->theGrid.at(i).at(5).setType('*');
+                    this->td->notify(p, i, 5, '*');
+                    if (this->text && this->gr) { // to see if text mode is activated 
+                        this->gr->notify(p, i, 5, '*');
+                    }
+                    break;
                 }
-                break;
             }
-        }
-        if (flag == true) {
-            throw GameOver{p};
         }
     } else { 
         for (int k = 0; k < 11; ++k) {

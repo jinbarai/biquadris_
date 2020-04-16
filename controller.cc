@@ -1,9 +1,10 @@
 #include "controller.h"
 
-Controller::Controller(Grid *g1, Grid *g2, TextDisplay *td) {
+Controller::Controller(Grid *g1, Grid *g2, TextDisplay *td, Graphics *gr) {
     this->g1 = g1;
     this->g2 = g2;
     this->td =  td;
+    this->gr = gr;
     this->turn = State::p1;
 }
 
@@ -159,6 +160,7 @@ void Controller::generate() {
         delete this->getGrid()->getPlayer()->getBlock();
         this->getGrid()->getPlayer()->setBlock(b);
         this->getGrid()->getPlayer()->setNextBlock(l->createBlock());
+        this->gr->next();
         this->getGrid()->update(this->turn);
     }
     catch (string &c) { cout << c << endl; }

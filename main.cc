@@ -182,7 +182,7 @@ int main(int argc, char *argv[])
     g1->setGraphics(gr);
     g2->setTD(td);
     g2->setGraphics(gr);
-    Controller c(g1, g2, td);
+    Controller c(g1, g2, td, gr);
     cin.ignore();
     cin.clear();
     string command;

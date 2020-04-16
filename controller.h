@@ -15,10 +15,10 @@ class Controller {
     Grid *g2;
     TextDisplay *td;
     State turn; //  either p1, or p2
-    // Graphics *g;
+    Graphics *gr;
     public: 
     Grid *getGrid();
-    Controller(Grid *g1, Grid *g2, TextDisplay *td); 
+    Controller(Grid *g1, Grid *g2, TextDisplay *td, Graphics *gr); 
     // main will make player pointers and pass the grid to the controller. 
     void changeTurn();
     void text(); // will cancel graphics
