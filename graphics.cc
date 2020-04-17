@@ -116,7 +116,7 @@ void Graphics::level6(State p) {
         x = 340;
     }
     this->xw.fillRectangle(x, 230, 50, 50, Xwindow::White); 
-    this->xw.drawStringFont(x+3, 260, "DROP", "lucidasans-14");
+    this->xw.drawStringFont(x+5, 260, "DROP", "lucidasans-14");
 }
 
 void Graphics::blindnotify(State p, int row, int col, char c) {
@@ -194,7 +194,7 @@ void Graphics::NextBlockp1(char c) {
     } else if (c == 'Z') {
         this->xw.fillRectangle(x1 + 1, 473 + 1, 17, 18, colour);
         this->xw.fillRectangle(x2 + 1, 473 + 1, 17, 18, colour);
-        this->xw.fillRectangle(x3 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x2 + 1, 453 + 1, 17, 18, colour);
         this->xw.fillRectangle(x3 + 1, 453 + 1, 17, 18, colour);
     } else if (c == 'J') { 
         this->xw.fillRectangle(x1 + 1, 453 + 1, 17, 18, colour);
@@ -237,7 +237,7 @@ void Graphics::NextBlockp2(char c) {
     } else if (c == 'Z') {
         this->xw.fillRectangle(x1 + 1, 473 + 1, 17, 18, colour);
         this->xw.fillRectangle(x2 + 1, 473 + 1, 17, 18, colour);
-        this->xw.fillRectangle(x3 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x2 + 1, 453 + 1, 17, 18, colour);
         this->xw.fillRectangle(x3 + 1, 453 + 1, 17, 18, colour);
     } else if (c == 'J') { 
         this->xw.fillRectangle(x1 + 1, 453 + 1, 17, 18, colour);
