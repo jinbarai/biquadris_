@@ -83,11 +83,11 @@ void Controller::force(char c) {
         delete p->getNextBlock();
         p->setNextBlock(new TBlock(b));
     } else { 
-        cout << "Invalid char, Force cancelled" << endl;
+        cout << "Invalid Character, Force cancelled" << endl;
     }
 }
 
-void Controller:changeBlock(char c) {
+void Controller::changeBlock(char c) {
 
 }
 
