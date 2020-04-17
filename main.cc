@@ -341,7 +341,9 @@ int main(int argc, char *argv[])
                 if (file!="") c->norandom(file);
                 else cout<<"Filename not entered or file not readable" << endl;
             }
-            else if (command  == "i" || command  == "j" || command  == "l" || command  == "o" || command  == "z" || command  == "s" || command  == "t"){
+            else if (command  == "i" || command  == "j" || 
+                command  == "l" || command  == "o" || 
+                command  == "z" || ommand  == "s" || command  == "t") {
                 char com = command[0];
                 //cout << com << endl; 
                 c->changeBlock(com);
