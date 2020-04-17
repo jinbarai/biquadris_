@@ -282,7 +282,7 @@ int main(int argc, char *argv[])
             }
             else if (command == "drop")
             {
-                c.drop();
+                c.drop(no);
             }
             else if (command == "cw")
             {
@@ -315,24 +315,34 @@ int main(int argc, char *argv[])
                 //cout << no << endl;
                 for (int i = 0; i < no; i++)
                 {
-                    c.levelup();
+                    if (c.getGrid()->getPlayer()->getLevel() != 6) {
+                        c.levelup();
+                    }
+                    else {
+                        break; 
+                    }
                 }
             }
             else if (command == "leveldown")
             {
                 no = (no < 0) ? 0 : no;
+                if (c.getGrid()->getPlayer()->getLevel())
                 //cout << no << endl;
                 for (int i = 0; i < no; i++)
                 {
-                    if (p1->getLevel() == 0)
-                    {
-                        break;
+                    // check if player whose turn it is has a level 0 then break
+                    if (c.getGrid()->getPlayer()->getLevel() != 0) {
+                        c.leveldown();
                     }
-                    c.leveldown();
+                    else {
+                        break; 
+                    }
                 }
             }
             else if (command == "sequence") {
-
+                 // pass in a filename
+                if (file!="") c.norandom(file);
+                else cout<<"Filename not entered or file not readable" << endl;
             }
             else
             {
