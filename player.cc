@@ -113,5 +113,6 @@ void Player::changeLevel(int lev) {
 Player::~Player() { 
     delete this->b;
     delete this->bnext;
+    delete this->l;
 }
 

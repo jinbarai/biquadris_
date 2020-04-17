@@ -29,6 +29,7 @@ class Controller {
     void leveldown();
     // Special Actions
     void specialAction();
+    void changeBlock(char c);
     void blind();
     void heavy();
     void force(char c);
