@@ -95,21 +95,53 @@ bool Grid::validate(int x, int y)  {
     return true;
 }
 
-void Grid::changeBlock(Block *b) {
+void Grid::changeBlock(State p, Block *b) {
     int x = b->getBottomX() - this->p->getBlock()->getBottomX();
     int y = b->getBottomY() - this->p->getBlock()->getBottomY();
+    vector <pair<int, int>> oldc = this->p->getBlock()->getCoords();
     vector <pair<int, int>> coords = b->getCoords();
     for (int i =  0; i < 4; ++i) {
         coords.at(i).first -= x;
         coords.at(i).second -=y;
         if (!validate(coords.at(i).first, coords.at(i).second)) {
             // if it is not possible, return 
+            delete b;
             return;
         }
     }
-
-
-    
+    for (int i = 0; i < 4; ++i) {
+        int x = coords.at(i).first;
+        int y = coords.at(i).second;
+        if (!this->theGrid.at(y).at(x).isEmpty()) {
+            int flag = 1;
+            for (int k = 0; k < 4; ++k) {
+                if (x == oldc.at(k).first && y == oldc.at(k).second) { 
+                    flag = 0;
+                    break;
+                } 
+            } if (flag == 1) { 
+                delete b;
+                return;
+            }
+        }
+    }
+    for (int i = 0; i < 4; ++i) {
+        int oldx = oldc.at(i).first;
+        int oldy = oldc.at(i).second;
+        this->clear(p, oldy, oldx);
+    }
+    for (int k = 0; k < 4; ++k) {
+        int x = coords.at(k).first;
+        int y = coords.at(k).second;
+        char c = b->getType();
+        this->theGrid.at(y).at(x).setType(c);
+        this->td->notify(p, y, x, c);
+        if (this->text && this->gr) {
+            this->gr->notify(p, y, x, c);
+        }
+    }
+    delete this->p->getBlock();
+    this->p->setBlock(b);
 }
 
 int Grid::down(State p) {

@@ -27,7 +27,7 @@ class Grid {
     bool isFull(); // will determine whether or not the board is full 
     void score(int n, int level);
     void update(State p);
-    void changeBlock(Block *b);
+    void changeBlock(State p, Block *b);
     void setTD(TextDisplay *td);
     void setGraphics(Graphics *gr);
     // where s is the player, n is the # of rows, level is the level of the player

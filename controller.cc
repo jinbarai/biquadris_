@@ -94,19 +94,19 @@ void Controller::changeBlock(char c) {
         flag = true;
     }
     if (c == 'Z' || c == 'z') { 
-        this->getGrid()->changeBlock(new ZBlock(flag));
+        this->getGrid()->changeBlock(this->turn, new ZBlock(flag));
     } else if (c == 'T' || c == 't') {
-        this->getGrid()->changeBlock(new TBlock(flag));
+        this->getGrid()->changeBlock(this->turn, new TBlock(flag));
     } else if (c == 'O' || c == 'o') {
-        this->getGrid()->changeBlock(new OBlock(flag));
+        this->getGrid()->changeBlock(this->turn, new OBlock(flag));
     } else if (c == 'S' || c == 's') {
-        this->getGrid()->changeBlock(new SBlock(flag));
+        this->getGrid()->changeBlock(this->turn, new SBlock(flag));
     } else if (c == 'I' || c == 'i') {
-        this->getGrid()->changeBlock(new IBlock(flag));
+        this->getGrid()->changeBlock(this->turn, new IBlock(flag));
     } else if (c == 'J' || c == 'j') {
-        this->getGrid()->changeBlock(new JBlock(flag));
+        this->getGrid()->changeBlock(this->turn, new JBlock(flag));
     } else if (c == 'L' || c == 'l') {
-        this->getGrid()->changeBlock(new LBlock(flag));
+        this->getGrid()->changeBlock(this->turn, new LBlock(flag));
     } else { 
         cout << "Invalid Character: " << c << "command cancelled" << endl;
     }
