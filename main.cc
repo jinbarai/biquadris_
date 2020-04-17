@@ -223,13 +223,12 @@ int main(int argc, char *argv[])
     g1->setGraphics(gr);
     g2->setTD(td);
     g2->setGraphics(gr);
-    Controller c(g1, g2, td, gr);
+    Controller *c = new Controller(g1, g2, td, gr);
     cin.ignore();
     cin.clear();
     string command;
-
-    c.startlevel(lvl);
-    c.generate();
+    c->startlevel(lvl);
+    c->generate();
     try
     {
         while (true)
@@ -265,47 +264,47 @@ int main(int argc, char *argv[])
             if (command == "left")
             {
                 no = (no > 10) ? 10 : no;
-                c.move(no, LEFT);
+                c->move(no, LEFT);
             }
             else if (command == "right")
             {
                 no = (no > 10) ? 10 : no;
                 cout << no << endl;
-                c.move(no, RIGHT);
+                c->move(no, RIGHT);
             }
             else if (command == "down")
             {
                 no = (no > 17) ? 17 : no;
                 cout << no << endl;
-                c.down(no);
+                c->down(no);
             }
             else if (command == "drop")
             {
-                c.drop(no);
+                c->drop(no);
             }
             else if (command == "cw")
             {
                 // logic for simplifying no
                 // no = (no%2
-                c.cw(no);
+                c->cw(no);
             }
             else if (command == "ccw")
             {
                 // logic for simplifying no
-                c.ccw(no);
+                c->ccw(no);
             }
             else if (command == "random")
             {
-                c.random();
+                c->random();
             }
             else if (command == "restart")
             {
-                c.restart();
+                c->restart();
             }
             else if (command == "norandom")
             {
                 // pass in a filename
-                if (file!="") c.norandom(file);
+                if (file!="") c->norandom(file);
                 else cout<<"Filename not entered or file not readable" << endl; 
             }
             else if (command == "levelup")
@@ -314,8 +313,8 @@ int main(int argc, char *argv[])
                 //cout << no << endl;
                 for (int i = 0; i < no; i++)
                 {
-                    if (c.getGrid()->getPlayer()->getLevel() != 6) {
-                        c.levelup();
+                    if (c->getGrid()->getPlayer()->getLevel() != 6) {
+                        c->levelup();
                     }
                     else {
                         break; 
@@ -325,13 +324,13 @@ int main(int argc, char *argv[])
             else if (command == "leveldown")
             {
                 no = (no < 0) ? 0 : no;
-                if (c.getGrid()->getPlayer()->getLevel())
+                if (c->getGrid()->getPlayer()->getLevel())
                 //cout << no << endl;
                 for (int i = 0; i < no; i++)
                 {
                     // check if player whose turn it is has a level 0 then break
-                    if (c.getGrid()->getPlayer()->getLevel() != 0) {
-                        c.leveldown();
+                    if (c->getGrid()->getPlayer()->getLevel() != 0) {
+                        c->leveldown();
                     }
                     else {
                         break; 
@@ -340,7 +339,7 @@ int main(int argc, char *argv[])
             }
             else if (command == "sequence") {
                  // pass in a filename
-                if (file!="") c.norandom(file);
+                if (file!="") c->norandom(file);
                 else cout<<"Filename not entered or file not readable" << endl;
             }
             else if (command  == "i" || command  == "j" || command  == "l"
@@ -348,11 +347,11 @@ int main(int argc, char *argv[])
                    command  == "t"){
                 cout << command << endl; 
                 char com = command[0];
-                c.changeBlock(com);
+                c->changeBlock(com);
             }
             else
             {
-                cout << "Invalid Command" << endl;
+                //cout << "Invalid Command" << endl;
             }
         }
     }    

@@ -3,7 +3,6 @@
 using namespace std;
 
 void Grid::init(Player *p) {
-    delete this->td;
     this->theGrid.clear();
     this->p = p;
     for (int i = 0; i < 18; ++i) {

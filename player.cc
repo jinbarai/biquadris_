@@ -5,10 +5,12 @@ Player::Player(int x, string s, int lev, string fileName) {
     this->score = x;
     this->name = s;
     this->blind = false;
+    this->b = nullptr;
+    this->bnext = nullptr;
     this->file = fileName;
     if (lev < 0) { 
         lev = 0;
-    } else if (lev > 4) { 
+    } else if (lev > 6) { 
         lev = 0;
     }
     this->level = lev;

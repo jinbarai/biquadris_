@@ -12,6 +12,7 @@
 class Controller { 
     Grid *g1;
     Grid *g2;
+    int highscore = 0;
     TextDisplay *td;
     State turn; //  either p1, or p2
     Graphics *gr;
@@ -33,6 +34,8 @@ class Controller {
     void heavy();
     void force(char c);
     void generate();
+    Grid *getG1();
+    Grid *getG2();
     void startlevel(int n);
     void restart(); 
     void drop(int n = 1);

@@ -24,18 +24,19 @@ void Controller::specialAction() {
     string s;
     cin >> s;
     const char c = s.at(0);
-    if (c == 'B' || c == 'b') {
+    if (c == 'B'|| c == 'b') {
         cout << "You have selected: Blind" << endl;
         this->blind();
-        cout << "Hello I made it back after doing blind!" << endl;
     } else if  (c == 'H' || c == 'h') {
         cout << "You have selected: Heavy" << endl;
-        //this->heavy();
+        this->heavy();
     } else if (c == 'F' || c == 'f') {
         char c;
         cin >> c;
-        cout << "You have selected: Force" << c << endl;
+        cout << "You have selected: Force " << c << endl;
         this->force(c);
+    }  else { 
+        cout << "Invalid choice. Special Action cancelled!" << endl;
     }
 }
 
@@ -92,7 +93,7 @@ void Controller::changeBlock(char c) {
     bool flag = false;
     if (this->getGrid()->getPlayer()->getLevel() >= 3) {
         flag = true;
-    }
+    } 
     if (c == 'Z' || c == 'z') { 
         this->getGrid()->changeBlock(this->turn, new ZBlock(flag));
     } else if (c == 'T' || c == 't') {
@@ -197,6 +198,7 @@ void Controller::down(int n) {
 }
 
 void Controller::cw(int n) {
+    n = n % 4;
     for (int i = 0; i < n; ++i) {
        this->getGrid()->rotate(this->turn);
     }
@@ -207,6 +209,7 @@ void Controller::cw(int n) {
 }
 
 void Controller::ccw(int n) {
+    n = n % 4;
     for (int k = 0; k < n; ++k) {
         for (int i = 0; i < 3; i++) {
             this->getGrid()->rotate(this->turn);
@@ -220,6 +223,13 @@ void Controller::ccw(int n) {
 
 void Controller::clearVector(levels *l) {
     l->clearVector();
+}
+Grid *Controller::getG1() {
+    return this->g1;
+}
+
+Grid *Controller::getG2() {
+    return this->g2;
 }
 
 void Controller::drop(int n) {
@@ -247,28 +257,7 @@ void Controller::drop(int n) {
     this->changeTurn();
 }
 
-void Controller::restart() {
-    string s1 = this->g1->getPlayer()->getName();
-    string s2 = this->g2->getPlayer()->getName();
-    delete this->td;
-    delete this->gr;
-    delete this->g1;
-    delete this->g2;
-    Player *p1 = new Player(0, s1, 0);
-    Player *p2 = new Player(0, s2, 0);
-    this->g1 = new Grid();
-    this->g2 = new Grid();
-    this->g1->init(p1);
-    this->g2->init(p2);
-    this->td = new TextDisplay(p1, p2);
-    this->gr = new Graphics{p1, p2};
-    g1->setTD(this->td);
-    g2->setTD(this->td);
-    g1->setGraphics(this->gr);
-    g2->setGraphics(this->gr);
-    this->turn = State::p1;
-    this->generate();
-}
+
 
 void Controller::random() {
     // If the pointer level is 3 - 6 only then the random function can be toggled on/off
@@ -311,6 +300,27 @@ void Controller::sequence(string filename) {
 
 }
 
+void Controller::restart() {
+    string s1 = this->g1->getPlayer()->getName();
+    string s2 = this->g2->getPlayer()->getName();
+    delete this->g1->getPlayer();
+    delete this->g2->getPlayer();
+    delete this->gr;
+    delete this->td;
+    Player *p1 = new Player(0, s1, 0, "sequence1.txt");
+    Player *p2 = new Player(0, s2, 0, "sequence2.txt");
+    this->g1->init(p1);
+    this->g2->init(p2);
+    this->gr = new Graphics{p1, p2};
+    this->td = new TextDisplay{p1, p2};
+    g1->setTD(this->td);
+    g2->setTD(this->td);
+    g1->setGraphics(this->gr);
+    g2->setGraphics(this->gr);
+    this->turn = State::p1;
+    this->generate();
+}
+
 void Controller::generate() { 
     try { 
         levels *l = this->getGrid()->getPlayer()->getPtrLevel();
@@ -340,4 +350,5 @@ Controller::~Controller() {
     delete this->g1;
     delete this->g2;
     delete this->td;
+    delete this->gr;
 }
