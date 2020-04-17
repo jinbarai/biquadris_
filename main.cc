@@ -36,23 +36,31 @@ const string restartfile = "textFiles/possible_restart.txt";
 const string hintfile = "textFiles/possible_hint.txt";
 const string norandomfile = "textFiles/possible_norandom.txt";
 const string randomfile = "textFiles/possible_random.txt";
+string file = ""; 
 
 using namespace std;
 
-char getNum(string n)
+string getNum(string n)
 {
+    string nu;
     for (int i = 0; i < n.length(); i++)
     {
         if (isdigit(n[i]))
         {
-            return n[i];
+            nu = nu + n[i];
         }
     }
+    return nu;
 }
 
 string extractString(string n)
 {
+    // Special condition for norandom and seq since they also accept a file argument
     string extract;
+    if(n.substr(0,4) == "nora" || n.substr(0,3) == "seq") {
+        return n; 
+    }
+    // This will execute if it is not norandom or seq 
     for (int i = 0; i < n.length(); i++)
     {
         if (isalpha(n[i]))
@@ -82,11 +90,7 @@ string getCommand(string n)
 {
     string cmd = extractString(n);
 
-    if (checkinFile(startfile, cmd))
-    {
-        return "start";
-    }
-    else if (checkinFile(leftfile, cmd))
+    if (checkinFile(leftfile, cmd))
     {
         return "left";
     }
@@ -122,10 +126,6 @@ string getCommand(string n)
     {
         return "random";
     }
-    else if (checkinFile(norandomfile, cmd))
-    {
-        return "norandom";
-    }
     else if (checkinFile(levelupfile, cmd))
     {
         return "levelup";
@@ -134,37 +134,60 @@ string getCommand(string n)
     {
         return "leveldown";
     }
-    else if (cmd=="end") {
-        return cmd; 
-    }
-    else 
+    //if cmd is end, norand... or sequence return the whole string 
+    else if (cmd.substr(0,8)=="norandom" || cmd.substr(0,8) == "sequence")
     {
-        return "notvalid";
+        // extract the file name after norandom or sequence word
+        for (int i=8; i<cmd.length(); i++) {
+            if(cmd[i]==' ') {
+                continue;
+            }
+            else {
+                file = file + cmd[i]; 
+            }
+        }
+        return cmd.substr(0,8); 
+    }
+    else
+    {
+        return cmd;
     }
 }
 
-
-
 int main(int argc, char *argv[])
-{   
+{
     cin.exceptions(ios::eofbit | ios::failbit); // from a4q4 main
     string cmd;                                 // for later commands
     string s1;
     string s2;
-    string seqFile1 = "sequence1.txt";
-    string seqFile2 = "sequence1.txt";
+    string seqFile1 = "biquadris_sequence1.txt";
+    string seqFile2 = "biquadris_sequence2.txt";
     int seed = 0;
     int lvl = 0;
-    if (argc > 1){
-        if (!strcmp(argv[1], "-text")){ //text mode
-        } else if (!strcmp(argv[1], "-seed")){
-            if (argc == 3) seed = atoi(argv[2]);
-        } else if (!strcmp(argv[1], "-scriptfile1")){
-            if (argc == 3) seqFile1 = argv[2];
-        } else if (!strcmp(argv[1], "-scriptfile2")){
-            if (argc == 3) seqFile2 = argv[2];
-        } else if (!strcmp(argv[1], "-startlevel")){
-            if (argc == 3) lvl = atoi(argv[2]);
+    if (argc > 1)
+    {
+        if (!strcmp(argv[1], "-text"))
+        { //text mode
+        }
+        else if (!strcmp(argv[1], "-seed"))
+        {
+            if (argc == 3)
+                seed = atoi(argv[2]);
+        }
+        else if (!strcmp(argv[1], "-scriptfile1"))
+        {
+            if (argc == 3)
+                seqFile1 = argv[2];
+        }
+        else if (!strcmp(argv[1], "-scriptfile2"))
+        {
+            if (argc == 3)
+                seqFile2 = argv[2];
+        }
+        else if (!strcmp(argv[1], "-startlevel"))
+        {
+            if (argc == 3)
+                lvl = atoi(argv[2]);
         }
     }
 
@@ -195,7 +218,7 @@ int main(int argc, char *argv[])
     Grid *g2 = new Grid;
     g1->init(p1);
     g2->init(p2);
-    TextDisplay *td =  new TextDisplay{p1, p2};    
+    TextDisplay *td = new TextDisplay{p1, p2};
     Graphics *gr = new Graphics{p1, p2};
     g1->setTD(td);
     g1->setGraphics(gr);
@@ -206,19 +229,23 @@ int main(int argc, char *argv[])
     cin.clear();
     string command;
 
-    c.startlevel(lvl);            
+    c.startlevel(lvl);
     c.generate();
     try
     {
         while (true)
         {
-            getline(cin,cmd);
+            // Extracting a line to work a number and string
+            file = ""; 
+            getline(cin, cmd);
             command = getCommand(cmd);
-            char num = getNum(cmd);
-
-            if ((command).compare("end")== 0)
-            {   
+            string num = getNum(cmd);
+            // Handle filenames
+            if ((command).compare("end") == 0)
+            {
+                // This won't work for windows, will work only for mac
                 system("clear");
+                // For windows: system("CLS");
                 cout << "Thank you for playing with us! <3" << endl;
                 cout << "Player 1: " << p1->getScore() << endl;
                 cout << "Player 2: " << p2->getScore() << endl;
@@ -226,41 +253,31 @@ int main(int argc, char *argv[])
             }
 
             int no;
-            if (isdigit(num))
+            if (!(num.empty()))
             {
-                no = stoi(string(1, num));
+                no = stoi(num);
             }
             else
             {
-                if (command == "start")
-                {
-                    no = 0;
-                }
-                else
-                {
-                    no = 1;
-                }
+                no = 1;
             }
-            
-            if (command == "start")
+
+            // Handling commands
+            if (command == "left")
             {
-                if (no != 0)
-                {
-            //        c.startlevel(no);
-                }
-              //  c.generate();
-                continue;
-            }
-            else if (command == "left")
-            {
+                no = (no > 10) ? 10 : no;
                 c.move(no, LEFT);
             }
             else if (command == "right")
             {
+                no = (no > 10) ? 10 : no;
+                cout << no << endl;
                 c.move(no, RIGHT);
             }
             else if (command == "down")
             {
+                no = (no > 17) ? 17 : no;
+                cout << no << endl;
                 c.down(no);
             }
             else if (command == "drop")
@@ -269,51 +286,72 @@ int main(int argc, char *argv[])
             }
             else if (command == "cw")
             {
-                c.cw(no); 
+                // logic for simplifying no
+                // no = (no%2
+                c.cw(no);
             }
             else if (command == "ccw")
             {
+                // logic for simplifying no
                 c.ccw(no);
             }
             else if (command == "random")
             {
-                try {
-                    c.random(); 
-                    c.generate(); 
-                }
-                catch (string &message) {
-                    cout << message << endl; 
-                    // Allow user to continue 
-                }
-                
+                c.random();
             }
             else if (command == "restart")
             {
-                c.restart(); 
+                c.restart();
             }
             else if (command == "norandom")
             {
-                try {
-                    c.norandom(); 
-                    c.generate(); 
-                }
-                catch (string &message) {
-                    cout << message << endl; 
-                    // Allow user to continue input 
-                }
-               
+                // pass in a filename
+                if (file!="") c.norandom(file);
+                else cout<<"Filename not entered or file not readable" << endl; 
             }
-            else if (command == "levelup") {
-                c.levelup();
+            else if (command == "levelup")
+            {
+                no = (no > 6) ? 6 : no;
+                //cout << no << endl;
+                for (int i = 0; i < no; i++)
+                {
+                    c.levelup();
+                }
             }
-            else if (command == "leveldown") {
-                c.leveldown(); 
+            else if (command == "leveldown")
+            {
+                no = (no < 0) ? 0 : no;
+                //cout << no << endl;
+                for (int i = 0; i < no; i++)
+                {
+                    if (p1->getLevel() == 0)
+                    {
+                        break;
+                    }
+                    c.leveldown();
+                }
+            }
+            else if (command == "sequence") {
+
+            }
+            else
+            {
+                cout << "Invalid Command" << endl;
             }
         }
+    }    
+    catch (GameOver(State p))
+    {   
+        cout << "Uhoh, game over!" << endl;
+        //cout << "Your score is: " << p->getScore() << endl; 
     }
-    catch (GameOver(State p)) {}
     catch (ios::failure &)
     {
-        cout << " oh we failed" << endl;
-    } // Any I/O failure quits, from a4q4 main
+        // This won't work for windows, will work only for mac
+        system("clear");
+        // For windows: system("CLS");
+        cout << "Thank you for playing with us! <3" << endl;
+        cout << "Player 1: " << p1->getScore() << endl;
+        cout << "Player 2: " << p2->getScore() << endl;
+    }
 }

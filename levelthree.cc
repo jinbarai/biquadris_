@@ -144,6 +144,10 @@ bool levelthree::getRandom() {
     return this->norandom;
 }
 
+void levelthree::clearVector() {
+    block_file.clear(); 
+}
+
 bool levelthree::isHeavy() { return true; }
 
 levelthree::~levelthree() {}

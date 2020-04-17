@@ -114,6 +114,10 @@ bool levelfive::getRandom() {
     return this->norandom;
 }
 
+void levelfive::clearVector() {
+    block_file.clear(); 
+}
+
 bool levelfive::isHeavy() { 
     return true; 
 } 

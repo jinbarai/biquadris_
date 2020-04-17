@@ -115,6 +115,9 @@ string Player::getFileName(){
     return this->file;
 }
 
+void Player::setFile(string filename) {
+    this->file = filename; 
+}
 
 Player::~Player() { 
     delete this->b;

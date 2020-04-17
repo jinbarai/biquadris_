@@ -88,6 +88,10 @@ bool leveltwo::getRandom() {
     return this->norandom; 
 }
 
+void leveltwo::clearVector() {
+    block_file.clear(); 
+}
+
 bool leveltwo::isHeavy() { return false; } 
 
 leveltwo::~leveltwo() {}

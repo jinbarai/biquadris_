@@ -28,6 +28,7 @@ class levelfive: public levels {
     bool getRandom() override; 
     Block *createBlock() override; 
     bool is_file_exist(const std::string file); 
+    void clearVector() override; 
     void blocksFromFile(std::string filename) override; 
     ~levelfive();
 };

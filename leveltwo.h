@@ -25,6 +25,7 @@ class leveltwo: public levels {
     bool getRandom() override;
     void setRandom(bool val) override; 
     Block *createBlock() override; 
+    void clearVector() override; 
     void blocksFromFile(std::string filename) override; 
     ~leveltwo();
 };

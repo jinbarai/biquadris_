@@ -99,5 +99,9 @@ bool levelone::isHeavy() {
      return false; 
 } 
 
+void levelone::clearVector() {
+    block_file.clear(); 
+}
+
 levelone::~levelone() {}
 

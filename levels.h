@@ -20,6 +20,7 @@ class levels {
     virtual void setRandom(bool val)=0; 
     virtual void blocksFromFile(std::string filename) = 0; 
     virtual Block *createBlock() = 0; 
+    virtual void clearVector()=0; 
     virtual ~levels() = 0; 
 };
 

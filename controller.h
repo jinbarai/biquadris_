@@ -37,7 +37,8 @@ class Controller {
     void restart(); 
     void drop(int n = 1);
     void random();
-    void norandom();
+    void clearVector(levels *l);
+    void norandom(std::string filename);
     void sequence(std::string filename); 
     void down(int n = 1);
     void readFromFile(std::string file, levels *l); 

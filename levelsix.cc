@@ -114,6 +114,11 @@ bool levelsix::getRandom() {
     return this->norandom;
 }
 
+void levelsix::clearVector() {
+    block_file.clear(); 
+}
+
+
 bool levelsix::isHeavy() { 
     return true; 
 } 

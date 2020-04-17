@@ -127,5 +127,9 @@ bool levelfour::isHeavy() {
     return true; 
 } 
 
+void levelfour::clearVector() {
+    block_file.clear(); 
+}
+
 levelfour::~levelfour() {}
 

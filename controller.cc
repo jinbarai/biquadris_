@@ -129,6 +129,11 @@ void Controller::changeTurn() {
 
 void Controller::levelup() {
     int level = this->getGrid()->getPlayer()->getLevel();
+    // Cannot levelup if it already 6
+    if (level == 6) {
+        cout << "Max level reached!" << endl; 
+        return;
+    } 
     ++level;
     this->getGrid()->getPlayer()->changeLevel(level);
     if (this->getGrid()->getGraphics()) {
@@ -138,7 +143,11 @@ void Controller::levelup() {
 
 void Controller::leveldown() {
     int level = this->getGrid()->getPlayer()->getLevel();
-    if (level == 0) return;
+    // Cannot level down if it already 0
+    if (level == 0) {
+        cout << "Min level reached!" << endl; 
+        return;
+    }
     --level;
     this->getGrid()->getPlayer()->changeLevel(level);
     if (this->getGrid()->getGraphics()) {
@@ -209,6 +218,10 @@ void Controller::ccw(int n) {
     }
 }
 
+void Controller::clearVector(levels *l) {
+    l->clearVector();
+}
+
 void Controller::drop(int n) {
     bool flag = false; 
     for (int i = 0; i < n; ++i) {
@@ -261,17 +274,33 @@ void Controller::random() {
     // If the pointer level is 3 - 6 only then the random function can be toggled on/off
     if (this->getGrid()->getPlayer()->getLevel() >= 3) {
         this->getGrid()->getPlayer()->getPtrLevel()->setRandom(false);
+        this->getGrid()->getPlayer()->setFile("");
+        levels *l = this->getGrid()->getPlayer()->getPtrLevel();
+        delete this->getGrid()->getPlayer()->getNextBlock();
+        // If breaks try removing this line lol
+        this->clearVector(l);
+        this->getGrid()->getPlayer()->setNextBlock(l->createBlock());
+        cout << this->getGrid()->getPlayer()->getPtrLevel()->getRandom() << endl; 
     } else {
         string s = "Wrong level for toggling random/norandom option";
         cout << s << endl; 
     }
 }
 
-void Controller::norandom(){ 
+void Controller::norandom(string filename){ 
     // If the pointer level is 3 - 6 only then the random function can be toggled on/off
     if (this->getGrid()->getPlayer()->getLevel() >= 3) {
         this->getGrid()->getPlayer()->getPtrLevel()->setRandom(true); 
-
+        this->getGrid()->getPlayer()->setFile(filename); 
+        levels *l = this->getGrid()->getPlayer()->getPtrLevel();
+        delete this->getGrid()->getPlayer()->getNextBlock();
+        string fl = this->getGrid()->getPlayer()->getFileName();
+        this->clearVector(l);
+        this->readFromFile(fl, l);
+        // gives block type of old file 
+        Block *t = l->createBlock();
+        cout << t->getType() << endl;
+        this->getGrid()->getPlayer()->setNextBlock(t);
     } else {
         string s = "Wrong level for toggling random/norandom option";
         cout << s << endl;

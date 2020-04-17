@@ -38,6 +38,7 @@ class Player {
     std::string getName();
     levels *getPtrLevel();
     int getLevel();
+    void setFile(std::string filename); 
     void changeLevel(int);
     ~Player();
 };
