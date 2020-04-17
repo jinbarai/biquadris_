@@ -7,7 +7,7 @@
 using namespace std;
 
 Block::Block(int h, int w, int x, int y, vector<pair<int, int>> coords, bool isHeavy, char c, orientationClass o): 
-height{h}, width{w}, xPos{x}, yPos{y}, coords{coords}, heavy{isHeavy}, type{c}, orient{o}{
+height{h}, width{w}, xPos{x}, yPos{y}, coords{coords}, levelHeavy{isHeavy}, type{c}, orient{o}{
     for (int i = 0; i <4; i++){
         this->blockVector.emplace_back(make_unique<Cell> (coords.at(i).first, coords.at(i).second, c));
     }
@@ -18,26 +18,27 @@ void Block::move(int direction){
         for (int i = 0; i < 4; ++i) { 
             this->blockVector.at(i)->updateBy(direction, 0);
             this->coords.at(i).first += direction;
-            if (this->heavy) {
-                this->blockVector.at(i)->updateBy(0, -1 * this->heavyBy);
-                this->coords.at(i).second += -1 * this->heavyBy;
-            }
         }
-        this->xPos += direction;
-    }  else { 
+    }  else { //DOWN
         for (int i = 0; i < 4; ++i) { 
             this->blockVector.at(i)->updateBy(0, -1);
             this->coords.at(i).second += -1;
-            if (this->heavy) this->blockVector.at(i)->updateBy(0, -1*this->heavyBy);
         }
-        this->yPos += -1;
-
-
     }
+   // vector <pair <int, int>> c = this->getCoords();
+    //for (int i = 0; i < 4; i++){
+    //    cout << this->coords.at(i).first <<", " << this->coords.at(i).second << endl;
+    //    cout << c.at(i).first <<", " << c.at(i).second << endl;
+   // }
 }
 
+
 vector<pair<int, int>> Block::getCoords(){
-    return this->coords;
+    vector <pair<int, int>> coords;
+    for (int i = 0; i < 4; i++){
+        coords.emplace_back(make_pair(blockVector.at(i)->getX(), blockVector.at(i)->getY()));
+    }
+    return coords;
 }
 
 static vector <pair <int, int>> rotateCoordsCW(vector <pair <int, int>> coords){
@@ -83,11 +84,6 @@ void Block::setCoords(vector <pair <int, int>> coords){
     }
 }
 
-void Block::setHeavy(int n){
-    this->heavy = true;
-    this->heavyBy = n;
-}
-
 void Block::switchOrientation() {
     if (this->orient == orientationClass::h) {
         this->orient = orientationClass::v;
@@ -100,15 +96,21 @@ char Block::getType() {
     return this->type;
 }
 
-
-bool Block::isHeavy(){
-    return this->heavy;
+bool Block::isLevelHeavy(){
+    return this->levelHeavy;
 }
 
-//pair <int, int> Block::getPos(){
-//    pair <int, int> pos = make_pair(this->xPos, this->yPos);
-//    return pos;
-//}
+void Block::makeLevelHeavy(bool n){
+    this->levelHeavy = n;
+}
+
+bool Block::isCommandHeavy(){
+    return this->commandHeavy;
+}
+
+void Block::makeCommandHeavy(bool n){
+    this->commandHeavy = n;
+}
 
 int Block::getBottomX() { 
     int xBottomLeft = this->coords.at(0).first;

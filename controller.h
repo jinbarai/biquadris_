@@ -34,6 +34,7 @@ class Controller {
     void heavy();
     void force(char c);
     void generate();
+    void getHighScore();
     Grid *getG1();
     Grid *getG2();
     void startlevel(int n);

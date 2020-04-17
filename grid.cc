@@ -17,9 +17,9 @@ void Grid::init(Player *p, bool text) {
 
 void Grid::update(State p) {
     Block *b = this->getPlayer()->getBlock();
-    // cout << "entered line 2 of update" << endl;
+
     if (this->getPlayer()->isSpecialHeavy()){
-        this->getPlayer()->getBlock()->setHeavy(2);
+        this->getPlayer()->getBlock()->makeCommandHeavy(true);
     }
 
     vector <pair <int, int>> coords = b->getCoords();

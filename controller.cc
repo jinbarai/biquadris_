@@ -97,6 +97,7 @@ void Controller::force(char c) {
 
 void Controller::changeBlock(char c) {
     bool flag = false;
+    bool heavyCommand = this->getGrid()->getPlayer()->getBlock()->isCommandHeavy();
     if (this->getGrid()->getPlayer()->getLevel() >= 3) {
         flag = true;
     } 
@@ -117,7 +118,8 @@ void Controller::changeBlock(char c) {
     } else { 
         cout << "Invalid Character: " << c << endl;
         return;
-    } 
+    }
+    this->getGrid()->getPlayer()->getBlock()->makeCommandHeavy(heavyCommand);
 }
 
 void Controller::changeTurn() {
@@ -167,6 +169,10 @@ void Controller::levelup() {
     }
 }
 
+void Controller::getHighScore(){
+
+}
+
 void Controller::leveldown() {
     int level = this->getGrid()->getPlayer()->getLevel();
     // Cannot level down if it already 0
@@ -200,7 +206,29 @@ void Controller::heavy(){
 
 void Controller::move(int n, int dir) { 
     for (int i = 0; i < n; ++i) {
-        bool val = this->getGrid()->move(this->turn, dir);
+        int val = this->getGrid()->move(this->turn, dir);
+        if (this->getGrid()->getPlayer()->getBlock()->isLevelHeavy()){
+            val = this->getGrid()->down(this->turn);
+            if (val == 0 || val == -1){
+                this->getGrid()->getPlayer()->setSpecialHeavy(false);
+                this->changeTurn();
+                return;
+            }
+        }
+        if (this->getGrid()->getPlayer()->getBlock()->isCommandHeavy()){
+            val = this->getGrid()->down(this->turn);
+            if (val == 0 || val == -1) {
+                this->getGrid()->getPlayer()->setSpecialHeavy(false);
+                this->changeTurn();
+                return;
+            }
+            val = this->getGrid()->down(this->turn);
+            if (val == 0 || val == -1) {
+                this->getGrid()->getPlayer()->setSpecialHeavy(false);
+                this->changeTurn();
+                return;
+            }
+        }
         if (this->getGrid()->getPlayer()->getLevel() != 6 && val) { 
             cout << *this->getGrid();
         }
@@ -215,6 +243,28 @@ void Controller::readFromFile(string filename, levels *l) {
 void Controller::down(int n) { 
     for (int i = 0; i < n; ++i) {
         int val = this->getGrid()->down(this->turn);
+        if (this->getGrid()->getPlayer()->getBlock()->isLevelHeavy()){
+            val = this->getGrid()->down(this->turn);
+        }
+        if (val == 0 || val == -1){
+            this->getGrid()->getPlayer()->setSpecialHeavy(false);
+            this->changeTurn();
+            return;
+        }
+        if (this->getGrid()->getPlayer()->getBlock()->isCommandHeavy()){
+            val = this->getGrid()->down(this->turn);
+            if (val == 0 || val == -1) {
+                this->getGrid()->getPlayer()->setSpecialHeavy(false);
+                this->changeTurn();
+                return;
+            } 
+            val = this->getGrid()->down(this->turn);
+            if (val == 0 || val == -1) {
+                this->getGrid()->getPlayer()->setSpecialHeavy(false);
+                this->changeTurn();
+                return;
+            }
+        } 
         if (this->getGrid()->getPlayer()->getLevel() != 6) { 
             cout << *this->getGrid();
         }
@@ -229,7 +279,7 @@ void Controller::cw(int n) {
     for (int i = 0; i < n; ++i) {
        this->getGrid()->rotate(this->turn);
     }
-    if (this->getGrid()->getPlayer()->getBlock()->isHeavy()) this->down();
+    if (this->getGrid()->getPlayer()->getBlock()->isLevelHeavy()) this->down();
     if (this->getGrid()->getPlayer()->getLevel() != 6) { 
         cout << *this->getGrid();
     }
@@ -242,7 +292,7 @@ void Controller::ccw(int n) {
             this->getGrid()->rotate(this->turn);
         }
     }
-    if (this->getGrid()->getPlayer()->getBlock()->isHeavy()) this->down();
+    if (this->getGrid()->getPlayer()->getBlock()->isLevelHeavy()) this->down();
     if (this->getGrid()->getPlayer()->getLevel() != 6) { 
         cout << *this->getGrid();
     }
@@ -282,6 +332,10 @@ void Controller::drop(int n) {
     if (flag) {
         this->specialAction();
     }
+    //vector<pair<int, int>> coords = this->getGrid()->getPlayer()->getBlock()->getCoords();
+    //for (int i = 0; i < 4; i++){
+    //    cout << "x: " << coords.at(i).first << " y: " << coords.at(i).second << endl;
+    //}
     this->changeTurn();
 }
 

@@ -20,8 +20,8 @@ class Block{
     std::vector <std::unique_ptr <Cell>> blockVector;    
     int height, width, xPos, yPos;
     std::vector < std::pair<int, int>> coords;
-    bool heavy; 
-    int heavyBy = 1;
+    bool levelHeavy; 
+    bool commandHeavy = false;
     char type;
     orientationClass orient;
     public:
@@ -33,8 +33,11 @@ class Block{
         std::vector <std::pair <int, int>> getCoords();
         void setCoords(std::vector <std::pair <int, int>> coords);
         std::pair <int, int> getPos();
-        bool isHeavy();
-        void setHeavy(int n);
+        bool isLevelHeavy();
+        void dropByOne();
+        void makeLevelHeavy(bool n);
+        bool isCommandHeavy();
+        void makeCommandHeavy(bool n);
         void switchOrientation();
         char getType();
         int getBottomX();
