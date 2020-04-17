@@ -108,7 +108,7 @@ void Controller::changeBlock(char c) {
     } else if (c == 'L' || c == 'l') {
         this->getGrid()->changeBlock(this->turn, new LBlock(flag));
     } else { 
-        cout << "Invalid Character: " << c << "command cancelled" << endl;
+        cout << "Invalid Character: " << c << endl;
     }
 }
 

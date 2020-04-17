@@ -89,7 +89,6 @@ bool checkinFile(string file, string word)
 string getCommand(string n)
 {
     string cmd = extractString(n);
-
     if (checkinFile(leftfile, cmd))
     {
         return "left";
@@ -343,6 +342,13 @@ int main(int argc, char *argv[])
                  // pass in a filename
                 if (file!="") c.norandom(file);
                 else cout<<"Filename not entered or file not readable" << endl;
+            }
+            else if (command  == "i" || command  == "j" || command  == "l"
+                   || command  == "o" || command  == "z" || command  == "s" ||
+                   command  == "t"){
+                cout << command << endl; 
+                char com = command[0];
+                c.changeBlock(com);
             }
             else
             {
