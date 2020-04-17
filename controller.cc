@@ -78,13 +78,17 @@ void Controller::force(char c) {
         p->setNextBlock(new IBlock(b));
     } else if (c == 'J' || c == 'j') {
         delete p->getNextBlock();
-        p->setNextBlock(new TBlock(b));
+        p->setNextBlock(new JBlock(b));
     } else if (c == 'T' || c == 't') {
         delete p->getNextBlock();
         p->setNextBlock(new TBlock(b));
     } else { 
-        cout << "Invalid char, Force cancelled" << endl;
+        cout << "Invalid Character, Force cancelled" << endl;
     }
+}
+
+void Controller::changeBlock(char c) {
+
 }
 
 void Controller::changeTurn() {
@@ -172,9 +176,8 @@ void Controller::ccw(int n) {
     cout << *this->getGrid();
 }
 
-void Controller::drop() {
-    bool flag = false;
-    int n = 1; // change n to be a parameter taken into drop function 
+void Controller::drop(int n) {
+    bool flag = false; 
     for (int i = 0; i < n; ++i) {
         bool val = this->getGrid()->drop(this->turn);
         if (val) {
@@ -198,7 +201,26 @@ void Controller::drop() {
 }
 
 void Controller::restart() {
-
+    string s1 = this->g1->getPlayer()->getName();
+    string s2 = this->g2->getPlayer()->getName();
+    delete this->td;
+    delete this->gr;
+    delete this->g1;
+    delete this->g2;
+    Player *p1 = new Player(0, s1, 0);
+    Player *p2 = new Player(0, s2, 0);
+    this->g1 = new Grid();
+    this->g2 = new Grid();
+    this->g1->init(p1);
+    this->g2->init(p2);
+    this->td = new TextDisplay(p1, p2);
+    this->gr = new Graphics{p1, p2};
+    g1->setTD(this->td);
+    g2->setTD(this->td);
+    g1->setGraphics(this->gr);
+    g2->setGraphics(this->gr);
+    this->turn = State::p1;
+    this->generate();
 }
 
 void Controller::random() {

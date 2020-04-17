@@ -341,6 +341,7 @@ bool Grid::rowclear(State p) {
             for (int m = 0; m < 11; ++m) {
                 clear(p, 17, m);
             }
+            i = -1;
         }
     }
     if (n > 0) {

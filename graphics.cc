@@ -1,7 +1,7 @@
 #include "graphics.h"
 using namespace std;
 
-Graphics::Graphics(Player *p1, Player *p2) : p1{p1}, p2{p2} {
+Graphics::Graphics(Player *p1, Player *p2) : p1{p1}, p2{p2} { 
     this->xw.fillRectangle(0, 0, 500, 500, 0);
         //"lucidasans-bold-24"
     this->xw.drawStringFont(30, 27, "CS246::BIQUADRIS", "lucidasanstypewriter-bold-24");
@@ -46,7 +46,6 @@ Graphics::Graphics(Player *p1, Player *p2) : p1{p1}, p2{p2} {
     this->xw.drawStringFont(260, 470, block2 , "lucidasans-14");
     this->xw.fillRectangle(393, 453, 76 , 40);
 }
-
 
 int Graphics::getColour(char c) {
     if (c == ' ') {

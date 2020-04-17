@@ -119,5 +119,6 @@ string Player::getFileName(){
 Player::~Player() { 
     delete this->b;
     delete this->bnext;
+    delete this->l;
 }
 

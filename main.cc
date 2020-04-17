@@ -196,7 +196,6 @@ int main(int argc, char *argv[])
     g2->init(p2);
     TextDisplay *td =  new TextDisplay{p1, p2};    
     Graphics *gr = new Graphics{p1, p2};
-
     g1->setTD(td);
     g1->setGraphics(gr);
     g2->setTD(td);

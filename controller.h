@@ -29,13 +29,14 @@ class Controller {
     void leveldown();
     // Special Actions
     void specialAction();
+    void changeBlock(char c);
     void blind();
     void heavy();
     void force(char c);
     void generate();
     void startlevel(int n);
     void restart(); 
-    void drop();
+    void drop(int n = 1);
     void random();
     void norandom();
     void sequence(std::string filename); 
