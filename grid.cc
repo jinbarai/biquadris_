@@ -97,9 +97,19 @@ bool Grid::validate(int x, int y)  {
 }
 
 void Grid::changeBlock(Block *b) {
-    int x = this->p->getBlock()->getBottomX();
-    int y = this->p->getBlock()->getBottomY();
+    int x = b->getBottomX() - this->p->getBlock()->getBottomX();
+    int y = b->getBottomY() - this->p->getBlock()->getBottomY();
     vector <pair<int, int>> coords = b->getCoords();
+    for (int i =  0; i < 4; ++i) {
+        coords.at(i).first -= x;
+        coords.at(i).second -=y;
+        if (!validate(coords.at(i).first, coords.at(i).second)) {
+            // if it is not possible, return 
+            return;
+        }
+    }
+
+
     
 }
 
