@@ -162,11 +162,12 @@ int main(int argc, char *argv[])
     string seqFile1 = "biquadris_sequence1.txt";
     string seqFile2 = "biquadris_sequence2.txt";
     unsigned int seed=0;
+    bool text = false;
     int lvl = 0;
     if (argc > 1)
     {
         if (!strcmp(argv[1], "-text"))
-        { //text mode
+        { text = true;
         }
         else if (!strcmp(argv[1], "-seed"))
         {
@@ -215,15 +216,20 @@ int main(int argc, char *argv[])
     Player *p2 = new Player(0, s2, 0, seqFile2);
     Grid *g1 = new Grid;
     Grid *g2 = new Grid;
-    g1->init(p1);
-    g2->init(p2);
-    TextDisplay *td = new TextDisplay{p1, p2};
-    Graphics *gr = new Graphics{p1, p2};
+    g1->init(p1, text);
+    g2->init(p2, text);
+    TextDisplay *td = new TextDisplay{p1, p2, 5}; // given the programs highscore!
     g1->setTD(td);
-    g1->setGraphics(gr);
     g2->setTD(td);
+    Graphics *gr;
+    if (!text) { 
+        gr = new Graphics{p1, p2, 5};
+    } else { 
+        gr = nullptr;
+    }
+    g1->setGraphics(gr);
     g2->setGraphics(gr);
-    Controller *c = new Controller(g1, g2, td, gr);
+    Controller *c = new Controller(g1, g2, td, 5, text, gr);
     cin.ignore();
     cin.clear();
     string command;
@@ -354,10 +360,14 @@ int main(int argc, char *argv[])
             }
         }
     }    
-    catch (GameOver(State p))
+    catch (GameOver g)
     {   
         cout << "Uhoh, game over!" << endl;
-        //cout << "Your score is: " << p->getScore() << endl; 
+        if (g.player == State::p1) { 
+            cout << "Player 2: " << c->getG2()->getPlayer()->getName() << " wins!" << endl;
+        } else { 
+            cout << "Player 1: " << c->getG1()->getPlayer()->getName() << " wins!" << endl;
+        } 
     }
     catch (ios::failure &)
     {

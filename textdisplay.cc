@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-TextDisplay::TextDisplay(Player *p1, Player *p2) : p1{p1}, p2{p2} {
+TextDisplay::TextDisplay(Player *p1, Player *p2, int score) : p1{p1}, p2{p2}, highscore{score} {
     theDisplayp1.clear();
     theDisplayp2.clear();
     for (int i = 0; i < 18; ++i) {
@@ -23,6 +23,10 @@ TextDisplay::TextDisplay(Player *p1, Player *p2) : p1{p1}, p2{p2} {
     }
 }
 
+void TextDisplay::updateScore(int n) {
+    this->highscore = n;
+}
+
 void TextDisplay::notify(State p, int row, int col, char c) { 
     if (p == State::p1) { 
         theDisplayp1.at(row).at(col) = c;
@@ -34,6 +38,7 @@ void TextDisplay::notify(State p, int row, int col, char c) {
 ostream &operator<<(std::ostream &out, const TextDisplay &td) {
     // print the names
     int size = td.p1->getName().length();
+    out << "Highscore: " << td.highscore << endl;
     out << "Name: " << td.p1->getName();
     for (int i = size; i < 5; ++i) { 
         out << " ";

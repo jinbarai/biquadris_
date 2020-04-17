@@ -2,8 +2,9 @@
 #include <iostream>
 using namespace std;
 
-void Grid::init(Player *p) {
+void Grid::init(Player *p, bool text) {
     this->theGrid.clear();
+    this->text = text;
     this->p = p;
     for (int i = 0; i < 18; ++i) {
         vector<Cell> c;
@@ -31,7 +32,7 @@ void Grid::update(State p) {
         }  else { 
             theGrid.at(y).at(x).setType(type);
             this->td->notify(p, y, x, type);
-            if (this->text && this->gr) {
+            if (!this->text && this->gr) {
                 this->gr->notify(p, y, x, type);
             }
         }
@@ -77,7 +78,7 @@ bool Grid::move(State p, int dir) {
         char c = b->getType();
         this->theGrid.at(y).at(x).setType(c);
         this->td->notify(p, y, x, c);
-        if (this->text && this->gr) {
+        if (!this->text && this->gr) {
             this->gr->notify(p, y, x, c);
         }
     }
@@ -137,9 +138,12 @@ void Grid::changeBlock(State p, Block *b) {
         int newy = coords.at(k).second;
         this->theGrid.at(newy).at(newx).setType(c);
         this->td->notify(p, newy, newx, c);
-        if (this->text && this->gr) {
+        if (!this->text && this->gr) {
             this->gr->notify(p, newy, newx, c);
         }
+    }
+    if (this->p->getLevel() != 6) {
+        cout << *this;
     }
     delete this->p->getBlock();
     this->p->setBlock(b);
@@ -181,7 +185,7 @@ int Grid::down(State p) {
         char c = b->getType();
         this->theGrid.at(y).at(x).setType(c);
         this->td->notify(p, y, x, c);
-        if (this->text && this->gr) {
+        if (!this->text && this->gr) {
                 this->gr->notify(p, y, x, c);
          }
     }
@@ -234,19 +238,22 @@ void Grid::brown(State p, int n) {
                 if (i == 0) { 
                     this->theGrid.at(i).at(5).setType('*');
                     this->td->notify(p, i, 5, '*');
-                    if (this->text && this->gr) { // to see if text mode is activated 
+                    if (!this->text && this->gr) { // to see if text mode is activated 
                         this->gr->notify(p, i, 5, '*');
                     }
                     break;
                 } else if (!this->theGrid.at(i-1).at(5).isEmpty()) {
                     this->theGrid.at(i).at(5).setType('*');
                     this->td->notify(p, i, 5, '*');
-                    if (this->text && this->gr) { // to see if text mode is activated 
+                    if (!this->text && this->gr) { // to see if text mode is activated 
                         this->gr->notify(p, i, 5, '*');
                     }
                     break;
                 }
             }
+        }
+        if (flag == true) {
+            throw GameOver{p};
         }
     } else { 
         for (int k = 0; k < 11; ++k) {
@@ -257,14 +264,14 @@ void Grid::brown(State p, int n) {
                     if (i == 0) { 
                         this->theGrid.at(i).at(k).setType('*');
                         this->td->notify(p, i, k, '*');
-                        if (this->text && this->gr) { // to see if text mode is activated 
+                        if (!this->text && this->gr) { // to see if text mode is activated 
                             this->gr->notify(p, i, k, '*');
                         }
                         break;
                     } else if (!this->theGrid.at(i-1).at(k).isEmpty()) {
                         this->theGrid.at(i).at(k).setType('*');
                         this->td->notify(p, i, k, '*');
-                        if (this->text && this->gr) { // to see if text mode is activated 
+                        if (!this->text && this->gr) { // to see if text mode is activated 
                          this->gr->notify(p, i, k, '*');
                         }
                         break;
@@ -279,6 +286,9 @@ void Grid::brown(State p, int n) {
 }
 
 void Grid::fixBlind(State p) {
+    if (text) {
+        return;
+    }
     for (int row = 0; row < 18; ++row) {
         for  (int col = 0; col < 11; ++col) {
             this->gr->blindnotify(p, row, col, this->theGrid.at(row).at(col).getType());
@@ -324,7 +334,7 @@ void Grid::rotate(State p) {
         char c = b->getType();
         this->theGrid.at(y).at(x).setType(c);
         this->td->notify(p, y, x, c);
-        if (this->text && this->gr) {
+        if (!this->text && this->gr) {
                 this->gr->notify(p, y, x, c);
         }
     } 
@@ -334,7 +344,7 @@ void Grid::clear(State p, int row, int col) {
     char c = ' ';
     this->theGrid.at(row).at(col).setType(c);
     this->td->notify(p, row, col, c);
-    if (this->text && this->gr) {
+    if (!this->text && this->gr) {
         this->gr->notify(p, row, col, c);
     }
 }
@@ -365,7 +375,7 @@ void Grid::score(int n, int level) {
     int score = n + level;
     score *= score;
     this->getPlayer()->addScore(score);
-    if (this->text && this->gr) {
+    if (!this->text && this->gr) {
         this->gr->notifyScore();
     }
 }
@@ -381,7 +391,7 @@ bool Grid::rowclear(State p) {
                     char c = this->theGrid.at(k+1).at(j).getType();
                     this->theGrid.at(k).at(j).setType(c); 
                     this->td->notify(p, k, j, c);
-                    if (this->text && this->gr) {
+                    if (!this->text && this->gr) {
                         this->gr->notify(p, k, j, c);
                      }
                 }
@@ -397,7 +407,7 @@ bool Grid::rowclear(State p) {
         this->counter = 0;
     }
     score(n, level);
-    if (n >= 1) {
+    if (n >= 2) {
         return true;
     }
     return false;
