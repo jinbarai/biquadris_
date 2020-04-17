@@ -248,6 +248,9 @@ void Grid::brown(State p, int n) {
                 }
             }
         }
+        if (flag == true) {
+            throw GameOver{p};
+        }
     } else { 
         for (int k = 0; k < 11; ++k) {
             bool flag = true;
@@ -397,7 +400,7 @@ bool Grid::rowclear(State p) {
         this->counter = 0;
     }
     score(n, level);
-    if (n >= 1) {
+    if (n >= 2) {
         return true;
     }
     return false;

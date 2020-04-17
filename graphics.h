@@ -12,10 +12,11 @@ class Graphics {
     Player *p2;
     Xwindow xw;
     public:
-    Graphics(Player *p1, Player *p2);
+    Graphics(Player *p1, Player *p2, int score);
     void notify(State, int row, int col, char c);
     void blindnotify(State, int row, int col, char c);
     void notifyScore();
+    void changeScore(int n);
     void drawBlind(State p);
     int getColour(char c);
     void next(); // updates the next block

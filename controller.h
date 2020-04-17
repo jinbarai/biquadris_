@@ -18,7 +18,7 @@ class Controller {
     Graphics *gr;
     public: 
     Grid *getGrid();
-    Controller(Grid *g1, Grid *g2, TextDisplay *td, Graphics *gr); 
+    Controller(Grid *g1, Grid *g2, TextDisplay *td, Graphics *gr, int score); 
     // main will make player pointers and pass the grid to the controller. 
     void changeTurn();
     void text(); // will cancel graphics

@@ -1,12 +1,12 @@
 #include "controller.h"
 using namespace std;
 
-Controller::Controller(Grid *g1, Grid *g2, TextDisplay *td, Graphics *gr) {
+Controller::Controller(Grid *g1, Grid *g2, TextDisplay *td, Graphics *gr, int score) {
     this->g1 = g1;
     this->g2 = g2;
     this->td =  td;
     this->gr = gr;
-    this->highscore = 0;
+    this->highscore = score;
     this->turn = State::p1;
 }
 
@@ -118,6 +118,20 @@ void Controller::changeTurn() {
     if (this->getGrid()->getPlayer()->getLevel() == 6) {
         this->getGrid()->fixBlind(this->turn);
     }
+    if (this->g1->getPlayer()->getScore() > this->highscore) {
+        this->highscore = this->g1->getPlayer()->getScore();
+        this->td->updateScore(this->highscore);
+        this->gr->changeScore(this->highscore);
+        cout << "Player 1: " << this->g1->getPlayer()->getName() 
+        << " updated highscore!" << endl;
+    } 
+    if (this->g2->getPlayer()->getScore() > this->highscore) {
+        this->highscore = this->g2->getPlayer()->getScore();
+        this->td->updateScore(this->highscore);
+        this->gr->changeScore(this->highscore);
+        cout << "Player 2: " << this->g2->getPlayer()->getName() 
+        << " updated highscore!" << endl;
+    } 
     if (this->turn == State::p1) {
         this->turn = State::p2;
         this->generate();
@@ -174,7 +188,7 @@ void Controller::heavy(){
 
 void Controller::move(int n, int dir) { 
     for (int i = 0; i < n; ++i) {
-        int val = this->getGrid()->move(this->turn, dir);
+        bool val = this->getGrid()->move(this->turn, dir);
         if (this->getGrid()->getPlayer()->getLevel() != 6 && val) { 
             cout << *this->getGrid();
         }
@@ -196,7 +210,7 @@ void Controller::down(int n) {
             break;
         } 
     }
-}
+} 
 
 void Controller::cw(int n) {
     n = n % 4;
@@ -312,8 +326,8 @@ void Controller::restart() {
     Player *p2 = new Player(0, s2, 0, "sequence2.txt");
     this->g1->init(p1);
     this->g2->init(p2);
-    this->gr = new Graphics{p1, p2};
-    this->td = new TextDisplay{p1, p2};
+    this->gr = new Graphics{p1, p2, this->highscore};
+    this->td = new TextDisplay{p1, p2, this->highscore};
     g1->setTD(this->td);
     g2->setTD(this->td);
     g1->setGraphics(this->gr);

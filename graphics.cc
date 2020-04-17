@@ -1,11 +1,15 @@
 #include "graphics.h"
 using namespace std;
 
-Graphics::Graphics(Player *p1, Player *p2) : p1{p1}, p2{p2} { 
+Graphics::Graphics(Player *p1, Player *p2, int score) : p1{p1}, p2{p2} { 
     this->xw.fillRectangle(0, 0, 500, 500, 0);
         //"lucidasans-bold-24"
-    this->xw.drawStringFont(30, 27, "CS246::BIQUADRIS", "lucidasanstypewriter-bold-24");
-    this->xw.drawStringFont(350, 20, "Jagrit, Jin & Kimia", "lucidasans-14");
+    this->xw.drawStringFont(30, 24, "BIQUADRIS:JJK", "lucidasanstypewriter-bold-24");
+    string highscore;
+    stringstream sscore; 
+    sscore << score;
+    highscore = sscore.str();
+    this->xw.drawStringFont(380, 20, "HighScore: " + highscore, "lucidasans-bold-14");
     this->xw.drawStringFont(30, 47, "Player 1: " + p1->getName(), "lucidasans-18");
     this->xw.drawStringFont(260, 47, "Player 2: "  + p2->getName(), "lucidasans-18");
     string l1;
@@ -45,6 +49,16 @@ Graphics::Graphics(Player *p1, Player *p2) : p1{p1}, p2{p2} {
     // height: 19* 4, width: 20 * 2
     this->xw.drawStringFont(260, 470, block2 , "lucidasans-14");
     this->xw.fillRectangle(393, 453, 76 , 40);
+}
+
+
+void Graphics::changeScore(int score) { 
+    this->xw.fillRectangle(380, 20, 50, 20, Xwindow::White);
+    string highscore;
+    stringstream sscore; 
+    sscore << score;
+    highscore = sscore.str();
+    this->xw.drawStringFont(380, 20, "HighScore: " + highscore, "lucidasans-bold-14");
 }
 
 int Graphics::getColour(char c) {
