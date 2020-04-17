@@ -1,10 +1,11 @@
 #include "controller.h"
 using namespace std;
 
-Controller::Controller(Grid *g1, Grid *g2, TextDisplay *td, Graphics *gr, int score) {
+Controller::Controller(Grid *g1, Grid *g2, TextDisplay *td, int score, bool text, Graphics *gr) {
     this->g1 = g1;
     this->g2 = g2;
-    this->td =  td;
+    this->td = td;
+    this->text = text;
     this->gr = gr;
     this->highscore = score;
     this->turn = State::p1;
@@ -44,10 +45,14 @@ void Controller::specialAction() {
 void Controller::blind() {
     if (this->turn == State::p1) {
         this->g2->getPlayer()->setBlind();
-        this->gr->drawBlind(State::p2);
+        if (!this->text) {
+            this->gr->drawBlind(State::p2);
+        }
     } else { 
         this->g1->getPlayer()->setBlind();
-        this->gr->drawBlind(State::p1);
+        if (!this->text) {
+            this->gr->drawBlind(State::p1);
+        }
     }
     cout << *this->getGrid(); // does not matter which Grid, just want to show blind 
 }
@@ -111,24 +116,29 @@ void Controller::changeBlock(char c) {
         this->getGrid()->changeBlock(this->turn, new LBlock(flag));
     } else { 
         cout << "Invalid Character: " << c << endl;
-    }
+        return;
+    } 
 }
 
 void Controller::changeTurn() {
-    if (this->getGrid()->getPlayer()->getLevel() == 6) {
+    if (!this->text && this->getGrid()->getPlayer()->getLevel() == 6) {
         this->getGrid()->fixBlind(this->turn);
     }
     if (this->g1->getPlayer()->getScore() > this->highscore) {
         this->highscore = this->g1->getPlayer()->getScore();
         this->td->updateScore(this->highscore);
-        this->gr->changeScore(this->highscore);
+        if (!this->text) { 
+            this->gr->changeScore(this->highscore);
+        }
         cout << "Player 1: " << this->g1->getPlayer()->getName() 
         << " updated highscore!" << endl;
     } 
     if (this->g2->getPlayer()->getScore() > this->highscore) {
         this->highscore = this->g2->getPlayer()->getScore();
         this->td->updateScore(this->highscore);
-        this->gr->changeScore(this->highscore);
+        if (!this->text) {
+            this->gr->changeScore(this->highscore);
+        }
         cout << "Player 2: " << this->g2->getPlayer()->getName() 
         << " updated highscore!" << endl;
     } 
@@ -152,7 +162,7 @@ void Controller::levelup() {
     } 
     ++level;
     this->getGrid()->getPlayer()->changeLevel(level);
-    if (this->getGrid()->getGraphics()) {
+    if (!this->text) {
         this->getGrid()->getGraphics()->changeLevel();
     }
 }
@@ -166,16 +176,18 @@ void Controller::leveldown() {
     }
     --level;
     this->getGrid()->getPlayer()->changeLevel(level);
-    if (this->getGrid()->getGraphics()) {
-        this->getGrid()->getGraphics()->changeLevel();
+    if (!this->text) {
+        this->gr->changeLevel();
     }
 }
   
 void Controller::startlevel(int n) { 
     this->g1->getPlayer()->changeLevel(n);
     this->g2->getPlayer()->changeLevel(n);
-    this->g1->getGraphics()->changeLevel();
-    this->g2->getGraphics()->changeLevel();
+    if (!this->text) { 
+        this->gr->changeLevel();
+    }
+    cout << "i finsihed startlevel " << endl;
 }
 
 void Controller::heavy(){
@@ -239,6 +251,7 @@ void Controller::ccw(int n) {
 void Controller::clearVector(levels *l) {
     l->clearVector();
 }
+
 Grid *Controller::getG1() {
     return this->g1;
 }
@@ -258,7 +271,7 @@ void Controller::drop(int n) {
         if (this->getGrid()->getPlayer()->isSpecialHeavy()){
             this->getGrid()->getPlayer()->setSpecialHeavy(false);
         }
-        if (this->getGrid()->getPlayer()->isBlind()) {
+        if (!this->text && this->getGrid()->getPlayer()->isBlind()) {
             this->getGrid()->getPlayer()->setBlind();
             this->getGrid()->fixBlind(this->turn);
         }
@@ -324,9 +337,13 @@ void Controller::restart() {
     delete this->td;
     Player *p1 = new Player(0, s1, 0, "sequence1.txt");
     Player *p2 = new Player(0, s2, 0, "sequence2.txt");
-    this->g1->init(p1);
-    this->g2->init(p2);
-    this->gr = new Graphics{p1, p2, this->highscore};
+    this->g1->init(p1, this->text);
+    this->g2->init(p2, this->text);
+    if (!this->text) { 
+        this->gr = new Graphics{p1, p2, this->highscore};
+    } else { 
+        this->gr = nullptr;
+    }
     this->td = new TextDisplay{p1, p2, this->highscore};
     g1->setTD(this->td);
     g2->setTD(this->td);
@@ -339,7 +356,8 @@ void Controller::restart() {
 void Controller::generate() { 
     try { 
         levels *l = this->getGrid()->getPlayer()->getPtrLevel();
-        if (this->getGrid()->getPlayer()->getLevel() == 6) {
+        int level = this->getGrid()->getPlayer()->getLevel();
+        if (!this->text && level == 6) {
             this->gr->level6(this->turn);
         }
         if(l->getRandom() == true) {
@@ -352,8 +370,11 @@ void Controller::generate() {
         delete this->getGrid()->getPlayer()->getBlock();
         this->getGrid()->getPlayer()->setBlock(b);
         this->getGrid()->getPlayer()->setNextBlock(l->createBlock());
-        this->gr->next();
+        if (!this->text) {
+            this->gr->next();
+        }
         this->getGrid()->update(this->turn);
+        cout << "I finished generate" << endl;
     }
     catch (string &c) { cout << c << endl; }
     if (this->getGrid()->getPlayer()->getLevel() != 6) { 

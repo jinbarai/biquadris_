@@ -13,15 +13,15 @@ class Controller {
     Grid *g1;
     Grid *g2;
     int highscore;
+    bool text;
     TextDisplay *td;
     State turn; //  either p1, or p2
-    Graphics *gr;
+    Graphics *gr = nullptr;
     public: 
     Grid *getGrid();
-    Controller(Grid *g1, Grid *g2, TextDisplay *td, Graphics *gr, int score); 
+    Controller(Grid *g1, Grid *g2, TextDisplay *td, int score, bool text, Graphics *gr); 
     // main will make player pointers and pass the grid to the controller. 
     void changeTurn();
-    void text(); // will cancel graphics
     void move(int n, int dir);
     void cw(int n = 1); // clockwise
     void ccw(int n = 1); // counterclockwise

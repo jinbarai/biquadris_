@@ -11,14 +11,14 @@
 
 class Grid { 
     Player *p = nullptr;
+    bool text;
     TextDisplay *td = nullptr; // to add TextDisplay
-    bool text = true;
     int counter = 0; // # of turns since clear
     Graphics *gr = nullptr; //  to add Graphics
     std::vector<std::vector<Cell>> theGrid;
     // vector of vectors of rows of cells 
     public: 
-    void init(Player *p);
+    void init(Player *p, bool text);
     Player *getPlayer();
     friend std::ostream &operator<<(std::ostream &out, const Grid &gr);
     // for output
