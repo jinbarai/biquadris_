@@ -22,10 +22,7 @@ Block* levelfive::createBlock() {
        return this->makeBlocks(nowBlock, this->isHeavy()); 
   } else {
     // randomly generate using the probabilities given 
-    random_device dev;
-    mt19937 rng(dev());
-    uniform_int_distribution<mt19937::result_type> dist6(1,9); // distribution in range [1, 9]
-    int generateLucky = dist6(rng);
+    int generateLucky = rand()%9+1;
     if (generateLucky == 1 || generateLucky == 2) {
         return this->makeBlocks('S', this->isHeavy());
     }

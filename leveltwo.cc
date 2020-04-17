@@ -19,10 +19,7 @@ using namespace std;
 
 Block *leveltwo::createBlock() {
     // generate a number from 0-6 
-    random_device dev;
-    mt19937 rng(dev());
-    uniform_int_distribution<mt19937::result_type> dist6(1,7); // distribution in range [1, 6]
-    int generateLucky = dist6(rng);
+    int generateLucky = rand()%7+1; 
     if (generateLucky == 1) {
         return this->makeBlocks('S', this->isHeavy());
     }

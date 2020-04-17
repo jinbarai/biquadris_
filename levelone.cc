@@ -17,18 +17,16 @@
 
 
 using namespace std; 
-//https://stackoverflow.com/questions/13445688/how-to-generate-a-random-number-in-c
+
 Block* levelone::createBlock() {
     // generate a number from 1-6 
-    random_device dev;
+    /*random_device dev;
     mt19937 rng(dev());
     uniform_int_distribution<mt19937::result_type> dist6(1,6); // distribution in range [1, 6]
-    int generateLucky = dist6(rng);
+    int generateLucky = dist6(rng);*/
+    int generateLucky = rand()%6+1; 
     if (generateLucky == 1) {
-        random_device dev2;
-        mt19937 rng2(dev2());
-        uniform_int_distribution<mt19937::result_type> dist2(1,2); // distribution in range [1, 2]
-        int n = dist2(rng2);
+        int n = rand()%2+1; 
         if (n == 1) {
             return this->makeBlocks('S', this->isHeavy());
         }

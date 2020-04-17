@@ -161,7 +161,7 @@ int main(int argc, char *argv[])
     string s2;
     string seqFile1 = "biquadris_sequence1.txt";
     string seqFile2 = "biquadris_sequence2.txt";
-    int seed = 0;
+    unsigned int seed=0;
     int lvl = 0;
     if (argc > 1)
     {
@@ -170,8 +170,8 @@ int main(int argc, char *argv[])
         }
         else if (!strcmp(argv[1], "-seed"))
         {
-            if (argc == 3)
-                seed = atoi(argv[2]);
+            if (argc == 3) seed = atoi(argv[2]);
+            srand(seed);
         }
         else if (!strcmp(argv[1], "-scriptfile1"))
         {
