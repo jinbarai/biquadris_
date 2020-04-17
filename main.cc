@@ -343,7 +343,7 @@ int main(int argc, char *argv[])
             }
             else if (command  == "i" || command  == "j" || 
                 command  == "l" || command  == "o" || 
-                command  == "z" || ommand  == "s" || command  == "t") {
+                command  == "z" || command  == "s" || command  == "t") {
                 char com = command[0];
                 //cout << com << endl; 
                 c->changeBlock(com);

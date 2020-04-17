@@ -12,7 +12,7 @@
 class Controller { 
     Grid *g1;
     Grid *g2;
-    int highscore = 0;
+    int highscore;
     TextDisplay *td;
     State turn; //  either p1, or p2
     Graphics *gr;
