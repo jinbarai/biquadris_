@@ -99,22 +99,23 @@ void Grid::changeBlock(State p, Block *b) {
     int y = b->getBottomY() - this->p->getBlock()->getBottomY();
     vector <pair<int, int>> oldc = this->p->getBlock()->getCoords();
     vector <pair<int, int>> coords = b->getCoords();
-    for (int i =  0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i) {
         coords.at(i).first -= x;
         coords.at(i).second -=y;
         if (!validate(coords.at(i).first, coords.at(i).second)) {
             // if it is not possible, return 
+            cout << "Unable to change block" << endl;
             delete b;
             return;
         }
     }
     for (int i = 0; i < 4; ++i) {
-        int x = coords.at(i).first;
-        int y = coords.at(i).second;
-        if (!this->theGrid.at(y).at(x).isEmpty()) {
+        int x1 = coords.at(i).first;
+        int y1 = coords.at(i).second;
+        if (!this->theGrid.at(y1).at(x1).isEmpty()) {
             int flag = 1;
             for (int k = 0; k < 4; ++k) {
-                if (x == oldc.at(k).first && y == oldc.at(k).second) { 
+                if (x1 == oldc.at(k).first && y1 == oldc.at(k).second) { 
                     flag = 0;
                     break;
                 } 
@@ -124,19 +125,20 @@ void Grid::changeBlock(State p, Block *b) {
             }
         }
     }
+    b->setCoords(coords);
     for (int i = 0; i < 4; ++i) {
         int oldx = oldc.at(i).first;
         int oldy = oldc.at(i).second;
         this->clear(p, oldy, oldx);
     }
+    char c = b->getType();
     for (int k = 0; k < 4; ++k) {
-        int x = coords.at(k).first;
-        int y = coords.at(k).second;
-        char c = b->getType();
-        this->theGrid.at(y).at(x).setType(c);
-        this->td->notify(p, y, x, c);
+        int newx = coords.at(k).first;
+        int newy = coords.at(k).second;
+        this->theGrid.at(newy).at(newx).setType(c);
+        this->td->notify(p, newy, newx, c);
         if (this->text && this->gr) {
-            this->gr->notify(p, y, x, c);
+            this->gr->notify(p, newy, newx, c);
         }
     }
     delete this->p->getBlock();
