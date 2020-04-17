@@ -6,7 +6,6 @@ Controller::Controller(Grid *g1, Grid *g2, TextDisplay *td, Graphics *gr) {
     this->td =  td;
     this->gr = gr;
     this->turn = State::p1;
-    
 }
 
 Grid *Controller::getGrid() {
@@ -127,13 +126,10 @@ void Controller::startlevel(int n) {
 }
 
 void Controller::heavy(){
-    cout << "entered here" << endl;
     if (this->turn == State::p1) {
         this->g2->getPlayer()->setSpecialHeavy(true);
-        cout << "entered 52" << endl;
     } else { 
         this->g1->getPlayer()->setSpecialHeavy(true);
-        cout << "entered 55" << endl;
     }
 }
 
@@ -162,6 +158,7 @@ void Controller::cw(int n) {
     for (int i = 0; i < n; ++i) {
         this->getGrid()->rotate(this->turn);
     }
+    if (this->getGrid()->getPlayer()->getBlock()->isHeavy()) this->down();
     cout << *this->getGrid();
 }
 
@@ -170,8 +167,9 @@ void Controller::ccw(int n) {
         for (int i = 0; i < 3; i++) {
             this->getGrid()->rotate(this->turn);
         }
-        cout << *this->getGrid();
     }
+    if (this->getGrid()->getPlayer()->getBlock()->isHeavy()) this->down();
+    cout << *this->getGrid();
 }
 
 void Controller::drop() {
@@ -229,17 +227,10 @@ void Controller::sequence(string filename) {
 }
 
 void Controller::generate() { 
-    // pass in a filename to generate?? 
-    string filename;
-    if (this->turn == State::p1) { 
-        filename = "sequence1.txt";
-    } else {
-        filename = "sequence2.txt";
-    }
     try { 
         levels *l = this->getGrid()->getPlayer()->getPtrLevel();
         if(l->getRandom() == true) {
-            this->readFromFile(filename, l); // outputs a string 
+            this->readFromFile(this->getGrid()->getPlayer()->getFileName(), l); // throws a string 
         }
         if (this->getGrid()->getPlayer()->getNextBlock() == nullptr) { 
             this->getGrid()->getPlayer()->setNextBlock(l->createBlock());

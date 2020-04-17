@@ -10,7 +10,7 @@
 #include "sblock.h"
 #include "controller.h"
 #include "player.h"
-#include <string>
+#include <string.h>
 #include <iostream>
 #include "levelzero.h"
 #include "levelone.h"
@@ -22,19 +22,19 @@
 #include "graphics.h"
 #include <cstdlib>
 
-const string levelupfile = "possible_levelu.txt";
-const string leveldownfile = "possible_leveld.txt";
-const string startfile = "possible_start.txt";
-const string leftfile = "possible_left.txt";
-const string rightfile = "possible_right.txt";
-const string downfile = "possible_down.txt";
-const string dropfile = "possible_drop.txt";
-const string clockwisefile = "possible_clockwise.txt";
-const string counterfile = "possible_counter.txt";
-const string restartfile = "possible_restart.txt";
-const string hintfile = "possible_hint.txt";
-const string norandomfile = "possible_norandom.txt";
-const string randomfile = "possible_random.txt";
+const string levelupfile = "textFiles/possible_levelu.txt";
+const string leveldownfile = "textFiles/possible_leveld.txt";
+const string startfile = "textFiles/possible_start.txt";
+const string leftfile = "textFiles/possible_left.txt";
+const string rightfile = "textFiles/possible_right.txt";
+const string downfile = "textFiles/possible_down.txt";
+const string dropfile = "textFiles/possible_drop.txt";
+const string clockwisefile = "textFiles/possible_clockwise.txt";
+const string counterfile = "textFiles/possible_counter.txt";
+const string restartfile = "textFiles/possible_restart.txt";
+const string hintfile = "textFiles/possible_hint.txt";
+const string norandomfile = "textFiles/possible_norandom.txt";
+const string randomfile = "textFiles/possible_random.txt";
 
 using namespace std;
 
@@ -150,6 +150,25 @@ int main(int argc, char *argv[])
     string cmd;                                 // for later commands
     string s1;
     string s2;
+    string seqFile1 = "sequence1.txt";
+    string seqFile2 = "sequence1.txt";
+    int seed = 0;
+    int lvl = 0;
+    if (argc > 1){
+        if (!strcmp(argv[1], "-text")){ //text mode
+        } else if (!strcmp(argv[1], "-seed")){
+            if (argc == 3) seed = atoi(argv[2]);
+        } else if (!strcmp(argv[1], "-scriptfile1")){
+            if (argc == 3) seqFile1 = argv[2];
+        } else if (!strcmp(argv[1], "-scriptfile2")){
+            if (argc == 3) seqFile2 = argv[2];
+        } else if (!strcmp(argv[1], "-startlevel")){
+            if (argc == 3) lvl = atoi(argv[2]);
+        }
+    }
+
+    if (lvl > 6) lvl = 0;
+
     cout << "Please enter player 1's name (up to 5 characters)" << endl;
     if (!(cin >> s1))
     {
@@ -169,8 +188,8 @@ int main(int argc, char *argv[])
         s2 = s2.substr(0, 5);
     }
     cout << "Welcome to Biquadris " << s1 << " and " << s2 << "!" << endl;
-    Player *p1 = new Player(0, s1, 0);
-    Player *p2 = new Player(0, s2, 0);
+    Player *p1 = new Player(0, s1, 0, seqFile1);
+    Player *p2 = new Player(0, s2, 0, seqFile2);
     Grid *g1 = new Grid;
     Grid *g2 = new Grid;
     g1->init(p1);
@@ -187,6 +206,8 @@ int main(int argc, char *argv[])
     cin.clear();
     string command;
 
+    c.startlevel(lvl);            
+    c.generate();
     try
     {
         while (true)
@@ -225,9 +246,9 @@ int main(int argc, char *argv[])
             {
                 if (no != 0)
                 {
-                    c.startlevel(no);
+            //        c.startlevel(no);
                 }
-                c.generate();
+              //  c.generate();
                 continue;
             }
             else if (command == "left")

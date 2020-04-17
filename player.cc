@@ -1,10 +1,11 @@
 #include "player.h"
 using namespace std;
 
-Player::Player(int x, string s, int lev) {
+Player::Player(int x, string s, int lev, string fileName) {
     this->score = x;
     this->name = s;
     this->blind = false;
+    this->file = fileName;
     if (lev < 0) { 
         lev = 0;
     } else if (lev > 4) { 
@@ -109,6 +110,11 @@ void Player::changeLevel(int lev) {
         this->l = new levelsix();
     }
 }
+
+string Player::getFileName(){
+    return this->file;
+}
+
 
 Player::~Player() { 
     delete this->b;

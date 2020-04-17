@@ -18,11 +18,13 @@ class Player {
     levels *l;
     int level;
     bool blind;
+    std::string file;
     Block *b = nullptr;
     Block *bnext = nullptr;
     bool specialCommandHeavy = false;
     public:
-    Player(int, std::string, int);
+    std::string getFileName();
+    Player(int, std::string, int, std::string);
     int getScore();
     void addScore(int);
     Block *getBlock();

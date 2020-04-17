@@ -21,7 +21,6 @@ void Block::move(int direction){
             if (this->heavy) {
                 this->blockVector.at(i)->updateBy(0, -1 * this->heavyBy);
                 this->coords.at(i).second += -1 * this->heavyBy;
-
             }
         }
         this->xPos += direction;
