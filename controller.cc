@@ -126,23 +126,13 @@ void Controller::changeTurn() {
     if (!this->text && this->getGrid()->getPlayer()->getLevel() == 6) {
         this->getGrid()->fixBlind(this->turn);
     }
-    if (this->g1->getPlayer()->getScore() > this->highscore) {
+    if (this->getGrid()->getPlayer()->getScore() > this->highscore) {
         this->highscore = this->g1->getPlayer()->getScore();
         this->td->updateScore(this->highscore);
         if (!this->text) { 
             this->gr->changeScore(this->highscore);
         }
-        cout << "Player 1: " << this->g1->getPlayer()->getName() 
-        << " updated highscore!" << endl;
-    } 
-    if (this->g2->getPlayer()->getScore() > this->highscore) {
-        this->highscore = this->g2->getPlayer()->getScore();
-        this->td->updateScore(this->highscore);
-        if (!this->text) {
-            this->gr->changeScore(this->highscore);
-        }
-        cout << "Player 2: " << this->g2->getPlayer()->getName() 
-        << " updated highscore!" << endl;
+        cout << this->getGrid()>getPlayer()->getName() << " updated highscore!" << endl;
     } 
     if (this->turn == State::p1) {
         this->turn = State::p2;
