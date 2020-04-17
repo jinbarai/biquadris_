@@ -24,7 +24,7 @@ class Player {
     bool specialCommandHeavy = false;
     public:
     std::string getFileName();
-    Player(int, std::string, int, std::string);
+    Player(int, std::string, int, std::string = "");
     int getScore();
     void addScore(int);
     Block *getBlock();

@@ -21,6 +21,7 @@
 #include "levelsix.h"
 #include "graphics.h"
 #include <cstdlib>
+using namespace std;
 
 const string levelupfile = "textFiles/possible_levelu.txt";
 const string leveldownfile = "textFiles/possible_leveld.txt";

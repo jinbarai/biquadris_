@@ -7,7 +7,6 @@
 #include "levels.h"
 #include "graphics.h"
 #include "state.h"
-using namespace std;
 // when you cannot spot
 
 class Controller { 
