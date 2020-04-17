@@ -96,6 +96,13 @@ bool Grid::validate(int x, int y)  {
     return true;
 }
 
+void Grid::changeBlock(Block *b) {
+    int x = this->p->getBlock()->getBottomX();
+    int y = this->p->getBlock()->getBottomY();
+    vector <pair<int, int>> coords = b->getCoords();
+    
+}
+
 int Grid::down(State p) {
     Block *b = this->getPlayer()->getBlock();
     vector <pair<int, int>> coords = b->getCoords();

@@ -79,16 +79,37 @@ void Controller::force(char c) {
     } else if (c == 'J' || c == 'j') {
         delete p->getNextBlock();
         p->setNextBlock(new JBlock(b));
-    } else if (c == 'T' || c == 't') {
+    } else if (c == 'L' || c == 'L') {
         delete p->getNextBlock();
-        p->setNextBlock(new TBlock(b));
+        p->setNextBlock(new LBlock(b));
     } else { 
         cout << "Invalid Character, Force cancelled" << endl;
     }
 }
 
 void Controller::changeBlock(char c) {
-
+    bool b = false;
+    if (this->getGrid()->getPlayer()->getLevel() >= 3) {
+        b = true;
+    }
+    Block *b;
+    if (c == 'Z' || c == 'z') { 
+        this->theGrid()->changeBlock(new ZBlock(b));
+    } else if (c == 'T' || c == 't') {
+        this->theGrid()->changeBlock(new TBlock(b));
+    } else if (c == 'O' || c == 'o') {
+        this->theGrid()->changeBlock(new OBlock(b));
+    } else if (c == 'S' || c == 's') {
+        this->theGrid()->changeBlock(new SBlock(b));
+    } else if (c == 'I' || c == 'i') {
+        this->theGrid()->changeBlock(new IBlock(b));
+    } else if (c == 'J' || c == 'j') {
+        this->theGrid()->changeBlock(new JBlock(b));
+    } else if (c == 'L' || c == 'l') {
+        this->theGrid()->changeBlock(new LBlock(b));
+    } else { 
+        cout << "Invalid Character: " << c << "command cancelled" << endl;
+    }
 }
 
 void Controller::changeTurn() {
