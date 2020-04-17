@@ -269,7 +269,6 @@ int main(int argc, char *argv[])
             else if (command == "right")
             {
                 no = (no > 10) ? 10 : no;
-                cout << no << endl;
                 c->move(no, RIGHT);
             }
             else if (command == "down")
@@ -342,11 +341,9 @@ int main(int argc, char *argv[])
                 if (file!="") c->norandom(file);
                 else cout<<"Filename not entered or file not readable" << endl;
             }
-            else if (command  == "i" || command  == "j" || command  == "l"
-                   || command  == "o" || command  == "z" || command  == "s" ||
-                   command  == "t"){
-                cout << command << endl; 
+            else if (command  == "i" || command  == "j" || command  == "l" || command  == "o" || command  == "z" || command  == "s" || command  == "t"){
                 char com = command[0];
+                //cout << com << endl; 
                 c->changeBlock(com);
             }
             else
