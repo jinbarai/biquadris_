@@ -97,7 +97,56 @@ void Graphics::drawBlind(State p) {
     }
 }
 
+void Graphics::level6(State p) {
+  if (p == State::p1) {
+        if (this->p1->getLevel() != 6) { 
+            return;
+        }
+    } else if (p == State::p2) {
+        if (this->p2->getLevel() != 6) {
+            return;
+        }
+    }
+    for (int i = 0; i < 18; ++i) {
+        for (int k = 0; k < 11; ++k) {
+            int row = 17 - i;
+            int x; 
+            int y =  90 + row * 20;
+            if (p == State::p1) {
+                x = 30 + k * 19;
+            } else { 
+                x = 260 + k * 19;
+            }
+            this->xw.fillRectangle(x+1, y+1, 17, 18, Xwindow::Black);
+            this->xw.fillCircle(x + 9, y + 10, 17, Xwindow::White);
+        }
+    }
+}
+
+void Graphics::blindnotify(State p, int row, int col, char c) {
+    row = 17 - row;
+    int x; 
+    int y =  90 + row * 20;
+    if  (p == State::p1) {
+        x = 30 + col * 19;
+    } else { 
+        x = 260 + col * 19;
+    }
+    int colour = getColour(c);
+    this->xw.fillRectangle(x+1, y+1, 17, 18, colour);
+
+}
+
 void Graphics::notify(State p, int row, int col, char c) {
+    if (p == State::p1) {
+        if (this->p1->getLevel() == 6) { 
+            return;
+        }
+    } else if (p == State::p2) {
+        if (this->p2->getLevel() == 6) {
+            return;
+        }
+    }
     row = 17 - row;
     int x; 
     int y =  90 + row * 20;

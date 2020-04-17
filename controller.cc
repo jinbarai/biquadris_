@@ -1,4 +1,5 @@
 #include "controller.h"
+using namespace std;
 
 Controller::Controller(Grid *g1, Grid *g2, TextDisplay *td, Graphics *gr) {
     this->g1 = g1;
@@ -88,31 +89,33 @@ void Controller::force(char c) {
 }
 
 void Controller::changeBlock(char c) {
-    bool b = false;
+    bool flag = false;
     if (this->getGrid()->getPlayer()->getLevel() >= 3) {
-        b = true;
+        flag = true;
     }
-    Block *b;
     if (c == 'Z' || c == 'z') { 
-        this->theGrid()->changeBlock(new ZBlock(b));
+        this->getGrid()->changeBlock(new ZBlock(flag));
     } else if (c == 'T' || c == 't') {
-        this->theGrid()->changeBlock(new TBlock(b));
+        this->getGrid()->changeBlock(new TBlock(flag));
     } else if (c == 'O' || c == 'o') {
-        this->theGrid()->changeBlock(new OBlock(b));
+        this->getGrid()->changeBlock(new OBlock(flag));
     } else if (c == 'S' || c == 's') {
-        this->theGrid()->changeBlock(new SBlock(b));
+        this->getGrid()->changeBlock(new SBlock(flag));
     } else if (c == 'I' || c == 'i') {
-        this->theGrid()->changeBlock(new IBlock(b));
+        this->getGrid()->changeBlock(new IBlock(flag));
     } else if (c == 'J' || c == 'j') {
-        this->theGrid()->changeBlock(new JBlock(b));
+        this->getGrid()->changeBlock(new JBlock(flag));
     } else if (c == 'L' || c == 'l') {
-        this->theGrid()->changeBlock(new LBlock(b));
+        this->getGrid()->changeBlock(new LBlock(flag));
     } else { 
         cout << "Invalid Character: " << c << "command cancelled" << endl;
     }
 }
 
 void Controller::changeTurn() {
+    if (this->getGrid()->getPlayer()->getLevel() == 6) {
+        this->getGrid()->fixBlind(this->turn);
+    }
     if (this->turn == State::p1) {
         this->turn = State::p2;
         this->generate();
@@ -160,7 +163,10 @@ void Controller::heavy(){
 
 void Controller::move(int n, int dir) { 
     for (int i = 0; i < n; ++i) {
-        this->getGrid()->move(this->turn, dir);
+        int val = this->getGrid()->move(this->turn, dir);
+        if (this->getGrid()->getPlayer()->getLevel() != 6 && val) { 
+            cout << *this->getGrid();
+        }
     }
 }
 
@@ -172,7 +178,9 @@ void Controller::readFromFile(string filename, levels *l) {
 void Controller::down(int n) { 
     for (int i = 0; i < n; ++i) {
         int val = this->getGrid()->down(this->turn);
-        cout << *this->getGrid();
+        if (this->getGrid()->getPlayer()->getLevel() != 6) { 
+            cout << *this->getGrid();
+        }
         if (val != 1) {
             break;
         } 
@@ -181,10 +189,12 @@ void Controller::down(int n) {
 
 void Controller::cw(int n) {
     for (int i = 0; i < n; ++i) {
-        this->getGrid()->rotate(this->turn);
+       this->getGrid()->rotate(this->turn);
     }
     if (this->getGrid()->getPlayer()->getBlock()->isHeavy()) this->down();
-    cout << *this->getGrid();
+    if (this->getGrid()->getPlayer()->getLevel() != 6) { 
+        cout << *this->getGrid();
+    }
 }
 
 void Controller::ccw(int n) {
@@ -194,16 +204,19 @@ void Controller::ccw(int n) {
         }
     }
     if (this->getGrid()->getPlayer()->getBlock()->isHeavy()) this->down();
-    cout << *this->getGrid();
+    if (this->getGrid()->getPlayer()->getLevel() != 6) { 
+        cout << *this->getGrid();
+    }
 }
 
 void Controller::drop(int n) {
     bool flag = false; 
     for (int i = 0; i < n; ++i) {
         bool val = this->getGrid()->drop(this->turn);
+        cout << *this->getGrid();
         if (val) {
           flag = true;
-         }
+        }
         if (this->getGrid()->getPlayer()->isSpecialHeavy()){
             this->getGrid()->getPlayer()->setSpecialHeavy(false);
         }
@@ -272,6 +285,9 @@ void Controller::sequence(string filename) {
 void Controller::generate() { 
     try { 
         levels *l = this->getGrid()->getPlayer()->getPtrLevel();
+        if (this->getGrid()->getPlayer()->getLevel() == 6) {
+            this->gr->level6(this->turn);
+        }
         if(l->getRandom() == true) {
             this->readFromFile(this->getGrid()->getPlayer()->getFileName(), l); // throws a string 
         }
@@ -286,7 +302,9 @@ void Controller::generate() {
         this->getGrid()->update(this->turn);
     }
     catch (string &c) { cout << c << endl; }
-    cout << *(this->getGrid()); 
+    if (this->getGrid()->getPlayer()->getLevel() != 6) { 
+        cout << *this->getGrid();
+    }
 }
 
 Controller::~Controller() {

@@ -82,7 +82,6 @@ bool Grid::move(State p, int dir) {
             this->gr->notify(p, y, x, c);
         }
     }
-    cout << *this;
     return true;
 }
 
@@ -190,7 +189,6 @@ bool Grid::drop(State p) {
         this->brown(p, this->p->getLevel());
     }
     const bool row = rowclear(p);
-    cout << *this;
     return row;
 }
 
@@ -250,7 +248,7 @@ void Grid::brown(State p, int n) {
 void Grid::fixBlind(State p) {
     for (int row = 0; row < 18; ++row) {
         for  (int col = 0; col < 11; ++col) {
-            this->gr->notify(p, row, col, this->theGrid.at(row).at(col).getType());
+            this->gr->blindnotify(p, row, col, this->theGrid.at(row).at(col).getType());
         }
     }
 }
