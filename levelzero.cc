@@ -91,6 +91,7 @@ bool levelzero::isHeavy() {
 
 void levelzero::clearVector() {
     block_file.clear(); 
+    this->curseq = 0;
 }
 
 void levelzero::setRandom(bool val){

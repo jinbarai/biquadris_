@@ -116,6 +116,7 @@ bool levelfive::getRandom() {
 
 void levelfive::clearVector() {
     block_file.clear(); 
+    this->curseq = 0; 
 }
 
 bool levelfive::isHeavy() { 

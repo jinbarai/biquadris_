@@ -116,6 +116,7 @@ bool levelsix::getRandom() {
 
 void levelsix::clearVector() {
     block_file.clear(); 
+    this->curseq = 0; 
 }
 
 
