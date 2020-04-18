@@ -53,7 +53,7 @@ Graphics::Graphics(shared_ptr<Player> p1, shared_ptr<Player> p2, int score) : p1
 
 
 void Graphics::changeScore(int score) { 
-    this->xw.fillRectangle(365, 10, 200, 30, Xwindow::White);
+    this->xw.fillRectangle(370, 10, 180, 25, Xwindow::White);
     string highscore;
     stringstream sscore; 
     sscore << score;

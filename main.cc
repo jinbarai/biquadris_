@@ -218,18 +218,18 @@ int main(int argc, char *argv[])
     auto g2 = make_shared<Grid>();
     g1->init(p1, text);
     g2->init(p2, text);
-    shared_ptr<TextDisplay> td = make_shared<TextDisplay>(p1, p2, 5); // given the programs highscore!
+    shared_ptr<TextDisplay> td = make_shared<TextDisplay>(p1, p2, 0); // given the programs highscore!
     g1->setTD(td);
     g2->setTD(td);
     shared_ptr<Graphics> gr;
     if (!text) { 
-        gr = make_shared<Graphics>(p1, p2, 5);
+        gr = make_shared<Graphics>(p1, p2, 0);
     } else { 
         gr = nullptr;
     }
     g1->setGraphics(gr);
     g2->setGraphics(gr);
-    unique_ptr<Controller> c = make_unique<Controller>(g1, g2, td, 5, text, gr);
+    unique_ptr<Controller> c = make_unique<Controller>(g1, g2, td, 0, text, gr);
     cin.ignore();
     cin.clear();
     string command;
