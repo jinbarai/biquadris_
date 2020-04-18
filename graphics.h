@@ -23,6 +23,7 @@ class Graphics {
     void NextBlockp1(char c);
     void level6(State p);
     void NextBlockp2(char c);
+    Xwindow *getXwindow();
     void changeLevel();
     ~Graphics() = default;
 };

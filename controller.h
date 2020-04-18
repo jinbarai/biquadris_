@@ -28,6 +28,8 @@ class Controller {
     void ccw(int n = 1); // counterclockwise
     void levelup();
     void leveldown();
+    int getHighScore();
+    std::string getKeyboardCommand();
     // Special Actions
     void specialAction();
     void changeBlock(char c);
@@ -35,7 +37,6 @@ class Controller {
     void heavy();
     void force(char c);
     void generate();
-    void getHighScore();
     std::shared_ptr<Grid> getG1();
     std::shared_ptr<Grid> getG2();
     void startlevel(int n);

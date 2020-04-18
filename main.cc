@@ -21,6 +21,7 @@
 #include "levelsix.h"
 #include "graphics.h"
 #include <cstdlib>
+#include <fstream>
 using namespace std;
 
 const string levelupfile = "textFiles/possible_levelu.txt";
@@ -37,7 +38,7 @@ const string hintfile = "textFiles/possible_hint.txt";
 const string norandomfile = "textFiles/possible_norandom.txt";
 const string randomfile = "textFiles/possible_random.txt";
 string file = ""; 
-
+#undef _KEYBOARDMODE_
 using namespace std;
 
 string getNum(string n)
@@ -84,6 +85,18 @@ bool checkinFile(string file, string word)
         }
     }
     return false;
+}
+
+int readHighScore(){
+    ifstream file{"highscore.txt"};
+    int h;
+    file >> h;
+    return h;
+}
+
+void saveHighScore(int n){
+    ofstream file{"highscore.txt"};
+    file << n;
 }
 
 string getCommand(string n)
@@ -149,12 +162,15 @@ string getCommand(string n)
     }
 }
 
+
 int main(int argc, char *argv[])
 {
+    bool keyboardmode = false;
     cin.exceptions(ios::eofbit | ios::failbit); // from a4q4 main
     string cmd;                                 // for later commands
     string s1;
     string s2;
+    int highScore = readHighScore();
     string seqFile1 = "biquadris_sequence1.txt";
     string seqFile2 = "biquadris_sequence2.txt";
     unsigned int seed=0;
@@ -163,7 +179,8 @@ int main(int argc, char *argv[])
     if (argc > 1)
     {
         if (!strcmp(argv[1], "-text"))
-        { text = true;
+        { 
+            text = true;
         }
         else if (!strcmp(argv[1], "-seed"))
         {
@@ -184,6 +201,9 @@ int main(int argc, char *argv[])
         {
             if (argc == 3)
                 lvl = atoi(argv[2]);
+        }
+        else if (!strcmp(argv[1], "-keyboardmode")){
+           keyboardmode = true;
         }
     }
 
@@ -231,68 +251,70 @@ int main(int argc, char *argv[])
     string command;
     c->startlevel(lvl);
     c->generate();
+
+
     try
     {
         while (true)
         {
             // Extracting a line to work a number and string
             file = ""; 
-            getline(cin, cmd);
-            command = getCommand(cmd);
-            string num = getNum(cmd);
-            // Handle filenames
-            if ((command).compare("end") == 0)
-            {
-                // This won't work for windows, will work only for mac
-                //system("clear");
-                // For windows: system("CLS");
-                cout << "Thank you for playing with us! <3" << endl;
-                cout << "Player 1: " << p1->getScore() << endl;
-                cout << "Player 2: " << p2->getScore() << endl;
-                break;
-            }
+            int multiplier = 1;
+            if (!keyboardmode){
+                getline(cin, cmd);
+                command = getCommand(cmd);
+                string num = getNum(cmd);
 
-            int no;
-            if (!(num.empty()))
-            {
-                no = stoi(num);
+                // Handle filenames
+                if ((command).compare("end") == 0)
+                {
+                    // This won't work for windows, will work only for mac
+                //    system("clear");
+                    saveHighScore(c->getHighScore());
+                    // For windows: system("CLS");
+                    cout << "Thank you for playing with us! <3" << endl;
+                    cout << "Player 1: " << p1->getScore() << endl;
+                    cout << "Player 2: " << p2->getScore() << endl;
+                    break;
+                }
+                if (!(num.empty()))
+                    multiplier = stoi(num);
+                else
+                    multiplier = 1;
             }
-            else
-            {
-                no = 1;
-            }
+            else if (keyboardmode) 
+                command = c->getKeyboardCommand();
 
-            // Handling commands
             if (command == "left")
             {
-                no = (no > 10) ? 10 : no;
-                c->move(no, LEFT);
+                multiplier = (multiplier > 10) ? 10 : multiplier;
+                c->move(multiplier, LEFT);
             }
             else if (command == "right")
             {
-                no = (no > 10) ? 10 : no;
-                c->move(no, RIGHT);
+                multiplier = (multiplier > 10) ? 10 : multiplier;
+                c->move(multiplier, RIGHT);
             }
             else if (command == "down")
             {
-                no = (no > 17) ? 17 : no;
-                cout << no << endl;
-                c->down(no);
+                multiplier = (multiplier > 17) ? 17 : multiplier;
+                cout << multiplier << endl;
+                c->down(multiplier);
             }
             else if (command == "drop")
             {
-                c->drop(no);
+                c->drop(multiplier);
             }
             else if (command == "cw")
             {
-                // logic for simplifying no
-                // no = (no%2
-                c->cw(no);
+                // logic for simplifying multiplier
+                // multiplier = (multiplier%2
+                c->cw(multiplier);
             }
             else if (command == "ccw")
             {
-                // logic for simplifying no
-                c->ccw(no);
+                // logic for simplifying multiplier
+                c->ccw(multiplier);
             }
             else if (command == "random")
             {
@@ -310,9 +332,9 @@ int main(int argc, char *argv[])
             }
             else if (command == "levelup")
             {
-                no = (no > 6) ? 6 : no;
-                //cout << no << endl;
-                for (int i = 0; i < no; i++)
+                multiplier = (multiplier > 6) ? 6 : multiplier;
+                //cout << multiplier << endl;
+                for (int i = 0; i < multiplier; i++)
                 {
                     if (c->getGrid()->getPlayer()->getLevel() != 6) {
                         c->levelup();
@@ -324,10 +346,10 @@ int main(int argc, char *argv[])
             }
             else if (command == "leveldown")
             {
-                no = (no < 0) ? 0 : no;
+                multiplier = (multiplier < 0) ? 0 : multiplier;
                 if (c->getGrid()->getPlayer()->getLevel())
-                //cout << no << endl;
-                for (int i = 0; i < no; i++)
+                //cout << multiplier << endl;
+                for (int i = 0; i < multiplier; i++)
                 {
                     // check if player whose turn it is has a level 0 then break
                     if (c->getGrid()->getPlayer()->getLevel() != 0) {

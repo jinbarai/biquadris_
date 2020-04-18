@@ -153,8 +153,8 @@ void Controller::levelup() {
     }
 }
 
-void Controller::getHighScore(){
-    
+int Controller::getHighScore(){
+    return this->highscore;
 }
 
 void Controller::leveldown() {
@@ -191,6 +191,7 @@ void Controller::move(int n, int dir) {
     for (int i = 0; i < n; ++i) {
         int val = this->getGrid()->move(this->turn, dir);
         if (this->getGrid()->getPlayer()->getBlock()->isLevelHeavy()){
+        // || this->getGrid()->getPlayer()->isLevelHeavy()){
             val = this->getGrid()->down(this->turn);
             if (val == 0 || val == -1){
                 this->getGrid()->getPlayer()->setSpecialHeavy(false);
@@ -227,12 +228,13 @@ void Controller::down(int n) {
     for (int i = 0; i < n; ++i) {
         int val = this->getGrid()->down(this->turn);
         if (this->getGrid()->getPlayer()->getBlock()->isLevelHeavy()){
+        //|| this->getGrid()->getPlayer()->isLevelHeavy()){
             val = this->getGrid()->down(this->turn);
-        }
-        if (val == 0 || val == -1){
-            this->getGrid()->getPlayer()->setSpecialHeavy(false);
-            this->changeTurn();
-            return;
+            if (val == 0 || val == -1){
+                this->getGrid()->getPlayer()->setSpecialHeavy(false);
+                this->changeTurn();
+                return;
+            }
         }
         if (this->getGrid()->getPlayer()->getBlock()->isCommandHeavy()){
             val = this->getGrid()->down(this->turn);
@@ -256,6 +258,33 @@ void Controller::down(int n) {
         } 
     }
 } 
+
+string Controller::getKeyboardCommand() // used xev in console to get these numbers
+{
+    int key = this->getGrid()->getGraphics()->getXwindow()->getKeyCode();
+    if (key == 113) 
+        return "left"; //left arrow
+    else if (key == 114) 
+        return "right";// right arrow
+    else if (key == 116) 
+        return "down";// down arrow
+    else if (key == 65) 
+        return "drop";// spacebar
+    else if (key == 52) 
+        return "cw";// z
+    else if (key == 53) 
+        return "ccw";// x
+    else if (key == 29) 
+        return "restart";// y
+    else if (key == 25)
+        return "levelup";// w
+    else if (key == 39)
+        return "leveldown";// s
+    else if (key == 9)
+        return "end";//escape
+    else
+        return "";
+}
 
 void Controller::cw(int n) {
     //n = n % 4;

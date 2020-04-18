@@ -86,7 +86,14 @@ void Player::setBlind() {
     } else { 
         this->blind = true;
     }
+}/*
+void Player::setLevelHeavy(bool b){
+    this->levelHeavy = b;
 }
+bool Player::isLevelHeavy(){
+    return  this->levelHeavy;
+}
+*/
 
 void Player::changeLevel(int lev) {
     if (lev > 6) {
@@ -97,18 +104,25 @@ void Player::changeLevel(int lev) {
     this->level = lev;
     if (lev == 0) {
         this->l =  make_shared<levelzero>(); // add notes based on level code
+     //   this->setLevelHeavy(false);
     } else if (lev == 1) {
         this->l  = make_shared<levelone>();
+     ///   this->setLevelHeavy(false);
     } else if (lev == 2) {
         this->l  = make_shared<leveltwo>();
+      //  this->setLevelHeavy(false);
     } else if (lev == 3) {
+      //  this->setLevelHeavy(true);
         this->l  = make_shared<levelthree>();
     } else if (lev == 4) {
         this->l  = make_shared<levelfour>();
+      //  this->setLevelHeavy(true);
     }  else if (lev == 5) {
         this->l = make_shared<levelfive>();
+      //  this->setLevelHeavy(true);
     } else if (lev == 6) {
         this->l = make_shared<levelsix>();
+      //  this->setLevelHeavy(true);
     }
 }
 

@@ -167,6 +167,16 @@ void Xwindow::drawBigString(int x, int y, string msg, int colour) {
 	drawStringFont(x, y, msg, name.str(), colour);
 }
 
+int Xwindow::getKeyCode(){
+	XSelectInput(d, w, KeyPressMask);
+    XNextEvent(d, &e);
+	if (this->e.type == KeyPress) {
+		return this->e.xkey.keycode;
+	}
+	XFlush(d);
+	return 0x09;
+}
+
 void Xwindow::printMessage(int x, int y, const string& msg, int colour, XFontStruct& f){
   XSetForeground(d, gc, colours[colour]);
   XTextItem ti;

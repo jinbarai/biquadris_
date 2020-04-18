@@ -61,6 +61,11 @@ void Graphics::changeScore(int score) {
     this->xw.drawStringFont(380, 20, "HighScore: " + highscore, "lucidasans-bold-14");
 }
 
+Xwindow *Graphics::getXwindow(){
+    return &this->xw;
+}
+
+
 int Graphics::getColour(char c) {
     if (c == ' ') {
         return Xwindow::Black;

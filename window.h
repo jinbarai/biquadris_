@@ -8,6 +8,7 @@ class Xwindow {
 	Display *d;
 	Window w;
 	int s;
+	XEvent e;
 	GC gc;
 	unsigned long colours[11];
 	int width, height;
@@ -46,6 +47,8 @@ class Xwindow {
 			int colour);
 	// Draws a circle centered at (x, y) with diameter d
 	void fillCircle(int x, int y, int d, int colour = Black);
+
+	int getKeyCode();
 
   void showAvailableFonts();
 

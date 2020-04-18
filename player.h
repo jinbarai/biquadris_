@@ -17,6 +17,7 @@ class Player {
     std::shared_ptr<levels> l;
     int level;
     bool blind;
+    //bool levelHeavy;
     std::string file;
     std::shared_ptr<Block> b = nullptr;
     std::shared_ptr<Block> bnext = nullptr;
@@ -26,6 +27,8 @@ class Player {
     Player(int, std::string, int, std::string = "");
     int getScore();
     void addScore(int);
+   // void setLevelHeavy(bool);
+   // bool isLevelHeavy();
     std::shared_ptr<Block> getBlock();
     bool isBlind();
     void setBlind();
