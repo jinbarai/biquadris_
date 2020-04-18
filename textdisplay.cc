@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-TextDisplay::TextDisplay(Player *p1, Player *p2, int score) : p1{p1}, p2{p2}, highscore{score} {
+TextDisplay::TextDisplay(shared_ptr<Player> p1, shared_ptr<Player>p2, int score) : p1{p1}, p2{p2}, highscore{score} {
     theDisplayp1.clear();
     theDisplayp2.clear();
     for (int i = 0; i < 18; ++i) {

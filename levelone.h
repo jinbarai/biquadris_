@@ -17,16 +17,14 @@
 #ifndef ONE_H
 #define ONE_H
 
-//class InvalidMove{};
-
 class levelone: public levels { 
-    Block *makeBlocks(char type, bool isHeavy) override; 
+    std::shared_ptr<Block> makeBlocks(char type, bool isHeavy) override; 
     bool isHeavy() override; 
     bool norandom=false; 
     public: 
     void setRandom(bool val) override;
     bool getRandom() override; 
-    Block *createBlock() override; 
+    std::shared_ptr<Block> createBlock() override; 
     void clearVector()override; 
     void blocksFromFile(std::string filename) override; 
     ~levelone();

@@ -15,7 +15,7 @@
 #include "zblock.h"
 using namespace std;
 
-Block *levelthree::createBlock()
+shared_ptr<Block> levelthree::createBlock()
 {
     // Read from file if norandom option is enabled 
     if (this->norandom)
@@ -65,35 +65,34 @@ Block *levelthree::createBlock()
 }
 
 // Implementing methods
-Block *levelthree::makeBlocks(char type, bool isHeavy)
+shared_ptr<Block> levelthree::makeBlocks(char type, bool isHeavy)
 {
-    Block *p;
-    switch (type)
-    {
-    case 'I':
-        p = new IBlock(isHeavy);
+    shared_ptr<Block> p; 
+    switch(type) {
+    case 'I': 
+        p = make_shared<IBlock>(isHeavy);
         break;
-    case 'J':
-        p = new JBlock(isHeavy);
+    case 'J': 
+        p = make_shared<JBlock>(isHeavy);
         break;
-    case 'L':
-        p = new LBlock(isHeavy);
+    case 'L': 
+        p = make_shared<LBlock>(isHeavy);
         break;
-    case 'O':
-        p = new OBlock(isHeavy);
+    case 'O': 
+        p = make_shared<OBlock>(isHeavy);
         break;
-    case 'S':
-        p = new SBlock(isHeavy);
+    case 'S': 
+        p = make_shared<SBlock>(isHeavy);
         break;
-    case 'Z':
-        p = new ZBlock(isHeavy);
+    case 'Z': 
+        p = make_shared<ZBlock>(isHeavy);
         break;
-    default:
-        p = new TBlock(isHeavy);
+    default: 
+        p = make_shared<TBlock>(isHeavy);
         break;
     }
-    return p;
-}
+    return p; 
+} 
 
 // check if file exists
 bool levelthree::is_file_exist(const string file)

@@ -212,24 +212,24 @@ int main(int argc, char *argv[])
         s2 = s2.substr(0, 5);
     }
     cout << "Welcome to Biquadris " << s1 << " and " << s2 << "!" << endl;
-    Player *p1 = new Player(0, s1, 0, seqFile1);
-    Player *p2 = new Player(0, s2, 0, seqFile2);
-    Grid *g1 = new Grid;
-    Grid *g2 = new Grid;
+    shared_ptr<Player> p1 = make_shared<Player>(0, s1, 0, seqFile1);
+    shared_ptr<Player> p2 = make_shared<Player>(0, s2, 0, seqFile2);
+    auto g1 = make_shared<Grid>();
+    auto g2 = make_shared<Grid>();
     g1->init(p1, text);
     g2->init(p2, text);
-    TextDisplay *td = new TextDisplay{p1, p2, 5}; // given the programs highscore!
+    shared_ptr<TextDisplay> td = make_shared<TextDisplay>(p1, p2, 5); // given the programs highscore!
     g1->setTD(td);
     g2->setTD(td);
-    Graphics *gr;
+    shared_ptr<Graphics> gr;
     if (!text) { 
-        gr = new Graphics{p1, p2, 5};
+        gr = make_shared<Graphics>(p1, p2, 5);
     } else { 
         gr = nullptr;
     }
     g1->setGraphics(gr);
     g2->setGraphics(gr);
-    Controller *c = new Controller(g1, g2, td, 5, text, gr);
+    unique_ptr<Controller> c = make_unique<Controller>(g1, g2, td, 5, text, gr);
     cin.ignore();
     cin.clear();
     string command;
@@ -362,7 +362,7 @@ int main(int argc, char *argv[])
     }    
     catch (GameOver g)
     {   
-        cout << "Uhoh, game over!" << endl;
+        cout << "GAME OVER!" << endl;
         if (g.player == State::p1) { 
             cout << "Player 2: " << c->getG2()->getPlayer()->getName() << " wins!" << endl;
         } else { 

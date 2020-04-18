@@ -1,7 +1,7 @@
 #include "graphics.h"
 using namespace std;
 
-Graphics::Graphics(Player *p1, Player *p2, int score) : p1{p1}, p2{p2} { 
+Graphics::Graphics(shared_ptr<Player> p1, shared_ptr<Player> p2, int score) : p1{p1}, p2{p2} { 
     this->xw.fillRectangle(0, 0, 500, 500, 0);
         //"lucidasans-bold-24"
     this->xw.drawStringFont(30, 24, "BIQUADRIS:JJK", "lucidasanstypewriter-bold-24");

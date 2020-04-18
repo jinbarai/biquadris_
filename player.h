@@ -11,32 +11,31 @@
 #include "levelfive.h"
 #include "levelsix.h"
 
-
 class Player { 
     int score;
     std::string name;
-    levels *l;
+    std::shared_ptr<levels> l;
     int level;
     bool blind;
     std::string file;
-    Block *b = nullptr;
-    Block *bnext = nullptr;
+    std::shared_ptr<Block> b = nullptr;
+    std::shared_ptr<Block> bnext = nullptr;
     bool specialCommandHeavy = false;
     public:
     std::string getFileName();
     Player(int, std::string, int, std::string = "");
     int getScore();
     void addScore(int);
-    Block *getBlock();
+    std::shared_ptr<Block> getBlock();
     bool isBlind();
     void setBlind();
-    Block *getNextBlock();
-    void setBlock(Block *b);
-    void setNextBlock(Block *b);
+    std::shared_ptr<Block> getNextBlock();
+    void setBlock(std::shared_ptr<Block> b);
+    void setNextBlock(std::shared_ptr<Block> b);
     void setSpecialHeavy(bool);
     bool isSpecialHeavy();
     std::string getName();
-    levels *getPtrLevel();
+    std::shared_ptr<levels> getPtrLevel();
     int getLevel();
     void setFile(std::string filename); 
     void changeLevel(int);

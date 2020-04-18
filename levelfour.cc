@@ -19,7 +19,7 @@
 
 using namespace std; 
 
-Block* levelfour::createBlock() {
+shared_ptr<Block> levelfour::createBlock() {
   // Read from file norandom == true 
   if (this->norandom) {
       char nowBlock = block_file.at(this->curseq); 
@@ -57,33 +57,34 @@ Block* levelfour::createBlock() {
 }
 
 // Implementing methods 
-Block* levelfour::makeBlocks(char type, bool isHeavy) {
-    Block *p; 
+shared_ptr<Block> levelfour::makeBlocks(char type, bool isHeavy) {
+   shared_ptr<Block> p; 
     switch(type) {
     case 'I': 
-        p = new IBlock(isHeavy);
+        p = make_shared<IBlock>(isHeavy);
         break;
     case 'J': 
-        p = new JBlock(isHeavy);
+        p = make_shared<JBlock>(isHeavy);
         break;
     case 'L': 
-        p = new LBlock(isHeavy);
+        p = make_shared<LBlock>(isHeavy);
         break;
     case 'O': 
-        p = new OBlock(isHeavy);
+        p = make_shared<OBlock>(isHeavy);
         break;
     case 'S': 
-        p = new SBlock(isHeavy);
+        p = make_shared<SBlock>(isHeavy);
         break;
     case 'Z': 
-        p = new ZBlock(isHeavy);
+        p = make_shared<ZBlock>(isHeavy);
         break;
     default: 
-        p = new TBlock(isHeavy);
+        p = make_shared<TBlock>(isHeavy);
         break;
     }
     return p; 
 } 
+
 // check if file exists 
 bool levelfour::is_file_exist(const string file) {
     std::ifstream infile(file);  
