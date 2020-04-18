@@ -15,35 +15,35 @@ Player::Player(int x, string s, int lev, string fileName) {
     }
     this->level = lev;
     if (lev == 0) {
-        this->l =  new levelzero(); // add notes based on level code
+        this->l =  make_shared<levelzero>(); // add notes based on level code
     } else if (lev == 1) {
-        this->l  = new levelone();
+        this->l  = make_shared<levelone>();
     } else if (lev == 2) {
-         this->l  = new leveltwo();
+        this->l  = make_shared<leveltwo>();
     } else if (lev == 3) {
-        this->l  = new levelthree();
+        this->l  = make_shared<levelthree>();
     } else if (lev == 4) {
-        this->l  = new levelfour();
+        this->l  = make_shared<levelfour>();
     }  else if (lev == 5) {
-        this->l =  new levelfive();
+        this->l = make_shared<levelfive>();
     } else if (lev == 6) {
-        this->l = new levelsix();
+        this->l = make_shared<levelsix>();
     }
 }
 
-Block *Player::getBlock() {
+shared_ptr<Block> Player::getBlock() {
     return this->b;
 }
 
-Block *Player::getNextBlock() {
+shared_ptr<Block> Player::getNextBlock() {
     return this->bnext;
 }
 
-void Player::setBlock(Block *b) { 
+void Player::setBlock(shared_ptr<Block> b) { 
     this->b = b;
 }
 
-void Player::setNextBlock(Block *b) { 
+void Player::setNextBlock(shared_ptr<Block> b) { 
     this->bnext = b;
 
 }
@@ -60,7 +60,7 @@ string Player::getName() {
     return this->name;
 }
 
-levels *Player::getPtrLevel() {
+shared_ptr<levels> Player::getPtrLevel() {
     return this->l;
 }
 
@@ -94,22 +94,21 @@ void Player::changeLevel(int lev) {
     } else if (lev < 0) {
         return;
     }
-    delete this->l;
     this->level = lev;
     if (lev == 0) {
-        this->l =  new levelzero(); // add notes based on level code
+        this->l =  make_shared<levelzero>(); // add notes based on level code
     } else if (lev == 1) {
-        this->l  = new levelone();
+        this->l  = make_shared<levelone>();
     } else if (lev == 2) {
-         this->l  = new leveltwo();
+        this->l  = make_shared<leveltwo>();
     } else if (lev == 3) {
-        this->l  = new levelthree();
+        this->l  = make_shared<levelthree>();
     } else if (lev == 4) {
-        this->l  = new levelfour();
-    } else if (lev == 5) {
-        this->l =  new levelfive();
+        this->l  = make_shared<levelfour>();
+    }  else if (lev == 5) {
+        this->l = make_shared<levelfive>();
     } else if (lev == 6) {
-        this->l = new levelsix();
+        this->l = make_shared<levelsix>();
     }
 }
 
@@ -121,9 +120,5 @@ void Player::setFile(string filename) {
     this->file = filename; 
 }
 
-Player::~Player() { 
-    delete this->b;
-    delete this->bnext;
-    delete this->l;
-}
+Player::~Player() {}
 

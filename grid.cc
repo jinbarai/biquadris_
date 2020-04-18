@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-void Grid::init(Player *p, bool text) {
+void Grid::init(shared_ptr<Player> p, bool text) {
     this->theGrid.clear();
     this->text = text;
     this->p = p;
@@ -16,7 +16,7 @@ void Grid::init(Player *p, bool text) {
 }
 
 void Grid::update(State p) {
-    Block *b = this->getPlayer()->getBlock();
+    shared_ptr<Block> b = this->getPlayer()->getBlock();
 
     if (this->getPlayer()->isSpecialHeavy()){
         this->getPlayer()->getBlock()->makeCommandHeavy(true);
@@ -41,7 +41,7 @@ void Grid::update(State p) {
 
 // moves left & right 
 bool Grid::move(State p, int dir) { 
-    Block *b = this->getPlayer()->getBlock();
+    shared_ptr<Block> b = this->getPlayer()->getBlock();
     // block and dir come from controller
     vector <pair<int, int>> coords = b->getCoords();
     b->move(dir);
@@ -95,7 +95,7 @@ bool Grid::validate(int x, int y)  {
     return true;
 }
 
-void Grid::changeBlock(State p, Block *b) {
+void Grid::changeBlock(State p, shared_ptr<Block> b) {
     int x = b->getBottomX() - this->p->getBlock()->getBottomX();
     int y = b->getBottomY() - this->p->getBlock()->getBottomY();
     vector <pair<int, int>> oldc = this->p->getBlock()->getCoords();
@@ -106,7 +106,6 @@ void Grid::changeBlock(State p, Block *b) {
         if (!validate(coords.at(i).first, coords.at(i).second)) {
             // if it is not possible, return 
             cout << "Unable to change block" << endl;
-            delete b;
             return;
         }
     }
@@ -121,7 +120,6 @@ void Grid::changeBlock(State p, Block *b) {
                     break;
                 } 
             } if (flag == 1) { 
-                delete b;
                 return;
             }
         }
@@ -145,12 +143,11 @@ void Grid::changeBlock(State p, Block *b) {
     if (this->p->getLevel() != 6) {
         cout << *this;
     }
-    delete this->p->getBlock();
     this->p->setBlock(b);
 }
 
 int Grid::down(State p) {
-    Block *b = this->getPlayer()->getBlock();
+    shared_ptr<Block> b = this->getPlayer()->getBlock();
     vector <pair<int, int>> coords = b->getCoords();
     b->move(DOWN);
     vector <pair<int, int>> newcoords = b->getCoords();
@@ -298,7 +295,7 @@ void Grid::fixBlind(State p) {
 
 
 void Grid::rotate(State p) {
-    Block *b = this->p->getBlock();
+    shared_ptr<Block> b = this->p->getBlock();
     vector <pair<int, int>> coords = b->getCoords();
     b->setCoords(b->rotate());
     vector <pair<int, int>> newCoords = b->getCoords();
@@ -413,19 +410,19 @@ bool Grid::rowclear(State p) {
     return false;
 }
 
-void Grid::setTD(TextDisplay *td) { 
+void Grid::setTD(shared_ptr<TextDisplay> td) { 
     this->td = td;
 }
 
-void Grid::setGraphics(Graphics *gr) { 
+void Grid::setGraphics(shared_ptr<Graphics> gr) { 
     this->gr = gr;
 }
 
-Graphics *Grid::getGraphics() { 
+shared_ptr<Graphics> Grid::getGraphics() { 
     return this->gr;
 }
                     
-Player *Grid::getPlayer() {
+shared_ptr<Player> Grid::getPlayer() {
     return this->p;
 }
 
@@ -434,7 +431,5 @@ ostream &operator<<(ostream &out, const Grid &gr) {
     return out;
 }
 
-Grid::~Grid() { 
-    delete this->p;
-}
+Grid::~Grid() {}
 

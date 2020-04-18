@@ -10,16 +10,17 @@
 // when you cannot spot
 
 class Controller { 
-    Grid *g1;
-    Grid *g2;
+    std::shared_ptr<Grid> g1;
+    std::shared_ptr<Grid> g2;
     int highscore;
     bool text;
-    TextDisplay *td;
+    std::shared_ptr<TextDisplay> td;
     State turn; //  either p1, or p2
-    Graphics *gr = nullptr;
+    std::shared_ptr<Graphics> gr = nullptr;
     public: 
-    Grid *getGrid();
-    Controller(Grid *g1, Grid *g2, TextDisplay *td, int score, bool text, Graphics *gr); 
+    std::shared_ptr<Grid> getGrid();
+    Controller(std::shared_ptr<Grid> g1, std::shared_ptr<Grid> g2, std::shared_ptr<TextDisplay> td, 
+        int score, bool text, std::shared_ptr<Graphics> gr); 
     // main will make player pointers and pass the grid to the controller. 
     void changeTurn();
     void move(int n, int dir);
@@ -35,17 +36,17 @@ class Controller {
     void force(char c);
     void generate();
     void getHighScore();
-    Grid *getG1();
-    Grid *getG2();
+    std::shared_ptr<Grid> getG1();
+    std::shared_ptr<Grid> getG2();
     void startlevel(int n);
     void restart(); 
     void drop(int n = 1);
     void random();
-    void clearVector(levels *l);
+    void clearVector(std::shared_ptr<levels> l);
     void norandom(std::string filename);
     void sequence(std::string filename); 
     void down(int n = 1);
-    void readFromFile(std::string file, levels *l); 
+    void readFromFile(std::string file, std::shared_ptr<levels> l); 
     ~Controller();
 };
 

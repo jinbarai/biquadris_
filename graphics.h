@@ -8,11 +8,11 @@
 
 class Graphics {
     // has a player
-    Player *p1;
-    Player *p2;
+    std::shared_ptr<Player> p1;
+    std::shared_ptr<Player> p2;
     Xwindow xw;
     public:
-    Graphics(Player *p1, Player *p2, int score);
+    Graphics(std::shared_ptr<Player> p1, std::shared_ptr<Player> p2, int score);
     void notify(State, int row, int col, char c);
     void blindnotify(State, int row, int col, char c);
     void notifyScore();

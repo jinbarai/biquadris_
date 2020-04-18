@@ -1,7 +1,8 @@
 #include "controller.h"
 using namespace std;
 
-Controller::Controller(Grid *g1, Grid *g2, TextDisplay *td, int score, bool text, Graphics *gr) {
+Controller::Controller(shared_ptr<Grid> g1, shared_ptr<Grid> g2, shared_ptr<TextDisplay> td, 
+    int score, bool text, shared_ptr<Graphics> gr) {
     this->g1 = g1;
     this->g2 = g2;
     this->td = td;
@@ -11,7 +12,7 @@ Controller::Controller(Grid *g1, Grid *g2, TextDisplay *td, int score, bool text
     this->turn = State::p1;
 }
 
-Grid *Controller::getGrid() {
+shared_ptr<Grid> Controller::getGrid() {
     if  (this->turn == State::p1) {
         return this->g1;
     } else  { 
@@ -58,7 +59,7 @@ void Controller::blind() {
 }
 
 void Controller::force(char c) {
-    Player *p;
+    shared_ptr<Player> p;
     if (this->turn == State::p1) { 
         p = g2->getPlayer();
     } else {  
@@ -70,26 +71,19 @@ void Controller::force(char c) {
         b = true;
     }
     if (c == 'Z' || c == 'z') { 
-        delete p->getNextBlock();
-        p->setNextBlock(new ZBlock(b));
+        p->setNextBlock(make_shared<ZBlock>(b));
     } else if (c == 'T' || c == 't') {
-        delete p->getNextBlock();
-        p->setNextBlock(new TBlock(b));
+        p->setNextBlock(make_shared<TBlock>(b));
     } else if (c == 'O' || c == 'o') {
-        delete p->getNextBlock();
-        p->setNextBlock(new OBlock(b));
+        p->setNextBlock(make_shared<OBlock>(b));
     } else if (c == 'S' || c == 's') {
-        delete p->getNextBlock();
-        p->setNextBlock(new SBlock(b));
+        p->setNextBlock(make_shared<SBlock>(b));
     } else if (c == 'I' || c == 'i') {
-        delete p->getNextBlock();
-        p->setNextBlock(new IBlock(b));
+        p->setNextBlock(make_shared<IBlock>(b));
     } else if (c == 'J' || c == 'j') {
-        delete p->getNextBlock();
-        p->setNextBlock(new JBlock(b));
+        p->setNextBlock(make_shared<JBlock>(b));
     } else if (c == 'L' || c == 'L') {
-        delete p->getNextBlock();
-        p->setNextBlock(new LBlock(b));
+        p->setNextBlock(make_shared<LBlock>(b));
     } else { 
         cout << "Invalid Character, Force cancelled" << endl;
     }
@@ -102,19 +96,19 @@ void Controller::changeBlock(char c) {
         flag = true;
     } 
     if (c == 'Z' || c == 'z') { 
-        this->getGrid()->changeBlock(this->turn, new ZBlock(flag));
+        this->getGrid()->changeBlock(this->turn, make_shared<ZBlock>(flag));
     } else if (c == 'T' || c == 't') {
-        this->getGrid()->changeBlock(this->turn, new TBlock(flag));
+        this->getGrid()->changeBlock(this->turn, make_shared<TBlock>(flag));
     } else if (c == 'O' || c == 'o') {
-        this->getGrid()->changeBlock(this->turn, new OBlock(flag));
+        this->getGrid()->changeBlock(this->turn, make_shared<OBlock>(flag));
     } else if (c == 'S' || c == 's') {
-        this->getGrid()->changeBlock(this->turn, new SBlock(flag));
+        this->getGrid()->changeBlock(this->turn, make_shared<SBlock>(flag));
     } else if (c == 'I' || c == 'i') {
-        this->getGrid()->changeBlock(this->turn, new IBlock(flag));
+        this->getGrid()->changeBlock(this->turn, make_shared<IBlock>(flag));
     } else if (c == 'J' || c == 'j') {
-        this->getGrid()->changeBlock(this->turn, new JBlock(flag));
+        this->getGrid()->changeBlock(this->turn, make_shared<JBlock>(flag));
     } else if (c == 'L' || c == 'l') {
-        this->getGrid()->changeBlock(this->turn, new LBlock(flag));
+        this->getGrid()->changeBlock(this->turn, make_shared<LBlock>(flag));
     } else { 
         cout << "Invalid Character: " << c << endl;
         return;
@@ -132,7 +126,7 @@ void Controller::changeTurn() {
         if (!this->text) { 
             this->gr->changeScore(this->highscore);
         }
-        cout << this->getGrid()>getPlayer()->getName() << " updated highscore!" << endl;
+        cout << this->getGrid()->getPlayer()->getName() << " updated highscore!" << endl;
     } 
     if (this->turn == State::p1) {
         this->turn = State::p2;
@@ -160,7 +154,7 @@ void Controller::levelup() {
 }
 
 void Controller::getHighScore(){
-
+    
 }
 
 void Controller::leveldown() {
@@ -183,7 +177,6 @@ void Controller::startlevel(int n) {
     if (!this->text) { 
         this->gr->changeLevel();
     }
-    cout << "i finsihed startlevel " << endl;
 }
 
 void Controller::heavy(){
@@ -226,7 +219,7 @@ void Controller::move(int n, int dir) {
 }
 
 // Need this for norandom file command since it also allows levels 3 - 6 to have blocks generated in sequence from file
-void Controller::readFromFile(string filename, levels *l) {
+void Controller::readFromFile(string filename, shared_ptr<levels> l) {
     l->blocksFromFile(filename); 
 }
 
@@ -288,15 +281,15 @@ void Controller::ccw(int n) {
     }
 }
 
-void Controller::clearVector(levels *l) {
+void Controller::clearVector(shared_ptr<levels> l) {
     l->clearVector();
 }
 
-Grid *Controller::getG1() {
+shared_ptr<Grid> Controller::getG1() {
     return this->g1;
 }
 
-Grid *Controller::getG2() {
+shared_ptr<Grid> Controller::getG2() {
     return this->g2;
 }
 
@@ -322,22 +315,15 @@ void Controller::drop(int n) {
     if (flag) {
         this->specialAction();
     }
-    //vector<pair<int, int>> coords = this->getGrid()->getPlayer()->getBlock()->getCoords();
-    //for (int i = 0; i < 4; i++){
-    //    cout << "x: " << coords.at(i).first << " y: " << coords.at(i).second << endl;
-    //}
     this->changeTurn();
 }
-
-
 
 void Controller::random() {
     // If the pointer level is 3 - 6 only then the random function can be toggled on/off
     if (this->getGrid()->getPlayer()->getLevel() >= 3) {
         this->getGrid()->getPlayer()->getPtrLevel()->setRandom(false);
         this->getGrid()->getPlayer()->setFile("");
-        levels *l = this->getGrid()->getPlayer()->getPtrLevel();
-        delete this->getGrid()->getPlayer()->getNextBlock();
+        shared_ptr <levels> l = this->getGrid()->getPlayer()->getPtrLevel();
         // If breaks try removing this line lol
         this->clearVector(l);
         this->getGrid()->getPlayer()->setNextBlock(l->createBlock());
@@ -353,13 +339,12 @@ void Controller::norandom(string filename){
     if (this->getGrid()->getPlayer()->getLevel() >= 3) {
         this->getGrid()->getPlayer()->getPtrLevel()->setRandom(true); 
         this->getGrid()->getPlayer()->setFile(filename); 
-        levels *l = this->getGrid()->getPlayer()->getPtrLevel();
-        delete this->getGrid()->getPlayer()->getNextBlock();
+        shared_ptr<levels> l = this->getGrid()->getPlayer()->getPtrLevel();
         string fl = this->getGrid()->getPlayer()->getFileName();
         this->clearVector(l);
         this->readFromFile(fl, l);
         // gives block type of old file 
-        Block *t = l->createBlock();
+        shared_ptr<Block> t = l->createBlock();
         cout << t->getType() << endl;
         this->getGrid()->getPlayer()->setNextBlock(t);
     } else {
@@ -375,20 +360,16 @@ void Controller::sequence(string filename) {
 void Controller::restart() {
     string s1 = this->g1->getPlayer()->getName();
     string s2 = this->g2->getPlayer()->getName();
-    delete this->g1->getPlayer();
-    delete this->g2->getPlayer();
-    delete this->gr;
-    delete this->td;
-    Player *p1 = new Player(0, s1, 0, "sequence1.txt");
-    Player *p2 = new Player(0, s2, 0, "sequence2.txt");
+    shared_ptr<Player> p1 = make_shared<Player>(0, s1, 0, "sequence1.txt");
+    shared_ptr<Player> p2 = make_shared<Player>(0, s2, 0, "sequence2.txt");
     this->g1->init(p1, this->text);
     this->g2->init(p2, this->text);
     if (!this->text) { 
-        this->gr = new Graphics{p1, p2, this->highscore};
+        this->gr = make_shared<Graphics>(p1, p2, this->highscore);
     } else { 
         this->gr = nullptr;
     }
-    this->td = new TextDisplay{p1, p2, this->highscore};
+    this->td = make_shared<TextDisplay>(p1, p2, this->highscore);
     g1->setTD(this->td);
     g2->setTD(this->td);
     g1->setGraphics(this->gr);
@@ -399,7 +380,7 @@ void Controller::restart() {
 
 void Controller::generate() { 
     try { 
-        levels *l = this->getGrid()->getPlayer()->getPtrLevel();
+        shared_ptr<levels> l = this->getGrid()->getPlayer()->getPtrLevel();
         int level = this->getGrid()->getPlayer()->getLevel();
         if (!this->text && level == 6) {
             this->gr->level6(this->turn);
@@ -410,15 +391,13 @@ void Controller::generate() {
         if (this->getGrid()->getPlayer()->getNextBlock() == nullptr) { 
             this->getGrid()->getPlayer()->setNextBlock(l->createBlock());
         } 
-        Block *b = this->getGrid()->getPlayer()->getNextBlock();
-        delete this->getGrid()->getPlayer()->getBlock();
+        shared_ptr<Block> b = this->getGrid()->getPlayer()->getNextBlock();
         this->getGrid()->getPlayer()->setBlock(b);
         this->getGrid()->getPlayer()->setNextBlock(l->createBlock());
         if (!this->text) {
             this->gr->next();
         }
         this->getGrid()->update(this->turn);
-        cout << "I finished generate" << endl;
     }
     catch (string &c) { cout << c << endl; }
     if (this->getGrid()->getPlayer()->getLevel() != 6) { 
@@ -426,9 +405,4 @@ void Controller::generate() {
     }
 }
 
-Controller::~Controller() {
-    delete this->g1;
-    delete this->g2;
-    delete this->td;
-    delete this->gr;
-}
+Controller::~Controller() {}

@@ -18,13 +18,13 @@
 //class InvalidMove{}; // use state.h instead
 
 class leveltwo: public levels { 
-    Block *makeBlocks(char type, bool isHeavy) override; 
+    std::shared_ptr<Block> makeBlocks(char type, bool isHeavy) override; 
     bool isHeavy() override; 
     bool norandom = false; 
     public: 
     bool getRandom() override;
     void setRandom(bool val) override; 
-    Block *createBlock() override; 
+    std::shared_ptr<Block> createBlock() override; 
     void clearVector() override; 
     void blocksFromFile(std::string filename) override; 
     ~leveltwo();

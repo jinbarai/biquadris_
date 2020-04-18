@@ -10,7 +10,7 @@
 
 using namespace std; 
 
-Block* levelsix::createBlock() {
+shared_ptr<Block> levelsix::createBlock() {
   // Read from file norandom == true 
   if (this->norandom) {
       char nowBlock = block_file.at(this->curseq); 
@@ -48,33 +48,34 @@ Block* levelsix::createBlock() {
 }
 
 // Implementing methods 
-Block* levelsix::makeBlocks(char type, bool isHeavy) {
-    Block *p; 
+shared_ptr<Block> levelsix::makeBlocks(char type, bool isHeavy) {
+   shared_ptr<Block> p; 
     switch(type) {
     case 'I': 
-        p = new IBlock(isHeavy);
+        p = make_shared<IBlock>(isHeavy);
         break;
     case 'J': 
-        p = new JBlock(isHeavy);
+        p = make_shared<JBlock>(isHeavy);
         break;
     case 'L': 
-        p = new LBlock(isHeavy);
+        p = make_shared<LBlock>(isHeavy);
         break;
     case 'O': 
-        p = new OBlock(isHeavy);
+        p = make_shared<OBlock>(isHeavy);
         break;
     case 'S': 
-        p = new SBlock(isHeavy);
+        p = make_shared<SBlock>(isHeavy);
         break;
     case 'Z': 
-        p = new ZBlock(isHeavy);
+        p = make_shared<ZBlock>(isHeavy);
         break;
     default: 
-        p = new TBlock(isHeavy);
+        p = make_shared<TBlock>(isHeavy);
         break;
     }
     return p; 
 } 
+
 // check if file exists 
 bool levelsix::is_file_exist(const string file) {
     std::ifstream infile(file);  

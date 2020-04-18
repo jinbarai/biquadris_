@@ -16,17 +16,15 @@
 #ifndef FOUR_H
 #define FOUR_H
 
-//class InvalidMove{};
-
 class levelfour: public levels { 
     int curseq = 0; 
-    Block *makeBlocks(char type, bool isHeavy) override; 
+    std::shared_ptr<Block> makeBlocks(char type, bool isHeavy) override; 
     bool isHeavy() override; 
     bool norandom = false;
     public: 
     void setRandom(bool val) override; 
     bool getRandom() override; 
-    Block *createBlock() override; 
+    std::shared_ptr<Block> createBlock() override; 
     bool is_file_exist(const std::string file); 
     void clearVector() override; 
     void blocksFromFile(std::string filename) override; 
