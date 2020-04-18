@@ -262,28 +262,19 @@ void Controller::down(int n) {
 string Controller::getKeyboardCommand() // used xev in console to get these numbers
 {
     int key = this->getGrid()->getGraphics()->getXwindow()->getKeyCode();
-    if (key == 113) 
-        return "left"; //left arrow
-    else if (key == 114) 
-        return "right";// right arrow
-    else if (key == 116) 
-        return "down";// down arrow
-    else if (key == 65) 
-        return "drop";// spacebar
-    else if (key == 52) 
-        return "cw";// z
-    else if (key == 53) 
-        return "ccw";// x
-    else if (key == 29) 
-        return "restart";// y
-    else if (key == 25)
-        return "levelup";// w
-    else if (key == 39)
-        return "leveldown";// s
-    else if (key == 9)
-        return "end";//escape
-    else
-        return "";
+    cout << "key: " << key << endl;
+    // left = linux, right = mac
+    if (key == 113 || key == 131) return "left"; //left arrow
+    else if (key == 114 || key == 132) return "right";// right arrow
+    else if (key == 116 || key == 133) return "down";// down arrow
+    else if (key == 65 || key == 57) return "drop";// spacebar
+    else if (key == 52 || key == 14) return "cw";// z
+    else if (key == 53 || key == 15) return "ccw";// x
+    else if (key == 29 || key == 24) return "restart";// y
+    else if (key == 25 || key == 21) return "levelup";// w
+    else if (key == 38 || key == 8) return "leveldown";// s
+    else if (key == 9 || key == 61) return "end";//escape
+    else return "";
 }
 
 void Controller::cw(int n) {

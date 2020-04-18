@@ -282,9 +282,10 @@ int main(int argc, char *argv[])
                 else
                     multiplier = 1;
             }
-            else if (keyboardmode) 
+            else if (keyboardmode) {
+                cout << "keyboard mode accepted" << endl;
                 command = c->getKeyboardCommand();
-
+            }
             if (command == "left")
             {
                 multiplier = (multiplier > 10) ? 10 : multiplier;
