@@ -246,6 +246,9 @@ int main(int argc, char *argv[])
     g1->setGraphics(gr);
     g2->setGraphics(gr);
     unique_ptr<Controller> c = make_unique<Controller>(g1, g2, td, 0, text, gr);
+    if (keyboardmode) {
+        c->setKeyboard(keyboardmode);
+    }
     cin.ignore();
     cin.clear();
     string command;

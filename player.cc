@@ -8,11 +8,9 @@ Player::Player(int x, string s, int lev, string fileName) {
     this->b = nullptr;
     this->bnext = nullptr;
     this->file = fileName;
-    if (lev < 0) { 
+    if (lev < 0 || lev > 6) { 
         lev = 0;
-    } else if (lev > 6) { 
-        lev = 0;
-    }
+    } 
     this->level = lev;
     if (lev == 0) {
         this->l =  make_shared<levelzero>(); // add notes based on level code

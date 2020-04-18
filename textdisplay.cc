@@ -50,9 +50,17 @@ ostream &operator<<(std::ostream &out, const TextDisplay &td) {
     for (int i = 0; i < 8; ++i) { out <<  ' '; }
     out << "Level:    " << td.p2->getLevel() << endl;
     // print the scores
-    out << "Score:    "  << td.p1->getScore();
+    string s1 = to_string(td.p1->getScore());
+    int sizescore1 = s1.length();
+    out << "Score:";
+    for (int i = 0; i < (5 - sizescore1); ++i) { out << ' '; }
+    out << td.p1->getScore();
     for (int i = 0; i < 8; ++i) { out <<  ' '; }
-    out << "Score:    "  << td.p2->getScore() << endl;
+    string s2 = to_string(td.p2->getScore());
+    int sizescore2 = s2.length();
+    out << "Score:";
+    for (int i = 0; i < (5 - sizescore2); ++i) { out << ' ';}
+    out << td.p2->getScore() << endl;
     for (int i = 0; i < 11; ++i) { out <<  '-'; }
     for (int i = 0; i < 8; ++i) { out <<  ' '; } // creates the top border
     for (int i = 0; i < 11; ++i) { out <<  '-'; }

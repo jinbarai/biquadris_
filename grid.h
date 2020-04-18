@@ -32,7 +32,6 @@ class Grid {
     void setGraphics(std::shared_ptr<Graphics> gr);
     // where s is the player, n is the # of rows, level is the level of the player
     bool isRowFull(int n); // n is the row you want to check
-    //void changeLevel(int n, std::string s);
     bool move(State p, int dir);
     bool validate(int x, int y);
     void fixBlind(State p);

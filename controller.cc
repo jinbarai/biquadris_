@@ -20,12 +20,25 @@ shared_ptr<Grid> Controller::getGrid() {
     }
 }
 
+void Controller::setKeyboard(bool k) {
+    this->keyboard = k;
+
+}
+
 void Controller::specialAction() {
     cout << "Congratultions on your Special Action!" << endl;
     cout << "Select one of the following: ";
-    cout << "Blind, Heavy or Force" << endl;
     string s;
-    cin >> s;
+    /*
+    if (this->keyboard) {
+        cout << "Blind[1], Heavy[2] or Force[3]" << endl;
+        s = this->getKeyboardCommand();
+    
+    } else { 
+        */
+        cout << "Blind, Heavy or Force" << endl;
+        cin >> s;
+    //}
     const char c = s.at(0);
     if (c == 'B'|| c == 'b') {
         cout << "You have selected: Blind" << endl;
@@ -258,7 +271,14 @@ void Controller::down(int n) {
         } 
     }
 } 
-
+// mac: 
+// 1: 26
+// 2: 27
+// 3: 28
+// linux: 
+// 1: 10
+// 2: 11
+// 3: 12
 string Controller::getKeyboardCommand() // used xev in console to get these numbers
 {
     int key = this->getGrid()->getGraphics()->getXwindow()->getKeyCode();
@@ -267,12 +287,17 @@ string Controller::getKeyboardCommand() // used xev in console to get these numb
     else if (key == 114 || key == 132) return "right";// right arrow
     else if (key == 116 || key == 133) return "down";// down arrow
     else if (key == 65 || key == 57) return "drop";// spacebar
-    else if (key == 52 || key == 14) return "cw";// z
-    else if (key == 53 || key == 15) return "ccw";// x
+    else if (key == 111 || key == 134) return "cw";// up
+    else if (key == 52 || key == 14) return "ccw";// z
     else if (key == 29 || key == 24) return "restart";// y
     else if (key == 25 || key == 21) return "levelup";// w
     else if (key == 38 || key == 8) return "leveldown";// s
     else if (key == 9 || key == 61) return "end";//escape
+    /*
+    else if (key == 10 || key == 26) return "blind";
+    else if (key == 11 || key == 27) return "heavy";
+    else if (key == 12 || key == 28) return "force";
+    */
     else return "";
 }
 

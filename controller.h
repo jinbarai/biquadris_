@@ -14,6 +14,7 @@ class Controller {
     std::shared_ptr<Grid> g2;
     int highscore;
     bool text;
+    bool keyboard = false;
     std::shared_ptr<TextDisplay> td;
     State turn; //  either p1, or p2
     std::shared_ptr<Graphics> gr = nullptr;
@@ -36,6 +37,7 @@ class Controller {
     void blind();
     void heavy();
     void force(char c);
+    void setKeyboard(bool k);
     void generate();
     std::shared_ptr<Grid> getG1();
     std::shared_ptr<Grid> getG2();
