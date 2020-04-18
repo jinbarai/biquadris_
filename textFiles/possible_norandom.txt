@@ -2,4 +2,5 @@ norandom
 norand
 nordm
 nord
+nr
 noranm
