@@ -262,7 +262,6 @@ void Controller::down(int n) {
 string Controller::getKeyboardCommand() // used xev in console to get these numbers
 {
     int key = this->getGrid()->getGraphics()->getXwindow()->getKeyCode();
-    cout << "key: " << key << endl;
     // left = linux, right = mac
     if (key == 113 || key == 131) return "left"; //left arrow
     else if (key == 114 || key == 132) return "right";// right arrow

@@ -283,7 +283,6 @@ int main(int argc, char *argv[])
                     multiplier = 1;
             }
             else if (keyboardmode) {
-                cout << "keyboard mode accepted" << endl;
                 command = c->getKeyboardCommand();
             }
             if (command == "left")
