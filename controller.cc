@@ -258,7 +258,7 @@ void Controller::down(int n) {
 } 
 
 void Controller::cw(int n) {
-    n = n % 4;
+    //n = n % 4;
     for (int i = 0; i < n; ++i) {
        this->getGrid()->rotate(this->turn);
     }
@@ -269,7 +269,7 @@ void Controller::cw(int n) {
 }
 
 void Controller::ccw(int n) {
-    n = n % 4;
+    //n = n % 4;
     for (int k = 0; k < n; ++k) {
         for (int i = 0; i < 3; i++) {
             this->getGrid()->rotate(this->turn);
@@ -324,10 +324,9 @@ void Controller::random() {
         this->getGrid()->getPlayer()->getPtrLevel()->setRandom(false);
         this->getGrid()->getPlayer()->setFile("");
         shared_ptr <levels> l = this->getGrid()->getPlayer()->getPtrLevel();
-        // If breaks try removing this line lol
         this->clearVector(l);
         this->getGrid()->getPlayer()->setNextBlock(l->createBlock());
-        cout << this->getGrid()->getPlayer()->getPtrLevel()->getRandom() << endl; 
+        //cout << this->getGrid()->getPlayer()->getPtrLevel()->getRandom() << endl; 
     } else {
         string s = "Wrong level for toggling random/norandom option";
         cout << s << endl; 
@@ -345,7 +344,7 @@ void Controller::norandom(string filename){
         this->readFromFile(fl, l);
         // gives block type of old file 
         shared_ptr<Block> t = l->createBlock();
-        cout << t->getType() << endl;
+        //cout << t->getType() << endl;
         this->getGrid()->getPlayer()->setNextBlock(t);
     } else {
         string s = "Wrong level for toggling random/norandom option";

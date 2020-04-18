@@ -117,10 +117,6 @@ string getCommand(string n)
     {
         return "restart";
     }
-    else if (checkinFile(hintfile, cmd))
-    {
-        return "hint";
-    }
     else if (checkinFile(randomfile, cmd))
     {
         return "random";
@@ -248,7 +244,7 @@ int main(int argc, char *argv[])
             if ((command).compare("end") == 0)
             {
                 // This won't work for windows, will work only for mac
-                system("clear");
+                //system("clear");
                 // For windows: system("CLS");
                 cout << "Thank you for playing with us! <3" << endl;
                 cout << "Player 1: " << p1->getScore() << endl;
@@ -351,7 +347,6 @@ int main(int argc, char *argv[])
                 command  == "l" || command  == "o" || 
                 command  == "z" || command  == "s" || command  == "t") {
                 char com = command[0];
-                //cout << com << endl; 
                 c->changeBlock(com);
             }
             else
@@ -372,7 +367,7 @@ int main(int argc, char *argv[])
     catch (ios::failure &)
     {
         // This won't work for windows, will work only for mac
-        system("clear");
+        //system("clear");
         // For windows: system("CLS");
         cout << "Thank you for playing with us! <3" << endl;
         cout << "Player 1: " << p1->getScore() << endl;
