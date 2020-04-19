@@ -33,135 +33,155 @@ void Grid::init(shared_ptr<Player> p, bool text) {
  */
 void Grid::update(State p) {
     shared_ptr<Block> b = this->getPlayer()->getBlock();
-
-    if (this->getPlayer()->isSpecialHeavy()){
+    // saves the block for cleaner access 
+    if (this->getPlayer()->isSpecialHeavy()){ // to determine heavy nature 
         this->getPlayer()->getBlock()->makeCommandHeavy(true);
     }
-
+    // obtains the coords from the block 
     vector <pair <int, int>> coords = b->getCoords();
     char type = b->getType(); 
     for (int i = 0; i < 4; ++i) {
         int x = coords.at(i).first;
         int y = coords.at(i).second;
-        if (!theGrid.at(y).at(x).isEmpty()) {
+        // if the coordinates are not valid, 
+        // block cannot be dropped and the palyer loses. 
+        // thowing GameOver (caught in main.cc)
+        if (!validate(x, y)) { 
             throw GameOver{p};
-        }  else { 
+        }
+        if (!theGrid.at(y).at(x).isEmpty()) {
+            throw GameOver{p}; // means it cannot be dropped 
+        }  else { // will continue to print them
             theGrid.at(y).at(x).setType(type);
             this->td->notify(p, y, x, type);
-            if (!this->text && this->gr) {
+            if (!this->text && this->gr) { // updates graphics
+            // if program is not in text mode. 
                 this->gr->notify(p, y, x, type);
             }
         }
     }
 }
 
-// moves left & right 
+/* Grid::move(State p, int dir)
+ * will move the block left and right (one time)
+ * in the direction passed in. Directions are defined in block.h
+ * where (LEFT = -1), (RIGHT = 1). A validate is done on each 
+ * cell before it prints. 
+ * A state is taken in in order to pass the correct player to 
+ * TextDisplay and Graphics. 
+ * Note: a return value of 0 means it did not move. 1 means 
+ * a move was successful. 
+ */
 bool Grid::move(State p, int dir) { 
     shared_ptr<Block> b = this->getPlayer()->getBlock();
     // block and dir come from controller
     vector <pair<int, int>> coords = b->getCoords();
-    b->move(dir);
+    b->move(dir); // this will update the coordinates on the block 
     vector <pair<int, int>> newcoords = b->getCoords();
     for (int i = 0; i < 4; ++i) {
         // check to make sure new coordinatres are valid 
         int x = newcoords.at(i).first;
         int y = newcoords.at(i).second;
-        if (!validate(x, y)) {
-            b->setCoords(coords);
-            return false;
+        if (!validate(x, y)) { // ensurse they are valid coordintes
+            b->setCoords(coords); // resets prior coordinates 
+            return false; // unable to move 
         } 
         if (!this->theGrid.at(y).at(x).isEmpty()) { 
             int flag = 1;
             for (int k = 0; k < 4; ++k) {
                 if (x == coords.at(k).first && y == coords.at(k).second) { 
-                    flag = 0;
+                    flag = 0; // if the block currently belongs to a 
+                    // another cell of the block in its unmoved position
+                    // this is okay, and hence flag is cleared. 
                     break;
                 } 
-            } if (flag == 1) { 
-                b->setCoords(coords);
-                return false;
+            } if (flag == 1) { // the cell wanting to be moved to 
+            // does not belong to the old or updated block (belongs to another
+            // block and hence, does not update)
+                b->setCoords(coords); // resets prior coordintes 
+                return false; // unable to move 
             }
         }
     } 
-    for (int i = 0; i < 4; ++i) {
-        int oldx = coords.at(i).first;
-        int oldy = coords.at(i).second;
-        this->clear(p, oldy, oldx);
-    }
-    for (int k = 0; k < 4; ++k) {
-        int x = newcoords.at(k).first;
-        int y = newcoords.at(k).second;
-        char c = b->getType();
-        this->theGrid.at(y).at(x).setType(c);
-        this->td->notify(p, y, x, c);
-        if (!this->text && this->gr) {
-            this->gr->notify(p, y, x, c);
-        }
-    }
-    return true;
+    char c = b->getType();
+    reprint(p, coords, newcoords, c); 
+    // empties old cells, draws new ones 
+    return true; // means the move was successful 
 }
 
-
+/* Grid::validate(int x, int y)
+ * Used by other functions in Grid to ensure x and y 
+ * values are within the Grids bounds. 
+ * x = col, y = row. 
+ * Note: return value of 0 = invalid, 1 = valid.  
+ */
 bool Grid::validate(int x, int y)  {
-    if (x > 10 || x < 0) {
+     // ensures x(col) is within bounds 
+    if (x > 10 || x < 0) { 
         return false;
-    } else if (y > 17 || y < 0) {
+     // ensures y (row) is within bunds 
+    } else if (y > 17 || y < 0) { 
         return false;
     } 
-    return true;
+    return true; // coordinates valid 
 }
 
+/* Grid::changeBlock(State p, Block *b)
+ * Used when the I/J/S/L/O/T/Z commands are called. 
+ * Effects: will print output if conversion is invalid. 
+ */
 void Grid::changeBlock(State p, shared_ptr<Block> b) {
     int x = b->getBottomX() - this->p->getBlock()->getBottomX();
     int y = b->getBottomY() - this->p->getBlock()->getBottomY();
+    // obtains the change in x and y from the start positions
     vector <pair<int, int>> oldc = this->p->getBlock()->getCoords();
     vector <pair<int, int>> coords = b->getCoords();
     for (int i = 0; i < 4; ++i) {
         coords.at(i).first -= x;
-        coords.at(i).second -=y;
+        coords.at(i).second -=y; 
+        // checks to make sure the coordinates are valid 
+        // using Grid::validate 
         if (!validate(coords.at(i).first, coords.at(i).second)) {
             // if it is not possible, return 
             cout << "Unable to change block" << endl;
-            return;
+            return; // will not make change happen 
         }
     }
     for (int i = 0; i < 4; ++i) {
         int x1 = coords.at(i).first;
         int y1 = coords.at(i).second;
+        // if desired cell is not empty, will see if it is 
+        // currently occupied by the current block 
         if (!this->theGrid.at(y1).at(x1).isEmpty()) {
             int flag = 1;
             for (int k = 0; k < 4; ++k) {
                 if (x1 == oldc.at(k).first && y1 == oldc.at(k).second) { 
-                    flag = 0;
+                    flag = 0; // will check to make sure if the block is occupied 
+                    // it is 
                     break;
                 } 
-            } if (flag == 1) { 
+            } if (flag == 1) { // will return if not possible.
                 return;
             }
         }
     }
-    b->setCoords(coords);
-    for (int i = 0; i < 4; ++i) {
-        int oldx = oldc.at(i).first;
-        int oldy = oldc.at(i).second;
-        this->clear(p, oldy, oldx);
-    }
+    b->setCoords(coords); // will set the blocks to permanently be in their
+    // new updated positio (each cell updated by -x, -y).
     char c = b->getType();
-    for (int k = 0; k < 4; ++k) {
-        int newx = coords.at(k).first;
-        int newy = coords.at(k).second;
-        this->theGrid.at(newy).at(newx).setType(c);
-        this->td->notify(p, newy, newx, c);
-        if (!this->text && this->gr) {
-            this->gr->notify(p, newy, newx, c);
-        }
-    }
+    reprint(p, oldc, coords, c);
     if (this->p->getLevel() != 6) {
+        // will not output in level 6 because of hide mode. 
         cout << *this;
     }
-    this->p->setBlock(b);
+    this->p->setBlock(b); // ensures the next block is correctly updated! 
 }
 
+/* Grid::down(State p)
+ * Will move down by 1. Has 3 return numbers! 
+ * 0 = unable to move down 
+ * -1 = moved down, but will not be able to move down again 
+ * 1 = moved down, and can move down again! 
+ */
 int Grid::down(State p) {
     shared_ptr<Block> b = this->getPlayer()->getBlock();
     vector <pair<int, int>> coords = b->getCoords();
@@ -187,21 +207,8 @@ int Grid::down(State p) {
             }
         }
     } 
-    for (int i = 0; i < 4; ++i) {
-        int oldx = coords.at(i).first;
-        int oldy = coords.at(i).second;
-        this->clear(p, oldy, oldx);
-    }
-    for (int k = 0; k < 4; ++k) {
-        int x = newcoords.at(k).first;
-        int y = newcoords.at(k).second;
-        char c = b->getType();
-        this->theGrid.at(y).at(x).setType(c);
-        this->td->notify(p, y, x, c);
-        if (!this->text && this->gr) {
-                this->gr->notify(p, y, x, c);
-         }
-    }
+    char c = b->getType();
+    reprint(p, coords, newcoords, c);
     for (int i = 0; i < 4; ++i) {
         int x = newcoords.at(i).first;
         int y = newcoords.at(i).second;
@@ -213,6 +220,7 @@ int Grid::down(State p) {
                 int newx = newcoords.at(k).first;
                 int newy = newcoords.at(k).second;
                 if (newx == x && newy == y - 1) { 
+                    // used to ensure it is not occupied by the current block! 
                     flag = false;
                     break;
                 }
@@ -227,38 +235,59 @@ int Grid::down(State p) {
     return 1;
 }
 
+/* Grid::drop(State p) 
+ * Iterates on down, to go down as much as possible, will call 
+ * rowClear as well, and if there has been 5 rows without clearing 
+ * a block, it will call the brown function to drop a block if 
+ * the players level is >= 4. 
+ */
 bool Grid::drop(State p) {
     int val = 1;
     while (val == 1) {
         val = this->down(p);
     }
-    ++this->counter;
-    if ((this->counter != 0) && (this->counter % 5 == 0) && (this->p->getLevel() >= 4)) {
-        // if the counter is not zero, the counter is divisible by 5 and the level is 4 or greater
+    ++this->counter; // increments the counter 
+    const int row = rowclear(p);
+    if ((this->counter != 0) && (this->counter % 5 == 0) && 
+    (this->p->getLevel() >= 4)) {
+        // if the counter is not zero, the counter is divisible 
+        // by 5 and the level is 4 or greater
         // we need to drop a brown block 
         this->brown(p, this->p->getLevel());
     }
-    const bool row = rowclear(p);
-    return row;
+    return (row >= 2);
 }
 
+
+/* Grid::brown(State p, int n)
+ * Used in levels 4-6. In level 4, will drop one 
+ * brown block in the first available position in col 5. 
+ * In levels 5 and 6, will drop one on every column. 
+ */
 void Grid::brown(State p, int n) { 
+    if (this->p->getLevel() < 4) { 
+        return;
+    }
     if (n == 4) { 
         bool flag = true;
         for (int i = 14; i >= 0; --i) {
             if (this->theGrid.at(i).at(5).isEmpty()) {
                 flag = false;
-                if (i == 0) { 
+                if (i == 0) {  // will not check row below as with 
+                // next loop because will throw 
+                // std::out_of_range exception 
                     this->theGrid.at(i).at(5).setType('*');
                     this->td->notify(p, i, 5, '*');
-                    if (!this->text && this->gr) { // to see if text mode is activated 
+                    if (!this->text && this->gr) { // to see if 
+                    // text mode is activated 
                         this->gr->notify(p, i, 5, '*');
                     }
                     break;
                 } else if (!this->theGrid.at(i-1).at(5).isEmpty()) {
                     this->theGrid.at(i).at(5).setType('*');
                     this->td->notify(p, i, 5, '*');
-                    if (!this->text && this->gr) { // to see if text mode is activated 
+                    if (!this->text && this->gr) { 
+                        // to see if text mode is activated 
                         this->gr->notify(p, i, 5, '*');
                     }
                     break;
@@ -266,59 +295,77 @@ void Grid::brown(State p, int n) {
             }
         }
         if (flag == true) {
-            throw GameOver{p};
+            throw GameOver{p}; // if it impossiible to set the brown block,
+            // the game is over (like any other block).
         }
-    } else { 
+    } else { // same loop as above, however drops a block on EVERY column. 
         for (int k = 0; k < 11; ++k) {
             bool flag = true;
             for (int i = 14; i >= 0; --i) {
                 if (this->theGrid.at(i).at(k).isEmpty()) {
                     flag = false;
-                    if (i == 0) { 
+                    if (i == 0) { // special cause for 0, because of 
+                    // std::out_of_range exception. 
                         this->theGrid.at(i).at(k).setType('*');
                         this->td->notify(p, i, k, '*');
-                        if (!this->text && this->gr) { // to see if text mode is activated 
+                        if (!this->text && this->gr) {
+                             // to see if text mode is activated 
                             this->gr->notify(p, i, k, '*');
                         }
                         break;
                     } else if (!this->theGrid.at(i-1).at(k).isEmpty()) {
                         this->theGrid.at(i).at(k).setType('*');
                         this->td->notify(p, i, k, '*');
-                        if (!this->text && this->gr) { // to see if text mode is activated 
+                        if (!this->text && this->gr) { 
+                            // to see if text mode is activated 
                          this->gr->notify(p, i, k, '*');
                         }
                         break;
                     }
                 }
             }
-            if (flag == true) {
+            if (flag == true) { // will throw GameOver if it is unable to 
+            // drop a block in a row
                     throw GameOver{p};
             }
         }
     }
 }
 
+/* Grid::fixBlind(State p) 
+ * The graphics of the game will be completely set to black. 
+ * If this happens, fixBlind will reupdate the entire graphics
+ * for the current player. 
+ */
 void Grid::fixBlind(State p) {
-    if (text) {
+    if (text) { // if the program is in text mode, 
+    // there is no need to update graphics. 
         return;
     }
     for (int row = 0; row < 18; ++row) {
         for  (int col = 0; col < 11; ++col) {
-            this->gr->blindnotify(p, row, col, this->theGrid.at(row).at(col).getType());
+            // calls one each cell (198 total)
+            this->gr->blindnotify(p, row, col, 
+            this->theGrid.at(row).at(col).getType());
         }
     }
 }
 
 
+/* Grid::rotate(State p)
+ * Will rotate the blocks in a CW direction. This will update
+ * graphics and textdisplay automatically if a change occurs. 
+ */
 void Grid::rotate(State p) {
     shared_ptr<Block> b = this->p->getBlock();
     vector <pair<int, int>> coords = b->getCoords();
-    b->setCoords(b->rotate());
+    b->setCoords(b->rotate()); // sets coords through rotate 
     vector <pair<int, int>> newCoords = b->getCoords();
     for (int i = 0; i < 4; ++i) {
         int x = newCoords.at(i).first;
         int y = newCoords.at(i).second;
         if (!validate(x, y)) {
+            // validate the coordinates through Grid::validate
             b->setCoords(coords);
             return;
         }
@@ -326,7 +373,8 @@ void Grid::rotate(State p) {
             int flag = 1;
             for (int k = 0; k < 4; ++k) {
                 if (x == coords.at(k).first && y == coords.at(k).second) { 
-                    flag = 0;
+                    flag = 0; // checks to see if the coordinates occupied are 
+                    // through the old block's coordinates 
                     break;
                 } 
             } if (flag == 1) { 
@@ -335,19 +383,28 @@ void Grid::rotate(State p) {
             }
         }
     }
-    b->switchOrientation();
+    b->switchOrientation(); // from h to v or v to h for block's rotate
+    // will reprrint 
+    char c = b->getType();
+    reprint(p, coords, newCoords, c); // redraws cells 
+}
+
+
+void Grid::reprint(State p, vector <pair<int, int>> coords, 
+vector <pair<int, int>> newCoords, char c) { 
     for (int i = 0; i < 4; ++i) {
         int oldx = coords.at(i).first;
         int oldy = coords.at(i).second;
-        this->clear(p, oldy, oldx);
+        this->clear(p, oldy, oldx); 
+        // empties all prior cells to ' ' (empty)
     }
     for (int k = 0; k < 4; ++k) {
         int x = newCoords.at(k).first;
         int y = newCoords.at(k).second;
-        char c = b->getType();
         this->theGrid.at(y).at(x).setType(c);
         this->td->notify(p, y, x, c);
-        if (!this->text && this->gr) {
+        if (!this->text && this->gr) { // only updates graphics
+        // if not in text mode 
                 this->gr->notify(p, y, x, c);
         }
     } 
@@ -393,7 +450,7 @@ void Grid::score(int n, int level) {
     }
 }
 
-bool Grid::rowclear(State p) {
+int Grid::rowclear(State p) {
     int level = this->getPlayer()->getLevel(); // level of player
     int n = 0; // # of rows cleared
     for (int i = 0; i < 18; ++i) {
@@ -420,10 +477,8 @@ bool Grid::rowclear(State p) {
         this->counter = 0;
     }
     score(n, level);
-    if (n >= 2) {
-        return true;
-    }
-    return false;
+    cout << " I cleared "  << n << " lines!" <<  endl;
+    return n;
 }
 
 void Grid::setTD(shared_ptr<TextDisplay> td) { 
