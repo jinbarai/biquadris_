@@ -2,19 +2,35 @@
 #include <iostream>
 using namespace std;
 
+/* Grid::init(Player *p, bool text )
+ * Instead of a constructor, we have an initalizer, 
+ * In order to make the restart command easier. 
+ * Hence, whenever init is called, the whole game is cleared
+ * Also, a new player is accpeted by the Grid when this happens. 
+ */
 void Grid::init(shared_ptr<Player> p, bool text) {
     this->theGrid.clear();
+    // takes a bool text in order to determine if 
+    // graphics should be updated via an Observer 
+    // Design pattern 
     this->text = text;
     this->p = p;
-    for (int i = 0; i < 18; ++i) {
+    // creates an 11x18 grid 
+    for (int i = 0; i < 18; ++i) { // rows
         vector<Cell> c;
         this->theGrid.emplace_back(c);
-        for (int k = 0; k < 11; ++k) {
+        for (int k = 0; k < 11; ++k) { // columns 
             this->theGrid.at(i).emplace_back(Cell(i,k,' '));
+            // ' ' represents an EMPTY cell 
         }
     }
 }
 
+/* Grid::update(State p)
+ * Update is used in order to add a block to the grid, at it's 
+ * spawning position. A state is taken in in order to pass the 
+ * correct player to TextDisplay and Graphics. 
+ */
 void Grid::update(State p) {
     shared_ptr<Block> b = this->getPlayer()->getBlock();
 
@@ -430,6 +446,4 @@ ostream &operator<<(ostream &out, const Grid &gr) {
     out << *gr.td;
     return out;
 }
-
-Grid::~Grid() {}
 

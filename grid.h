@@ -11,8 +11,12 @@
 
 /* THE GRID
  * This class is used to store all the information regarding 
- * the Grid, 
- * 
+ * the Grid, including notifying the Graphcs & TextDisplay. 
+ * Note: A Grid OWN'S its player (1-1). The grid does 
+ * not know which player it has (player 1 or player 2), and hence
+ * accepts a state when called by the controller for anything 
+ * that notifies grapics or TextDisplay. The grid also owns 
+ * 198 cells in it's theGrid vector. 
  */
 
 class Grid { 
@@ -46,6 +50,6 @@ class Grid {
     std::shared_ptr<Graphics> getGraphics();
     bool drop(State p);
     int down(State p);
-    ~Grid();
+    ~Grid() = default;
 };
 #endif

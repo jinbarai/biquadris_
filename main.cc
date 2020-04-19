@@ -190,44 +190,44 @@ int main(int argc, char *argv[])
     // default string names if no other strings are provided 
     string seqFile1 = "biquadris_sequence1.txt";
     string seqFile2 = "biquadris_sequence2.txt";
-    unsigned int seed=0;
+    unsigned int seed = 0;
     bool text = false; // used if text command is supplied to the program 
     int lvl = 0; // used if a particular level is supplied to the program 
-    if (argc > 1)
-    {
-        /* 
-         * this if statement is used to check for the command line flgas
-         * passed to the program 
-         */ 
-        if (!strcmp(argv[1],"-text")) // if text is provided 
+    /* 
+     * this if statement is used to check for the command line flags
+     * passed to the program 
+     */ 
+    for (int i = 0; i < argc ; ++i) { 
+
+        if (!strcmp(argv[i],"-text")) // if text is provided 
         { 
             text = true;
         }
-        else if (!strcmp(argv[1], "-seed")) // if seed is provided 
+        else if (!strcmp(argv[i], "-seed")) // if seed is provided 
         {
-            if (argc == 3) seed = atoi(argv[2]);
+            ++i;
+            seed = atoi(argv[i]);
             srand(seed);
         }
-        else if (!strcmp(argv[1], "-scriptfile1")) // if scriptfiles are provided 
+        else if (!strcmp(argv[i], "-scriptfile1")) // if scriptfiles are provided 
         {
-            if (argc == 3)
-                seqFile1 = argv[2];
+            ++i;
+            seqFile1 = argv[i];
         }
-        else if (!strcmp(argv[1], "-scriptfile2"))
+        else if (!strcmp(argv[i], "-scriptfile2"))
         {
-            if (argc == 3)
-                seqFile2 = argv[2];
+            ++i;
+            seqFile2 = argv[i];
         }
-        else if (!strcmp(argv[1], "-startlevel")) // to start at a particular level
+        else if (!strcmp(argv[i], "-startlevel")) // to start at a particular level
         {
-            if (argc == 3)
-                lvl = atoi(argv[2]);
+            ++i;
+            lvl = atoi(argv[i]);
         }
-        else if (!strcmp(argv[1], "-keyboardmode")){ // to start keyboard mode 
+        else if (!strcmp(argv[i], "-keyboardmode")){ // to start keyboard mode 
            keyboardmode = true;
         }
     }
-
     if (lvl > 6) lvl = 0;
     // to determine Player 1's name 
     cout << "Please enter player 1's name (up to 5 characters)" << endl;
@@ -265,7 +265,7 @@ int main(int argc, char *argv[])
     // used to initalie the Grid 
     g1->init(p1, text);
     g2->init(p2, text);
-    shared_ptr<TextDisplay> td = make_shared<TextDisplay>(p1, p2, 0); // given the programs highscore!
+    shared_ptr<TextDisplay> td = make_shared<TextDisplay>(p1, p2, highScore); // given the programs highscore!
     g1->setTD(td);
     g2->setTD(td);
     shared_ptr<Graphics> gr;
@@ -276,13 +276,13 @@ int main(int argc, char *argv[])
      */
     if (!text) {
         gr = make_shared<Graphics>();
-        gr->init(p1, p2, 0);
+        gr->init(p1, p2, highScore);
     } else { 
         gr = nullptr;
     }
     g1->setGraphics(gr);
     g2->setGraphics(gr);
-    unique_ptr<Controller> c = make_unique<Controller>(g1, g2, td, 0, text, gr);
+    unique_ptr<Controller> c = make_unique<Controller>(g1, g2, td, highScore, text, gr);
     if (keyboardmode) { // to ensure that keyboard mode is properly entered 
         c->setKeyboard(keyboardmode);
     }
@@ -455,6 +455,9 @@ int main(int argc, char *argv[])
         // as it will be the opposite player who threw the GameOver class
         // if Player 1 -> Player 2 wins
         // if Player 2 -> Player 1 wins 
+        if (c->getHighScore() > highScore) {
+            saveHighScore(c->getHighScore());
+        }
         if (g.player == State::p1) { 
             cout << "Player 2: " << c->getG2()->getPlayer()->getName() << " wins!" << endl;
         } else { 
@@ -465,6 +468,9 @@ int main(int argc, char *argv[])
     {
         // This won't work for windows, will work only for mac
         //system("clear");
+        if (c->getHighScore() > highScore) {
+            saveHighScore(c->getHighScore());
+        }
         cout << "Thank you for playing with us! <3" << endl;
         cout << "Player 1: " << p1->getScore() << endl;
         cout << "Player 2: " << p2->getScore() << endl;
