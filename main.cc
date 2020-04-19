@@ -318,8 +318,19 @@ int main(int argc, char *argv[])
                 {
                     saveHighScore(c->getHighScore());
                     cout << "Thank you for playing with us! <3" << endl;
-                    cout << "Player 1: " << p1->getScore() << endl;
-                    cout << "Player 2: " << p2->getScore() << endl;
+                    int score1 = c->getG1()->getPlayer()->getScore();
+                    string name1 = c->getG1()->getPlayer()->getName();
+                    int score2 = c->getG2()->getPlayer()->getScore();
+                    string name2 = c->getG2()->getPlayer()->getName();
+                    cout << "Player 1: " << score1 << endl;
+                    cout << "Player 2: " << score2  << endl;
+                    if (score1 > score2) {
+                        cout << "Player 1: " << name1 << " wins!" << endl;
+                    } else if (score1 < score2) { 
+                        cout << "Player 2: " << name2 << " wins!" << endl;
+                    } else { 
+                        cout << "It's a tie!" << endl;
+                    }
                     break;
                 }
                 if (!(num.empty()))
@@ -472,8 +483,19 @@ int main(int argc, char *argv[])
             saveHighScore(c->getHighScore());
         }
         cout << "Thank you for playing with us! <3" << endl;
-        cout << "Player 1: " << p1->getScore() << endl;
-        cout << "Player 2: " << p2->getScore() << endl;
+        int score1 = c->getG1()->getPlayer()->getScore();
+        string name1 = c->getG1()->getPlayer()->getName();
+        int score2 = c->getG2()->getPlayer()->getScore();
+        string name2 = c->getG2()->getPlayer()->getName();
+        cout << "Player 1: " << score1 << endl;
+        cout << "Player 2: " << score2  << endl;
+        if (score1 > score2) {
+            cout << "Player 1: " << name1 << " wins!" << endl;
+        } else if (score1 < score2) { 
+            cout << "Player 2: " << name2 << " wins!" << endl;
+        } else { 
+            cout << "It's a tie!" << endl;
+        }
         // will provide the scores of both players 
     }
 }

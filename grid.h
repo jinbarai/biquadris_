@@ -34,7 +34,7 @@ class Grid {
     // for output
     void clear(State p, int row, int col);
     int rowclear(State p); // clears any full row 
-    bool isFull(); // will determine whether or not the board is full 
+    bool checkEmpty(int x, int y, std::vector <std::pair<int, int>> coords);
     void score(int n, int level);
     void update(State p);
     void changeBlock(State p, std::shared_ptr<Block> b);
@@ -49,7 +49,6 @@ class Grid {
     void fixBlind(State p);
     void rotate(State p);
     void brown(State p, int n);
-    std::shared_ptr<Graphics> getGraphics();
     bool drop(State p);
     int down(State p);
     ~Grid() = default;
