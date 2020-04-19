@@ -607,9 +607,7 @@ void Controller::restart() {
     this->g2->init(p2, this->text);
     // will reinitalize the graphics! 
     if (!this->text) { 
-        this->gr = make_shared<Graphics>(p1, p2, this->highscore);
-    } else { 
-        this->gr = nullptr;
+        this->gr->init(p1, p2, this->highscore);
     }
     // creates a new TextDisplay! 
     this->td = make_shared<TextDisplay>(p1, p2, this->highscore);

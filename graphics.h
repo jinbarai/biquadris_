@@ -12,7 +12,8 @@ class Graphics {
     std::shared_ptr<Player> p2;
     Xwindow xw;
     public:
-    Graphics(std::shared_ptr<Player> p1, std::shared_ptr<Player> p2, int score);
+    Graphics();
+    void init(std::shared_ptr<Player> p1, std::shared_ptr<Player> p2, int score);
     void notify(State, int row, int col, char c);
     void blindnotify(State, int row, int col, char c);
     void notifyScore();
