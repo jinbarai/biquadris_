@@ -9,6 +9,12 @@
 #include "block.h"
 #include "graphics.h"
 
+/* THE GRID
+ * This class is used to store all the information regarding 
+ * the Grid, 
+ * 
+ */
+
 class Grid { 
     std::shared_ptr <Player> p = nullptr;
     bool text;

@@ -3,7 +3,8 @@
 #include "controller.h"
 #include "player.h"
 #include "graphics.h"
-#include <string>
+#include <algorithm>
+#include <string.h>
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
