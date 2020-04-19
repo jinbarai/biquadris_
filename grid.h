@@ -33,7 +33,7 @@ class Grid {
     friend std::ostream &operator<<(std::ostream &out, const Grid &gr);
     // for output
     void clear(State p, int row, int col);
-    bool rowclear(State p); // clears any full row 
+    int rowclear(State p); // clears any full row 
     bool isFull(); // will determine whether or not the board is full 
     void score(int n, int level);
     void update(State p);
@@ -44,6 +44,8 @@ class Grid {
     bool isRowFull(int n); // n is the row you want to check
     bool move(State p, int dir);
     bool validate(int x, int y);
+    void reprint(State p, std::vector <std::pair<int, int>> coords, 
+    std::vector <std::pair<int, int>> newCoords, char c);
     void fixBlind(State p);
     void rotate(State p);
     void brown(State p, int n);

@@ -330,7 +330,7 @@ void Controller::move(int n, int dir) {
             val = this->getGrid()->down(this->turn);
             if (val == 0 || val == -1){
                 this->getGrid()->getPlayer()->setSpecialHeavy(false);
-                this->changeTurn();
+                drop();
                 return;
             }
         } // used to determine the heavy nature of the blocks. 
@@ -338,13 +338,13 @@ void Controller::move(int n, int dir) {
             val = this->getGrid()->down(this->turn);
             if (val == 0 || val == -1) {
                 this->getGrid()->getPlayer()->setSpecialHeavy(false);
-                this->changeTurn();
+                drop();
                 return;
             }
             val = this->getGrid()->down(this->turn);
             if (val == 0 || val == -1) {
                 this->getGrid()->getPlayer()->setSpecialHeavy(false);
-                this->changeTurn();
+                drop();
                 return;
             }
         } // if the game is NOT in Level 6 mode (grid hidden) and if 
@@ -379,7 +379,7 @@ void Controller::down(int n) {
             val = this->getGrid()->down(this->turn);
             if (val == 0 || val == -1){
                 this->getGrid()->getPlayer()->setSpecialHeavy(false);
-                this->changeTurn();
+                drop();
                 // if it is not possible to move down anymore, shuld stop. 
                 return;
             }
@@ -389,13 +389,13 @@ void Controller::down(int n) {
             val = this->getGrid()->down(this->turn);
             if (val == 0 || val == -1) {
                 this->getGrid()->getPlayer()->setSpecialHeavy(false);
-                this->changeTurn();
+                drop();
                 return;
             } 
             val = this->getGrid()->down(this->turn);
             if (val == 0 || val == -1) {
                 this->getGrid()->getPlayer()->setSpecialHeavy(false);
-                this->changeTurn();
+                drop();
                 return;
             }
         } 
