@@ -249,7 +249,7 @@ void Controller::levelup() {
     this->getGrid()->getPlayer()->changeLevel(level);
     if (!this->text) { // will not change graphics 
     // if text mode is proviided 
-        this->getGrid()->getGraphics()->changeLevel();
+        this->gr->changeLevel();
     }
     cout << *this->getGrid();
 }
@@ -429,7 +429,7 @@ void Controller::down(int n) {
 string Controller::getKeyboardCommand() // used xev in console to get these numbers
 {
     // key is updated by graphics 
-    int key = this->getGrid()->getGraphics()->getXwindow()->getKeyCode();
+    int key = this->gr->getXwindow()->getKeyCode();
     // left = linux, right = mac
     if (key == 113 || key == 131) return "left"; //left arrow
     else if (key == 114 || key == 132) return "right";// right arrow

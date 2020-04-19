@@ -87,17 +87,10 @@ bool Grid::move(State p, int dir) {
             return false; // unable to move 
         } 
         if (!this->theGrid.at(y).at(x).isEmpty()) { 
-            int flag = 1;
-            for (int k = 0; k < 4; ++k) {
-                if (x == coords.at(k).first && y == coords.at(k).second) { 
-                    flag = 0; // if the block currently belongs to a 
-                    // another cell of the block in its unmoved position
-                    // this is okay, and hence flag is cleared. 
-                    break;
-                } 
-            } if (flag == 1) { // the cell wanting to be moved to 
-            // does not belong to the old or updated block (belongs to another
-            // block and hence, does not update)
+            bool flag = checkEmpty(x, y, coords);
+            if (flag == 1) { // the cell wanting to be moved to 
+            // does not belong to the old or updated block 
+            // (belongs to another block and hence, does not update)
                 b->setCoords(coords); // resets prior coordintes 
                 return false; // unable to move 
             }
@@ -107,6 +100,24 @@ bool Grid::move(State p, int dir) {
     reprint(p, coords, newcoords, c); 
     // empties old cells, draws new ones 
     return true; // means the move was successful 
+}
+
+/* Grid::checkEmpty(int x, int y, vector coords)
+ * Used to determine if the current cell at x, y is occupied by a 
+ * member of the coords (used to prevent repetitive code)
+ */
+bool Grid::checkEmpty(int x, int y, vector <pair<int, int>> coords) {
+    int flag = true;
+    for (int k = 0; k < 4; ++k) {
+        if (x == coords.at(k).first && y == coords.at(k).second) { 
+            flag = false; // if the block currently belongs to a 
+            // another cell of the block in its 
+            // unmoved position this is okay,
+            //  and hence flag is cleared. 
+            break;
+        } 
+    }
+    return flag;
 }
 
 /* Grid::validate(int x, int y)
@@ -153,27 +164,23 @@ void Grid::changeBlock(State p, shared_ptr<Block> b) {
         // if desired cell is not empty, will see if it is 
         // currently occupied by the current block 
         if (!this->theGrid.at(y1).at(x1).isEmpty()) {
-            int flag = 1;
-            for (int k = 0; k < 4; ++k) {
-                if (x1 == oldc.at(k).first && y1 == oldc.at(k).second) { 
-                    flag = 0; // will check to make sure if the block is occupied 
-                    // it is 
-                    break;
-                } 
-            } if (flag == 1) { // will return if not possible.
+            bool flag = checkEmpty(x1, y1, oldc);
+            if (flag == 1) { // will return if not possible.
                 return;
             }
         }
     }
-    b->setCoords(coords); // will set the blocks to permanently be in their
-    // new updated positio (each cell updated by -x, -y).
+    b->setCoords(coords); // will set the blocks to permanently 
+    // be in their new updated position 
+    // (each cell updated by -x, -y).
     char c = b->getType();
     reprint(p, oldc, coords, c);
     if (this->p->getLevel() != 6) {
         // will not output in level 6 because of hide mode. 
         cout << *this;
     }
-    this->p->setBlock(b); // ensures the next block is correctly updated! 
+    this->p->setBlock(b); 
+    // ensures the next block is correctly updated! 
 }
 
 /* Grid::down(State p)
@@ -195,13 +202,8 @@ int Grid::down(State p) {
             return false;
         } 
         if (!this->theGrid.at(y).at(x).isEmpty()) { 
-            int flag = 1;
-            for (int k = 0; k < 4; ++k) {
-                if (x == coords.at(k).first && y == coords.at(k).second) { 
-                    flag = 0;
-                    break;
-                } 
-            } if (flag == 1) { 
+            bool flag = checkEmpty(x, y, coords);
+            if (flag == 1) { 
                 b->setCoords(coords);
                 return false;
             }
@@ -215,16 +217,7 @@ int Grid::down(State p) {
         if (y == 0) {
             return -1;
         } else if (!this->theGrid.at(y - 1).at(x).isEmpty()) {
-            bool flag = true;
-            for (int k = 0; k < 4; ++k) {
-                int newx = newcoords.at(k).first;
-                int newy = newcoords.at(k).second;
-                if (newx == x && newy == y - 1) { 
-                    // used to ensure it is not occupied by the current block! 
-                    flag = false;
-                    break;
-                }
-            }
+            bool flag = checkEmpty(x, y - 1, newcoords);
             if (flag == true) {
                 // this means that the block is unable to be moved 
                 // further down 
@@ -295,10 +288,11 @@ void Grid::brown(State p, int n) {
             }
         }
         if (flag == true) {
-            throw GameOver{p}; // if it impossiible to set the brown block,
-            // the game is over (like any other block).
+            throw GameOver{p}; // if it impossiible to set 
+            // the brown block, the game is over. .
         }
-    } else { // same loop as above, however drops a block on EVERY column. 
+    } else { // same loop as above, however
+    //  drops a block on EVERY column. 
         for (int k = 0; k < 11; ++k) {
             bool flag = true;
             for (int i = 14; i >= 0; --i) {
@@ -324,7 +318,8 @@ void Grid::brown(State p, int n) {
                     }
                 }
             }
-            if (flag == true) { // will throw GameOver if it is unable to 
+            if (flag == true) { 
+                // will throw GameOver if it is unable to 
             // drop a block in a row
                     throw GameOver{p};
             }
@@ -370,26 +365,24 @@ void Grid::rotate(State p) {
             return;
         }
         if (!this->theGrid.at(y).at(x).isEmpty()) { 
-            int flag = 1;
-            for (int k = 0; k < 4; ++k) {
-                if (x == coords.at(k).first && y == coords.at(k).second) { 
-                    flag = 0; // checks to see if the coordinates occupied are 
-                    // through the old block's coordinates 
-                    break;
-                } 
-            } if (flag == 1) { 
+            int flag = checkEmpty(x, y, coords);
+            if (flag == 1) { 
                 b->setCoords(coords);
                 return;
             }
         }
     }
-    b->switchOrientation(); // from h to v or v to h for block's rotate
-    // will reprrint 
+    b->switchOrientation(); // from h to v or v to h 
+    // for block's rotate
     char c = b->getType();
     reprint(p, coords, newCoords, c); // redraws cells 
 }
 
-
+/* Grid::reprint(State p, vector coords, 
+*  vector newCoords, char c)
+ * Used to "erase" all the cells from the vector coords, 
+ * and drawall the cells from vector newCoords with type c.
+ */
 void Grid::reprint(State p, vector <pair<int, int>> coords, 
 vector <pair<int, int>> newCoords, char c) { 
     for (int i = 0; i < 4; ++i) {
@@ -410,46 +403,60 @@ vector <pair<int, int>> newCoords, char c) {
     } 
 }
 
+/* Grid::clear(State p, int row, int col)
+ * Used to "erase" a cell and revert to type 
+ * empty (' ').
+ */
 void Grid::clear(State p, int row, int col) {
     char c = ' ';
     this->theGrid.at(row).at(col).setType(c);
     this->td->notify(p, row, col, c);
     if (!this->text && this->gr) {
+        // only updates graphics if not in text mode 
         this->gr->notify(p, row, col, c);
     }
 }
 
+/* Grid::isRowFull(int n)
+ * Will return whether or not a particlar row is full. 
+ * Used in the Grid::rowClear() function. 
+ */
 bool Grid::isRowFull(int n) { 
     for (int i = 0; i < 11; ++i) {
          if (this->theGrid.at(n).at(i).isEmpty() == true) {
+             // if a cell is empty, it clearly is not full
+             // the type of what it is when not empty does 
+             // not matter, 
             return false;
         }
     } 
     return true;
 }     
 
-bool Grid::isFull() {  
-    for (int i = 0; i < 18; ++i) { 
-        if (isRowFull(i) == false) {
-            return false;
-        }
-    } 
-    return true;
-}
-
-
+/* Grid::score(int n, int level)
+ * Will increment the players score by 
+ * (n + level)^2. 
+ */
 void Grid::score(int n, int level) { 
-    if (n == 0) {
+    if (n == 0) { // useless to update 
+    // can incorrectly cause a wrong value 
+    // if level > 0. 
         return;
     }
     int score = n + level;
     score *= score;
     this->getPlayer()->addScore(score);
     if (!this->text && this->gr) {
+        // will only update the graphics 
+        // if not in text mode 
         this->gr->notifyScore();
     }
 }
 
+/* Grid::rowClear(state p)
+ * will clear a row, and call the score function to change
+ * the score. 
+ */
 int Grid::rowclear(State p) {
     int level = this->getPlayer()->getLevel(); // level of player
     int n = 0; // # of rows cleared
@@ -470,6 +477,8 @@ int Grid::rowclear(State p) {
                 clear(p, 17, m);
             }
             i = -1;
+            // if a row is cleared, restart the entire loop
+            // -1 will become 0 on the next iteration. 
         }
     }
     if (n > 0) {
@@ -477,26 +486,39 @@ int Grid::rowclear(State p) {
         this->counter = 0;
     }
     score(n, level);
-    cout << " I cleared "  << n << " lines!" <<  endl;
-    return n;
+    return n; // used by the drop function 
+    // to determine if a specialAction should occur or not. 
 }
 
+/* Grid::setTD(TextDisplay *td)
+ * Used to increment a new TD when initalized 
+ */
 void Grid::setTD(shared_ptr<TextDisplay> td) { 
     this->td = td;
 }
 
+/* Grid::setGraphics(Graphics *gr)
+ * Used to set a Graphics pointer. If the program 
+ * is in "-text" mode, will be a nullptr.  
+ */
 void Grid::setGraphics(shared_ptr<Graphics> gr) { 
     this->gr = gr;
 }
 
-shared_ptr<Graphics> Grid::getGraphics() { 
-    return this->gr;
-}
-                    
+
+/* Grid::getPlayer() 
+ * Will return the current player. 
+ * Mostly used by Controller, to not have to check which 
+ * players turn it in (use getGrid()->getPlayer()).
+ */              
 shared_ptr<Player> Grid::getPlayer() {
     return this->p;
 }
 
+/* operator overload << for a grid. 
+ * Will make reference to the TextDisplay output.
+ * Refer to textdisplay.cc 
+ */
 ostream &operator<<(ostream &out, const Grid &gr) { 
     out << *gr.td;
     return out;
