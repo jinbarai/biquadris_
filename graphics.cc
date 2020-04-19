@@ -253,118 +253,129 @@ void Graphics::notify(State p, int row, int col, char c) {
     this->xw.fillRectangle(x+1, y+1, xpixel, ypixel, colour);
 }
 
-
-/* Graphics::NextBlock(State p, char c)
- * Very long (beacuse the next block is beautifully centered). 
- * Display the next block at the particular location based 
- * on its correct colour and state. 
+/* Graphics::NextBlockp1(char c)
+ * Used to notify graphics to print next block
+ * will print centered 
  */
-void Graphics::NextBlock(State p, char c) { 
-    int x1;
-    int x2;
-    int x3;
-    int xi1;
-    int xi2;
-    int xi3;
-    int xi4;
-    int y1 = 454;
-    int y2 = 464; 
-    int y3 = 474;
-    // x1, x2, x3 are the next block centered in middle
-    // xi1, xi2, xi3 and xi4 are just the width /4 to make 
-    // centered i and o blocks 
-    //y1 and y3 are top and bottom split in half
-    // y2 is the center height in the middlle of the block 
-    // to make i block on a middle line. 
-    if (p == State::p1) { 
-        x1 = 173;
-        x2 = 192;
-        x3 = 211; 
-        xi1 = 163;
-        xi2 = 182;
-        xi3 = 201;
-        xi4 = 220;
-    } else { 
-        x1 = 403;
-        x2 = 422;
-        x3 = 441;
-        xi1 = 393;
-        xi2 = 412;
-        xi3 = 431;
-        xi4 = 450;
-    }
-    int colour = this->getColour(c); 
+void Graphics::NextBlockp1(char c) { 
+    int colour = this->getColour(c);
+    int x1 = 173;
+    int x2 = 192;
+    int x3 = 211; 
     if (c == 'O') {
-        this->xw.fillRectangle(xi2 + 1, y1, xpixel, ypixel, colour);
-        this->xw.fillRectangle(xi2 + 1, y3, xpixel, ypixel, colour);
-        this->xw.fillRectangle(xi3 + 1, y1, xpixel, ypixel, colour);
-        this->xw.fillRectangle(xi3 + 1, y3, xpixel, ypixel, colour);
+        this->xw.fillRectangle(182 + 1, 453 + 1, 17, 18, colour);
+        this->xw.fillRectangle(182 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(201 + 1, 453 + 1, 17, 18, colour);
+        this->xw.fillRectangle(201 + 1, 473 + 1, 17, 18, colour);
     } else if (c == 'I') {
-        this->xw.fillRectangle(xi1 + 1, y2, xpixel, ypixel, colour);
-        this->xw.fillRectangle(xi2 + 1, y2, xpixel, ypixel, colour);
-        this->xw.fillRectangle(xi3 + 1, y2, xpixel, ypixel, colour);
-        this->xw.fillRectangle(xi4 + 1, y2, xpixel, ypixel, colour);
+        this->xw.fillRectangle(163 + 1, 463 + 1, 17, 18, colour);
+        this->xw.fillRectangle(182 + 1, 463 + 1, 17, 18, colour);
+        this->xw.fillRectangle(201 + 1, 463 + 1, 17, 18, colour);
+        this->xw.fillRectangle(220 + 1, 463 + 1, 17, 18, colour);
     } else if (c == 'T') {
-        this->xw.fillRectangle(x2 + 1, y1, xpixel, ypixel, colour);
-        this->xw.fillRectangle(x1 + 1, y3, xpixel, ypixel, colour);
-        this->xw.fillRectangle(x2 + 1, y3, xpixel, ypixel, colour);
-        this->xw.fillRectangle(x3 + 1, y3, xpixel, ypixel, colour);
+        this->xw.fillRectangle(x2 + 1, 453 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x1 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x2 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x3 + 1, 473 + 1, 17, 18, colour);
     } else if (c == 'S') {
-        this->xw.fillRectangle(x1 + 1, y3, xpixel, ypixel, colour);
-        this->xw.fillRectangle(x2 + 1, y3, xpixel, ypixel, colour);
-        this->xw.fillRectangle(x2 + 1, y1, xpixel, ypixel, colour);
-        this->xw.fillRectangle(x3 + 1, y1, xpixel, ypixel, colour);
+        this->xw.fillRectangle(x1 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x2 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x2 + 1, 453 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x3 + 1, 453 + 1, 17, 18, colour);
     } else if (c == 'L') {
-        this->xw.fillRectangle(x1 + 1, y3, xpixel, ypixel, colour);
-        this->xw.fillRectangle(x2 + 1, y3, xpixel, ypixel, colour);
-        this->xw.fillRectangle(x3 + 1, y3, xpixel, ypixel, colour);
-        this->xw.fillRectangle(x3 + 1, y1, xpixel, ypixel, colour);
+        this->xw.fillRectangle(x1 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x2 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x3 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x3 + 1, 453 + 1, 17, 18, colour);
     } else if (c == 'Z') {
-        this->xw.fillRectangle(x1 + 1, y3, xpixel, ypixel, colour);
-        this->xw.fillRectangle(x2 + 1, y3, xpixel, ypixel, colour);
-        this->xw.fillRectangle(x2 + 1, y1, xpixel, ypixel, colour);
-        this->xw.fillRectangle(x3 + 1, y1, xpixel, ypixel, colour);
+        this->xw.fillRectangle(x1 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x2 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x2 + 1, 453 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x3 + 1, 453 + 1, 17, 18, colour);
     } else if (c == 'J') { 
-        this->xw.fillRectangle(x1 + 1, y1, xpixel, ypixel, colour);
-        this->xw.fillRectangle(x1 + 1, y3, xpixel, ypixel, colour);
-        this->xw.fillRectangle(x2 + 1, y3, xpixel, ypixel, colour);
-        this->xw.fillRectangle(x3 + 1, y3, xpixel, ypixel, colour);
+        this->xw.fillRectangle(x1 + 1, 453 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x1 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x2 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x3 + 1, 473 + 1, 17, 18, colour);
     }
 }
 
-
-/* Graphics::next(State p)
- * Used to update the Graphics' next statement 
- * Can be called if nextblock is nullptr as well 
+/* Graphics::NextBlockp2(char c)
+ * Similar to NextBlockp1. Attempts to merge functions into 1 were 
+ * not successful (far too many variables) 
  */
-void Graphics::next(State p) {
+void Graphics::NextBlockp2(char c) { 
+      int colour = this->getColour(c);
+    int x1 = 403;
+    int x2 = 422;
+    int x3 = 441; 
+    if (c == 'O') {
+        this->xw.fillRectangle(412 + 1, 453 + 1, 17, 18, colour);
+        this->xw.fillRectangle(412 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(431 + 1, 453 + 1, 17, 18, colour);
+        this->xw.fillRectangle(431 + 1, 473 + 1, 17, 18, colour);
+    } else if (c == 'I') {
+        this->xw.fillRectangle(393 + 1, 463 + 1, 17, 18, colour);
+        this->xw.fillRectangle(412 + 1, 463 + 1, 17, 18, colour);
+        this->xw.fillRectangle(431 + 1, 463 + 1, 17, 18, colour);
+        this->xw.fillRectangle(450 + 1, 463 + 1, 17, 18, colour);
+    } else if (c == 'T') {
+        this->xw.fillRectangle(x2 + 1, 453 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x1 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x2 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x3 + 1, 473 + 1, 17, 18, colour);
+    } else if (c == 'S') {
+        this->xw.fillRectangle(x1 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x2 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x2 + 1, 453 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x3 + 1, 453 + 1, 17, 18, colour);
+    } else if (c == 'L') {
+        this->xw.fillRectangle(x1 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x2 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x3 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x3 + 1, 453 + 1, 17, 18, colour);
+    } else if (c == 'Z') {
+        this->xw.fillRectangle(x1 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x2 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x2 + 1, 453 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x3 + 1, 453 + 1, 17, 18, colour);
+    } else if (c == 'J') { 
+        this->xw.fillRectangle(x1 + 1, 453 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x1 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x2 + 1, 473 + 1, 17, 18, colour);
+        this->xw.fillRectangle(x3 + 1, 473 + 1, 17, 18, colour);
+    }
+}
+
+/* Graphics::next()
+ * Prints both next blocks
+ */
+void Graphics::next() {
     // reset to Black
     string block1 = "Next: ";
     string block2 = "Next: ";
-    if (this->p1->getNextBlock()) { // ensures next block exists (not nullptr)
-        // will reprint the correct white space for the statement and
-        // black space for the place the actual display of the next block goes
-        this->xw.fillRectangle(align1, 450, 200, 50, Xwindow::White);
+    // updates string to cover old next statement 
+    if (this->p1->getNextBlock()) {
+        this->xw.fillRectangle(30, 450, 200, 50, Xwindow::White);
         block1.push_back(this->p1->getNextBlock()->getType());
         block1 += " Block";
+        // obtains the type of the netc block 
         char c1 = this->p1->getNextBlock()->getType();
-        this->xw.drawStringFont(align1, 470, block1 , body);
+        this->xw.drawStringFont(align2, 470, block1 , body);
         this->xw.fillRectangle(163, 453, 76 , 40); 
-        // calls the NextBlock function
-        this->NextBlock(p, c1);
+        this->NextBlockp1(c1);
     } 
-    if (this->p2->getNextBlock())  {
+    if  (this->p2->getNextBlock())  {
         this->xw.fillRectangle(align2, 450, 200, 50, Xwindow::White);
         block2.push_back(this->p2->getNextBlock()->getType());
         block2 += " Block";
         char c2 = this->p2->getNextBlock()->getType();
-        this->xw.drawStringFont(align2, 470, block2 , body);
+        this->xw.drawStringFont(260, 470, block2 , body);
         // height: 19* 4, width: 20 * 2
         this->xw.fillRectangle(393, 453, 76 , 40);
-        this->NextBlock(p, c2);
+        this->NextBlockp2(c2);
     }
 }
-
 
 /* Graphics::notifyScore() 
  * this is used to update the score of the players, 

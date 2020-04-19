@@ -648,7 +648,7 @@ void Controller::generate() {
         this->getGrid()->getPlayer()->setBlock(b);
         this->getGrid()->getPlayer()->setNextBlock(l->createBlock());
         if (!this->text) { // will update the Graphics if not "-text" mode. 
-            this->gr->next(this->turn);
+            this->gr->next();
         }
         // will update the grid with the current player's state (hence 
         // which player's turn it is).

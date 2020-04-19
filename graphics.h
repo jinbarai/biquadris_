@@ -26,8 +26,9 @@ class Graphics {
     void changeScore(int n);
     void drawBlind(State p);
     int getColour(char c);
-    void next(State p); // updates the next block
-    void NextBlock(State p, char c);
+    void next(); // updates the next block
+    void NextBlockp1(char c);
+    void NextBlockp2(char c);
     void level6(State p);
     Xwindow *getXwindow();
     void changeLevel();
