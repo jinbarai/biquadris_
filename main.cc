@@ -28,6 +28,9 @@ const string hintfile = "textFiles/possible_hint.txt";
 const string norandomfile = "textFiles/possible_norandom.txt";
 const string randomfile = "textFiles/possible_random.txt";
 string file = ""; 
+bool readSeq = false; 
+vector <string> seq_comm; 
+
 #undef _KEYBOARDMODE_
 using namespace std;
 
@@ -296,7 +299,15 @@ int main(int argc, char *argv[])
             int multiplier = 1;
             if (!keyboardmode){ // if it is keyboard mode
             // other commands are provided 
-                getline(cin, cmd); // obtains the line from the user's input 
+                if(!readSeq) {
+                    getline(cin, cmd); // obtains the line from the user's input 
+                }
+                else if(!seq_comm.empty() && readSeq) {
+                    cmd = seq_comm.back();
+                    //cout << cmd << endl; 
+                    seq_comm.pop_back();  
+                }
+                else if (seq_comm.empty()) readSeq = false; 
                 // converts to a command 
                 command = getCommand(cmd);
                 string num = getNum(cmd);
@@ -304,11 +315,7 @@ int main(int argc, char *argv[])
                 // Handle filenames
                 if ((command).compare("end") == 0)
                 {
-                    // This won't work for windows, will work only for mac
-                //    system("clear");
                     saveHighScore(c->getHighScore());
-                    // used to save the highscore 
-                    // For windows: system("CLS");
                     cout << "Thank you for playing with us! <3" << endl;
                     cout << "Player 1: " << p1->getScore() << endl;
                     cout << "Player 2: " << p2->getScore() << endl;
@@ -348,7 +355,7 @@ int main(int argc, char *argv[])
             {
                 multiplier = (multiplier > 17) ? 17 : multiplier;
                 // used to save efficiency 
-                cout << multiplier << endl;
+                //cout << multiplier << endl;
                 c->down(multiplier);
             }
             else if (command == "drop")
@@ -380,6 +387,7 @@ int main(int argc, char *argv[])
                 // pass in a filename
                 if (file!="") c->norandom(file);
                 else cout<<"Filename not entered or file not readable" << endl; 
+                file = ""; 
             }
             else if (command == "levelup")
             {
@@ -411,8 +419,18 @@ int main(int argc, char *argv[])
                 }
             }
             else if (command == "sequence") {
+                 //flush the vector 
+                 seq_comm.clear(); 
                  // pass in a filename
-                if (file!="") c->norandom(file);
+                ifstream fname{file};
+                if(fname.good()) {
+                    string word; 
+                    readSeq = true; 
+                    while(fname>>word) {
+                        seq_comm.emplace_back(word); 
+                    }
+                    reverse(seq_comm.begin(),seq_comm.end()); 
+                }
                 else cout<<"Filename not entered or file not readable" << endl;
             }
             else if (command  == "i" || command  == "j" || 
