@@ -10,6 +10,7 @@
 using namespace std;
 
 /* 
+ * WELCOME TO BIQUADRIS!! 
  * these strings are saved for simplicity within the 
  * command simplifier getCommand function. 
  */ 

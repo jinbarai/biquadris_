@@ -47,10 +47,9 @@ class Controller {
     void random();
     void clearVector(std::shared_ptr<levels> l);
     void norandom(std::string filename);
-    void sequence(std::string filename); 
     void down(int n = 1);
     void readFromFile(std::string file, std::shared_ptr<levels> l); 
-    ~Controller();
+    ~Controller() = default;
 };
 
 #endif
