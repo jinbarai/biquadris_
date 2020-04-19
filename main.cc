@@ -271,7 +271,8 @@ int main(int argc, char *argv[])
      * shared pointer is created  
      */
     if (!text) {
-        gr = make_shared<Graphics>(p1, p2, 0);
+        gr = make_shared<Graphics>();
+        gr->init(p1, p2, 0);
     } else { 
         gr = nullptr;
     }
