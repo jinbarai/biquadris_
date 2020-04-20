@@ -230,7 +230,8 @@ int main(int argc, char *argv[])
                // -keyboard mode is not compatable with -text mode 
                // will turn keyboardmode off 
                if (!strcmp(argv[k], "-text")) {
-                   cout << "-text flag provided, keyboardmode will not be in effect" << endl;
+                   cout << "-text flag provided, keyboardmode will not be in effect" 
+                   << endl;
                    keyboardmode = false;
                    break;
                }
