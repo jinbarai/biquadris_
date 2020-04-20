@@ -226,6 +226,15 @@ int main(int argc, char *argv[])
         }
         else if (!strcmp(argv[i], "-keyboardmode")){ // to start keyboard mode 
            keyboardmode = true;
+           for (int k = 0; k < argc; ++k) { 
+               // -keyboard mode is not compatable with -text mode 
+               // will turn keyboardmode off 
+               if (!strcmp(argv[k], "-text")) {
+                   cout << "-text flag provided, keyboardmode will not be in effect" << endl;
+                   keyboardmode = false;
+                   break;
+               }
+           }
         }
     }
     if (lvl > 6) lvl = 0;
@@ -256,8 +265,8 @@ int main(int argc, char *argv[])
     }
     cout << "Welcome to Biquadris " << s1 << " and " << s2 << "!" << endl;
     // make the pointers for player 1 and 2 
-    shared_ptr<Player> p1 = make_shared<Player>(0, s1, 0, seqFile1);
-    shared_ptr<Player> p2 = make_shared<Player>(0, s2, 0, seqFile2);
+    shared_ptr<Player> p1 = make_shared<Player>(s1, 0, seqFile1);
+    shared_ptr<Player> p2 = make_shared<Player>(s2, 0, seqFile2);
     // will make Grid pointers to be passed to the controller
     // upon it's construction 
     auto g1 = make_shared<Grid>();

@@ -600,8 +600,8 @@ void Controller::restart() {
     // revert players back to default sequence files. 
     string s1 = this->g1->getPlayer()->getName();
     string s2 = this->g2->getPlayer()->getName();
-    shared_ptr<Player> p1 = make_shared<Player>(0, s1, 0, "sequence1.txt");
-    shared_ptr<Player> p2 = make_shared<Player>(0, s2, 0, "sequence2.txt");
+    shared_ptr<Player> p1 = make_shared<Player>(s1, 0, "sequence1.txt");
+    shared_ptr<Player> p2 = make_shared<Player>(s2, 0, "sequence2.txt");
     // does not create new grids, simply re-initalizes them 
     this->g1->init(p1, this->text);
     this->g2->init(p2, this->text);
