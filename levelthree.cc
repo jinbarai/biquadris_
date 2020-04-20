@@ -15,6 +15,8 @@
 #include "zblock.h"
 using namespace std;
 
+// Refer to levels.h for function explanations 
+
 shared_ptr<Block> levelthree::createBlock()
 {
     // Read from file if norandom option is enabled 

@@ -14,9 +14,9 @@
 #include "sblock.h"
 #include "tblock.h"
 #include "zblock.h"
-
-
 using namespace std; 
+
+// Refer to levels.h for function explanations 
 
 shared_ptr<Block> levelone::createBlock() {
     // Generate a lucky number using rand()

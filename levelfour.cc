@@ -8,16 +8,9 @@
 #include "levelfour.h"
 #include <random>
 #include "iblock.h"
-/*
-#include "jblock.h"
-#include "oblock.h"
-#include "lblock.h"
-#include "sblock.h"
-#include "tblock.h"
-#include "zblock.h"
-*/
-
 using namespace std; 
+
+// Refer to levels.h for function explanations 
 
 shared_ptr<Block> levelfour::createBlock() {
   // Read from file norandom == true 
