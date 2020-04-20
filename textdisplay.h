@@ -4,6 +4,13 @@
 #include "state.h"
 #include "player.h"
 
+
+/* TEXTDISPLAY
+ * This class does not own any other class in particular, but
+ * has 2 players (owned by the Grid). The textdisplay class
+ * is notified by the grid (refer to grid.cc)
+ */
+
 class TextDisplay { 
     std::shared_ptr<Player> p1;
     std::shared_ptr<Player> p2;
@@ -15,7 +22,7 @@ class TextDisplay {
     void updateScore(int n);
     friend std::ostream &operator<<(std::ostream &out, const TextDisplay &td);
     void notify(State p, int row, int col, char c); // call notify on all cells
-    ~TextDisplay();
+    ~TextDisplay() = default;
 };
 
 #endif
