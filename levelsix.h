@@ -16,8 +16,8 @@
 #ifndef SIX_H
 #define SIX_H
 
-//class InvalidMove{};
 
+// All methods function the same as the one described in levels.h 
 class levelsix: public levels { 
     int curseq = 0; 
     std::shared_ptr<Block> makeBlocks(char type, bool isHeavy) override; 

@@ -10,6 +10,8 @@
 
 using namespace std; 
 
+
+// Returns a shared pointer to type Block 
 shared_ptr<Block> levelfive::createBlock() {
   // Read from file norandom == true 
   if (this->norandom) {

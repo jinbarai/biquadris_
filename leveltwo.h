@@ -15,7 +15,7 @@
 #ifndef TWO_H
 #define TWO_H
 
-//class InvalidMove{}; // use state.h instead
+// All methods perform the same function as described in levels.h
 
 class leveltwo: public levels { 
     std::shared_ptr<Block> makeBlocks(char type, bool isHeavy) override; 

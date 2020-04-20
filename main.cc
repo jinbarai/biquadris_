@@ -445,6 +445,7 @@ int main(int argc, char *argv[])
                  seq_comm.clear(); 
                  // pass in a filename
                 ifstream fname{file};
+                // check if a file exists or is readable, and open it
                 if(fname.good()) {
                     string word; 
                     readSeq = true; 

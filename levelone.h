@@ -17,6 +17,8 @@
 #ifndef ONE_H
 #define ONE_H
 
+// All methods function the same as the one described in levels.h 
+
 class levelone: public levels { 
     std::shared_ptr<Block> makeBlocks(char type, bool isHeavy) override; 
     bool isHeavy() override; 

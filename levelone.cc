@@ -19,12 +19,9 @@
 using namespace std; 
 
 shared_ptr<Block> levelone::createBlock() {
-    // generate a number from 1-6 
-    /*random_device dev;
-    mt19937 rng(dev());
-    uniform_int_distribution<mt19937::result_type> dist6(1,6); // distribution in range [1, 6]
-    int generateLucky = dist6(rng);*/
+    // Generate a lucky number using rand()
     int generateLucky = rand()%6+1; 
+    // Calculating block types based on probabilities
     if (generateLucky == 1) {
         int n = rand()%2+1; 
         if (n == 1) {
@@ -80,6 +77,7 @@ shared_ptr<Block> levelone::makeBlocks(char type, bool isHeavy) {
     return p; 
 } 
 
+// You can't read from a file for this level 
 void levelone::blocksFromFile(string filename) {
     string s = "Invalid level for reading from file";
     throw (s); 
@@ -89,6 +87,7 @@ bool levelone::getRandom() {
     return this->norandom; 
 }
 
+// You cannot read from a file hence norandom=false 
 void levelone::setRandom(bool val) {
     this->norandom = false; 
 }

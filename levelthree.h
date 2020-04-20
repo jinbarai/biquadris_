@@ -17,6 +17,8 @@
 #ifndef THREE_H
 #define THREE_H
 
+// All these methods perform the same function 
+
 class levelthree: public levels { 
     int curseq = 0;
     std::shared_ptr<Block> makeBlocks(char type, bool isHeavy) override; 

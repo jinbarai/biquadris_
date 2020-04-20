@@ -19,6 +19,7 @@
 using namespace std; 
 
 shared_ptr<Block> levelzero::createBlock() {
+       // store the current block 
        char nowBlock = block_file.at(this->curseq); 
        this->curseq++;
        // go through the same sequence if reached the end of sequence 
@@ -29,7 +30,9 @@ shared_ptr<Block> levelzero::createBlock() {
 }
 
 
-// Implementing methods 
+// Implementing methods
+
+// Returns a shared pointer of type Block
 shared_ptr<Block> levelzero::makeBlocks(char type, bool isHeavy) {
     shared_ptr<Block> p; 
     switch(type) {
@@ -66,11 +69,11 @@ bool levelzero::is_file_exist(const string file) {
 
 // Read from file 
 void levelzero::blocksFromFile(string filename) {
-    //  controller will pass these to level
-    //cout << "LET'S" << endl; 
+    //  controller will pass these to level 
     if (is_file_exist(filename)) {
         ifstream file{filename};
         char t; 
+        // Store all the block types from the file into the vector block_file
         while(file>>t) {
             block_file.emplace_back(t); 
         }
@@ -94,6 +97,7 @@ void levelzero::clearVector() {
     this->curseq = 0;
 }
 
+// No Random will always be true here! 
 void levelzero::setRandom(bool val){
     this->norandom = true; 
 }   

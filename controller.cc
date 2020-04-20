@@ -545,7 +545,7 @@ void Controller::drop(int n) {
  * Controller::random()
  * If the random commamd from main.cc is called, it will revert the 
  * user to use randomized block values. 
- * Note: main.cc may accept a multipliar, but it is not used 
+ * Note: main.cc may accept a multiplier, but it is not used 
  * by the function. This command has no affects on levels 0-2. 
  */ 
 void Controller::random() {
@@ -556,7 +556,6 @@ void Controller::random() {
         shared_ptr <levels> l = this->getGrid()->getPlayer()->getPtrLevel();
         this->clearVector(l);
         this->getGrid()->getPlayer()->setNextBlock(l->createBlock());
-        //cout << this->getGrid()->getPlayer()->getPtrLevel()->getRandom() << endl; 
     } else {
         string s = "Wrong level for toggling random/norandom option";
         cout << s << endl; 
@@ -567,7 +566,7 @@ void Controller::random() {
  * Controller::norandom(string filename)
  * If the norandom commamd from main.cc is called, it will change 
  * the user to have blocks called from the string filename! 
- * Note: main.cc may accept a multipliar, but it is not used 
+ * Note: main.cc may accept a multiplier, but it is not used 
  * by the function. This command has no affects on levels 0-2. 
  */ 
 void Controller::norandom(string filename){ 

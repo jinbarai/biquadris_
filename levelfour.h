@@ -16,6 +16,7 @@
 #ifndef FOUR_H
 #define FOUR_H
 
+// All methods function the same as the one described in levels.h 
 class levelfour: public levels { 
     int curseq = 0; 
     std::shared_ptr<Block> makeBlocks(char type, bool isHeavy) override; 
