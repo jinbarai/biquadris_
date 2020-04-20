@@ -11,9 +11,19 @@
 #include "levelfive.h"
 #include "levelsix.h"
 
+
+/* PLAYER 
+ * A player is owned by a grid
+ * but a graphic class and textdisplay class 
+ * also have (HAS-A) grid.
+ * A player OWNS-A level (this->l) and OWNS 2 block pointers, 
+ * the current and next block of the player 
+ * (this->b and this->bnext)
+ */
+
 class Player { 
     int score;
-    std::string name;
+    const std::string name;
     std::shared_ptr<levels> l;
     int level;
     bool blind;
@@ -24,7 +34,7 @@ class Player {
     bool specialCommandHeavy = false;
     public:
     std::string getFileName();
-    Player(int, std::string, int, std::string = "");
+    Player(std::string, int, std::string = "");
     int getScore();
     void addScore(int);
    // void setLevelHeavy(bool);
@@ -42,7 +52,7 @@ class Player {
     int getLevel();
     void setFile(std::string filename); 
     void changeLevel(int);
-    ~Player();
+    ~Player() = default;
 };
 
 
