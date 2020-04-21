@@ -7,20 +7,28 @@ using namespace std;
  * a string fileName if they are given a command line argument with 
  * their filename, 
  */
-Player::Player(string s, int lev, string fileName) : name{s} {
+Player::Player(string s, int lev, bool bonus, string fileName) : name{s} {
     this->score = 0;
     this->blind = false;
+    this->bonus = bonus;
     // their next block defaults to null upon construction 
     this->b = nullptr;
     // next block set to null 
     this->bnext = nullptr;
     this->file = fileName;
-    if (lev < 0 || lev > 6) { // if an incorrect level is provided
-    // it defaults to zeor
-        lev = 0;
-    } 
+    if (this->bonus) {
+        if (lev < 0 || lev > 6) { // if an incorrect level is provided
+            // it defaults to zeor
+            lev = 0;
+        } 
+        
+    } else { 
+        if (lev < 0 || lev > 4) { 
+            lev = 0;
+        }
+    }
     this->level = lev;
-    // attaches the correct level pointer to the player 
+        // attaches the correct level pointer to the player 
     if (lev == 0) {
         this->l =  make_shared<levelzero>(); // add notes based on level code
     } else if (lev == 1) {
@@ -147,18 +155,25 @@ void Player::setBlind() {
     }
 }
 
+void Player::changeBonus(bool b) {
+    this->bonus = b;
+}
+
 /* Player::changeLevel(int lev)
  * Used to change the players level and called by the
  * Controller::levelup and Controller::leveldown. 
  * Has no effect if called with an incorrect level. 
  */
 void Player::changeLevel(int lev) {
-    if (lev > 6) {
+    if (this->bonus && lev > 6) {
+        return;
+    } else if (!this->bonus && lev > 4) { 
         return;
     } else if (lev < 0) {
         return;
     }
     this->level = lev;
+        // attaches the correct level pointer to the player 
     if (lev == 0) {
         this->l =  make_shared<levelzero>(); // add notes based on level code
     } else if (lev == 1) {

@@ -12,6 +12,7 @@
 class Controller { 
     std::shared_ptr<Grid> g1;
     std::shared_ptr<Grid> g2;
+    bool bonus = false;
     bool ActionMode = false;
     int highscore;
     bool text;
@@ -22,7 +23,7 @@ class Controller {
     public: 
     std::shared_ptr<Grid> getGrid();
     Controller(std::shared_ptr<Grid> g1, std::shared_ptr<Grid> g2, std::shared_ptr<TextDisplay> td, 
-        int score, bool text, std::shared_ptr<Graphics> gr); 
+        int score, bool text, std::shared_ptr<Graphics> gr, bool bonus); 
     // main will make player pointers and pass the grid to the controller. 
     void changeTurn();
     void move(int n, int dir);
@@ -32,6 +33,8 @@ class Controller {
     void leveldown();
     int getHighScore();
     bool isSpecialAction();
+    bool getBonus();
+    void changeBonus(bool b);
     std::string getKeyboardCommand();
     // Special Actions
     void specialAction(char c, char b);

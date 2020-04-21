@@ -26,6 +26,7 @@ class Player {
     const std::string name;
     std::shared_ptr<levels> l;
     int level;
+    bool bonus;
     bool blind;
     //bool levelHeavy;
     std::string file;
@@ -34,9 +35,10 @@ class Player {
     bool specialCommandHeavy = false;
     public:
     std::string getFileName();
-    Player(std::string, int, std::string = "");
+    Player(std::string, int, bool bonus, std::string = "");
     int getScore();
     void addScore(int);
+    void changeBonus(bool b);
    // void setLevelHeavy(bool);
    // bool isLevelHeavy();
     std::shared_ptr<Block> getBlock();
