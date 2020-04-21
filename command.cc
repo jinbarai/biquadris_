@@ -5,7 +5,7 @@ using namespace std;
 string Command::extractString(string n)
 {
     string extract;
-    if(n.substr(0,4) == "nora" || n.substr(0,3) == "seq" || n.substr(0,6) == "rename") {
+    if(n.substr(0,1) == "n" || n.substr(0,3) == "seq" || n.substr(0,6) == "rename") {
         return n; 
     }
     // This will execute if it is not norandom or seq or rename
@@ -53,13 +53,19 @@ int Command::getNum(string n)
 }
 
 static void readFile(vector<string>& v, string filename){
+    // Can't do a getline here because in sequence file the same line could 
+    // have different commands like dr dr dr dr
     string line;
-    ifstream file(filename);
-	while (getline(file, line))
+    ifstream file{filename};
+	while(file>>line) {
+                v.emplace_back(line); 
+        }
+    /*
+    while (getline(file, line))
 	{
 		if(line.size() > 0)
 			v.emplace_back(line);
-	}
+	}*/
 }
 
 static bool replace(vector<string>& v, string old, string newName){
@@ -143,6 +149,12 @@ string Command::getFile(){
     return this->file;
 }
 
+bool Command::fileValid(string filename) {
+    if (filename=="") { return false; }
+    ifstream file{filename};
+    return (file.good()); 
+}
+
 void Command::setFile(string s){
     this->file = s;
 }
@@ -182,7 +194,6 @@ string Command::getCommand(string n)
     string cmd;
    
     cmd = extractString(n);
-    cout << cmd << endl;
     if (checkinVector(cmd, this->leftVector))
     {
         return "left";
@@ -223,6 +234,7 @@ string Command::getCommand(string n)
     {
         return "leveldown";
     }
+    
     string firstcmd = "";
     int i = 0;
     int len = cmd.length();
@@ -231,12 +243,14 @@ string Command::getCommand(string n)
         firstcmd += cmd[i];
     }
 
-    if (checkinVector(firstcmd, this->norandomVector)){
+    if (checkinVector(firstcmd, this->norandomVector)){ 
+        if (firstcmd == cmd) { return "sos"; }
         file = cmd.substr(i+1, cmd.length());
         return "norandom";
     }
 
     else if (checkinVector(firstcmd, this->sequenceVector)){
+        
         file = cmd.substr(i+1, cmd.length());
         return "sequence";
     }

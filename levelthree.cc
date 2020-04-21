@@ -97,8 +97,8 @@ shared_ptr<Block> levelthree::makeBlocks(char type, bool isHeavy)
 // check if file exists
 bool levelthree::is_file_exist(const string file)
 {
-    std::ifstream infile(file);
-    return infile.good();
+    ifstream infile{file};
+    return (infile.good());
 }
 
 void levelthree::blocksFromFile(string filename)

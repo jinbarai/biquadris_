@@ -193,8 +193,11 @@ int main(int argc, char *argv[])
                 else if (com.seq_comm.empty()) com.readSeq = false; 
                 // converts to a command 
                 command = com.getCommand(cmd);
+                if (command == "sos") {
+                    cout << "Filename not entered or file not readable" << endl; 
+                    continue; 
+                }
                 int num = com.getNum(cmd);
-             //   cout << "command = " << command << endl;
                 // Handle filenames
                 if ((command).compare("end") == 0)
                 {
@@ -279,7 +282,7 @@ int main(int argc, char *argv[])
             else if (command == "norandom")
             {
                 // pass in a filename
-                if (com.getFile() != "") c->norandom(com.getFile());
+                if (com.fileValid(com.getFile())) {c->norandom(com.getFile());}
                 else cout<<"Filename not entered or file not readable" << endl; 
                 com.setFile(""); 
             }
