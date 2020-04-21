@@ -181,8 +181,9 @@ int main(int argc, char *argv[])
             // Extracting a line to work a number and string
            // file = ""; 
             int multiplier = 1;
-            if (!keyboardmode){ // if it is keyboard mode
+            if (!keyboardmode) { // if it is keyboard mode
             // other commands are provided 
+                if (com.seq_comm.empty()) com.readSeq = false; 
                 if(!com.readSeq) {
                     getline(cin, cmd); // obtains the line from the user's input 
                 }
@@ -190,7 +191,6 @@ int main(int argc, char *argv[])
                     cmd = com.seq_comm.back();
                     com.seq_comm.pop_back();  
                 }
-                else if (com.seq_comm.empty()) com.readSeq = false; 
                 // converts to a command 
                 command = com.getCommand(cmd);
                 if (command == "sos") {
@@ -235,6 +235,33 @@ int main(int argc, char *argv[])
              * all commands accept short form , as provided by the 
              * getCommand function 
              */ 
+            if (c->isSpecialAction()) {
+                cout << "Congratultions on your Special Action!" << endl;
+                string s;
+                char action;
+                char b = ' ';
+                if (!com.readSeq) {
+                    cout << "Select one of the following: ";
+                    cout << "Blind, Heavy or Force" << endl;
+                    cin >> s;
+                    action = s.at(0);
+                    if (action == 'f' || action == 'F') {
+                        cin >> b;
+                    }
+                } else { 
+                    s = cmd;
+                    action = s.at(0);
+                    if (action == 'f' || action == 'F') {
+                        string key;
+                        key = com.seq_comm.back();
+                        b = key.at(0);
+                        com.seq_comm.pop_back(); 
+                    }
+                }
+                c->setSpecialAction(false);
+                c->specialAction(action, b);
+                continue;
+            }
             if (command == "left")
             {
                 multiplier = (multiplier > 10) ? 10 : multiplier;
@@ -327,9 +354,9 @@ int main(int argc, char *argv[])
                     while(fname>>word) {
                         com.seq_comm.emplace_back(word); 
                     }
-                    reverse(com.seq_comm.begin(),com.seq_comm.end()); 
+                    reverse(com.seq_comm.begin(),com.seq_comm.end());
                 }
-                else cout<<"Filename not entered or file not readable" << endl;
+                else cout << "Filename not entered or file not readable" << endl;
             }
             else if (command  == "i" || command  == "j" || 
                 command  == "l" || command  == "o" || 

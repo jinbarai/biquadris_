@@ -1,0 +1,14 @@
+i
+cw
+dr
+i
+cw
+dr i 4ri cw
+dr
+i 4ri
+cw dr
+o 8ri dr
+o 8ri dr
+i
+5ri
+

@@ -56,35 +56,24 @@ void Controller::setKeyboard(bool k) {
  * cleared 2 or more rows at once! 
  * Effects: uses I/O seperate from main.cc 
  */ 
-void Controller::specialAction() {
-    cout << "Congratultions on your Special Action!" << endl;
-    cout << "Select one of the following: ";
-    string s;
-    /*
-    if (this->keyboard) {
-        cout << "Blind[1], Heavy[2] or Force[3]" << endl;
-        s = this->getKeyboardCommand();
-    
-    } else { 
-        */
-        cout << "Blind, Heavy or Force" << endl;
-        cin >> s;
-    //}
-    const char c = s.at(0);
-    if (c == 'B'|| c == 'b') {
+
+void Controller::specialAction(char c, char b = ' ') {
+    if (c == 'b') {
         cout << "You have selected: Blind" << endl;
         this->blind();
-    } else if  (c == 'H' || c == 'h') {
+    } else if  (c == 'h') {
         cout << "You have selected: Heavy" << endl;
         this->heavy();
-    } else if (c == 'F' || c == 'f') {
-        char c;
-        cin >> c;
-        cout << "You have selected: Force " << c << endl;
-        this->force(c);
+    } else if (c == 'f') {
+        cout << "You have selected: Force " << b << endl;
+        this->force(b);
     }  else { 
         cout << "Invalid choice. Special Action cancelled!" << endl;
     }
+}
+
+void Controller::setSpecialAction(bool b) {
+    this->ActionMode = b;
 }
 
 /* 
@@ -110,6 +99,7 @@ void Controller::blind() {
     // that is why getGrid() is used instead of the 
     // particular players turn
     cout << *this->getGrid(); // does not matter which Grid, just want to show blind 
+    this->changeTurn();
 }
 
 /* 
@@ -152,6 +142,7 @@ void Controller::force(char c) {
     } else { 
         cout << "Invalid Character, Force cancelled" << endl;
     }
+    this->changeTurn();
 }
 /* 
  * Controller::changeBlock(char c)
@@ -311,6 +302,7 @@ void Controller::heavy(){
     } else { 
         this->g1->getPlayer()->setSpecialHeavy(true);
     }
+    this->changeTurn();
 }
 
 /* 
@@ -535,10 +527,15 @@ void Controller::drop(int n) {
         }
     }
     if (flag) {
-        this->specialAction();
+        this->ActionMode= true;
+    } else { 
+        this->changeTurn(); 
+        // calls changeTurn because the players turn is done! 
     }
-    this->changeTurn(); 
-    // calls changeTurn because the players turn is done! 
+}
+
+bool Controller::isSpecialAction() {
+    return this->ActionMode;
 }
 
 /* 

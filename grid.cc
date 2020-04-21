@@ -248,9 +248,9 @@ bool Grid::drop(State p) {
         // we need to drop a brown block 
         this->brown(p, this->p->getLevel());
     }
+
     return (row >= 2);
 }
-
 
 /* Grid::brown(State p, int n)
  * Used in levels 4-6. In level 4, will drop one 

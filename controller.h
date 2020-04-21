@@ -12,6 +12,7 @@
 class Controller { 
     std::shared_ptr<Grid> g1;
     std::shared_ptr<Grid> g2;
+    bool ActionMode = false;
     int highscore;
     bool text;
     bool keyboard = false;
@@ -30,9 +31,11 @@ class Controller {
     void levelup();
     void leveldown();
     int getHighScore();
+    bool isSpecialAction();
     std::string getKeyboardCommand();
     // Special Actions
-    void specialAction();
+    void specialAction(char c, char b);
+    void setSpecialAction(bool b);
     void changeBlock(char c);
     void blind();
     void heavy();
