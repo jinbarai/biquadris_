@@ -190,7 +190,7 @@ void Graphics::level6(State p) {
         x = 340;
     }
     // outputs a completely black grid with a white square in the middle saying "DROP".
-    this->xw.fillRectangle(x, align1, 50, 50, Xwindow::White); 
+    this->xw.fillRectangle(x, 230, 50, 50, Xwindow::White); 
     this->xw.drawStringFont(x+5, align2, "DROP", body);
 }
 
