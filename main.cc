@@ -61,6 +61,7 @@ int main(int argc, char *argv[])
     unsigned int seed = 0;
     bool text = false; // used if text command is supplied to the program 
     int lvl = 0; // used if a particular level is supplied to the program 
+    bool bonus = false;
     /* 
      * this if statement is used to check for the command line flags
      * passed to the program 
@@ -70,6 +71,10 @@ int main(int argc, char *argv[])
         if (!strcmp(argv[i],"-text")) // if text is provided 
         { 
             text = true;
+        }
+        else if (!strcmp(argv[i], "-bonus")) 
+        { 
+            bonus = true;
         }
         else if (!strcmp(argv[i], "-seed")) // if seed is provided 
         {
@@ -139,8 +144,8 @@ int main(int argc, char *argv[])
 
     cout << "Welcome to Biquadris " << s1 << " and " << s2 << "!" << endl;
     // make the pointers for player 1 and 2 
-    shared_ptr<Player> p1 = make_shared<Player>(s1, 0, seqFile1);
-    shared_ptr<Player> p2 = make_shared<Player>(s2, 0, seqFile2);
+    shared_ptr<Player> p1 = make_shared<Player>(s1, 0, bonus, seqFile1);
+    shared_ptr<Player> p2 = make_shared<Player>(s2, 0, bonus, seqFile2);
     // will make Grid pointers to be passed to the controller
     // upon it's construction 
     auto g1 = make_shared<Grid>();
@@ -165,7 +170,7 @@ int main(int argc, char *argv[])
     }
     g1->setGraphics(gr);
     g2->setGraphics(gr);
-    unique_ptr<Controller> c = make_unique<Controller>(g1, g2, td, highScore, text, gr);
+    unique_ptr<Controller> c = make_unique<Controller>(g1, g2, td, highScore, text, gr, bonus);
     
     if (keyboardmode) { // to ensure that keyboard mode is properly entered 
         c->setKeyboard(keyboardmode);
@@ -293,14 +298,27 @@ int main(int argc, char *argv[])
             }
             else if (command == "levelup")
             {
-                multiplier = (multiplier > 6) ? 6 : multiplier;
-                for (int i = 0; i < multiplier; i++)
-                {
-                    if (c->getGrid()->getPlayer()->getLevel() != 6) {
-                        c->levelup();
+                if (bonus) {
+                    multiplier = (multiplier > 6) ? 6 : multiplier;
+                    for (int i = 0; i < multiplier; i++)
+                    {
+                        if (c->getGrid()->getPlayer()->getLevel() != 6) {
+                            c->levelup();
+                        }
+                        else {
+                            break; 
+                        }
                     }
-                    else {
-                        break; 
+                } else { 
+                    multiplier = (multiplier > 4) ? 4 : multiplier;
+                    for (int i = 0; i < multiplier; i++)
+                    {
+                        if (c->getGrid()->getPlayer()->getLevel() != 4) {
+                            c->levelup();
+                        }
+                        else {
+                            break; 
+                        }
                     }
                 }
             }
@@ -347,14 +365,30 @@ int main(int argc, char *argv[])
                 char b = command[0];
                 c->changeBlock(b);
             }
-            else if (command == "rename"){
+            else if (bonus && command == "rename"){
                 if (com.rename()){
                     if (com.isCoreCommand()){
                         cout << "You attempted to rename a core command. Both words are now valid." << endl;
                     }else{
-                        cout << "Success!: " << com.getOldName() << " was renamed to ";
+                        cout << "Success! " << com.getOldName() << " was renamed to ";
                         cout << com.getNewName() << endl;
                     }          
+                }
+            } else if (command == "bonus") {
+                if (bonus == false) {
+                    bonus = true;
+                    c->changeBonus(bonus);
+                    c->getG1()->getPlayer()->changeBonus(bonus);
+                    c->getG2()->getPlayer()->changeBonus(bonus);
+                } else { 
+                    bonus = false;
+                    c->changeBonus(bonus);
+                    if (c->getG1()->getPlayer()->getLevel() > 4) {
+                        c->getG1()->getPlayer()->changeLevel(4);
+                    }
+                    if (c->getG2()->getPlayer()->getLevel() > 4) {
+                        c->getG2()->getPlayer()->changeLevel(4);
+                    }
                 }
             }
             else {}

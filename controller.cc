@@ -7,7 +7,7 @@ using namespace std;
  * Graphics, the program's highest score whether or not the program is being run in text mode
  */
 Controller::Controller(shared_ptr<Grid> g1, shared_ptr<Grid> g2, shared_ptr<TextDisplay> td, 
-    int score, bool text, shared_ptr<Graphics> gr) {
+    int score, bool text, shared_ptr<Graphics> gr, bool bonus) {
     this->g1 = g1;
     this->g2 = g2;
     this->td = td;
@@ -15,6 +15,7 @@ Controller::Controller(shared_ptr<Grid> g1, shared_ptr<Grid> g2, shared_ptr<Text
     // to determine if program is running in text mode 
     this->gr = gr;
     this->highscore = score;
+    this->bonus = bonus;
     // used to determine the highest score yet 
     this->turn = State::p1; 
     /* 
@@ -233,7 +234,10 @@ void Controller::changeTurn() {
 void Controller::levelup() {
     int level = this->getGrid()->getPlayer()->getLevel();
     // Cannot levelup if it already 6
-    if (level == 6) {
+    if (this->bonus && level == 6) {
+        cout << "Max level reached!" << endl; 
+        return;
+    } else if (!this->bonus && level == 4) { 
         cout << "Max level reached!" << endl; 
         return;
     } 
@@ -599,8 +603,8 @@ void Controller::restart() {
     // revert players back to default sequence files. 
     string s1 = this->g1->getPlayer()->getName();
     string s2 = this->g2->getPlayer()->getName();
-    shared_ptr<Player> p1 = make_shared<Player>(s1, 0, "sequence1.txt");
-    shared_ptr<Player> p2 = make_shared<Player>(s2, 0, "sequence2.txt");
+    shared_ptr<Player> p1 = make_shared<Player>(s1, 0, this->bonus, "sequence1.txt");
+    shared_ptr<Player> p2 = make_shared<Player>(s2, 0, this->bonus, "sequence2.txt");
     // does not create new grids, simply re-initalizes them 
     this->g1->init(p1, this->text);
     this->g2->init(p2, this->text);
@@ -619,6 +623,14 @@ void Controller::restart() {
     this->turn = State::p1;
     // will call generate to start the turn automaticall 
     this->generate();
+}
+
+bool Controller::getBonus() {
+    return this->bonus;
+}
+
+void Controller::changeBonus(bool b) {
+    this->bonus = b;
 }
 
 /* 
