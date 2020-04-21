@@ -8,6 +8,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
+#include "command.h"
 using namespace std;
 
 /* 
@@ -15,73 +16,8 @@ using namespace std;
  * these strings are saved for simplicity within the 
  * command simplifier getCommand function. 
  */ 
-const string levelupfile = "textFiles/possible_levelu.txt";
-const string leveldownfile = "textFiles/possible_leveld.txt";
-const string startfile = "textFiles/possible_start.txt";
-const string leftfile = "textFiles/possible_left.txt";
-const string rightfile = "textFiles/possible_right.txt";
-const string downfile = "textFiles/possible_down.txt";
-const string dropfile = "textFiles/possible_drop.txt";
-const string clockwisefile = "textFiles/possible_clockwise.txt";
-const string counterfile = "textFiles/possible_counter.txt";
-const string restartfile = "textFiles/possible_restart.txt";
-const string hintfile = "textFiles/possible_hint.txt";
-const string norandomfile = "textFiles/possible_norandom.txt";
-const string randomfile = "textFiles/possible_random.txt";
-string file = ""; 
-bool readSeq = false; 
-vector <string> seq_comm; 
 
-#undef _KEYBOARDMODE_
 using namespace std;
-
-string getNum(string n)
-{
-    string nu;
-    for (int i = 0; i < n.length(); i++)
-    {
-        if (isdigit(n[i]))
-        {
-            nu = nu + n[i];
-        }
-    }
-    return nu;
-}
-
-string extractString(string n)
-{
-    // Special condition for norandom and seq since they also accept a file argument
-    string extract;
-    if(n.substr(0,4) == "nora" || n.substr(0,3) == "seq") {
-        return n; 
-    }
-    // This will execute if it is not norandom or seq 
-    for (int i = 0; i < n.length(); i++)
-    {
-        if (isalpha(n[i]))
-        {
-            n[i] = tolower(n[i]);
-            extract = extract + n[i];
-        }
-    }
-    return extract;
-}
-
-bool checkinFile(string file, string word)
-{
-    // will go through and check the corresponding name
-    // will see if the file exists 
-    ifstream name{file};
-    string check;
-    while (getline(name, check))
-    {
-        if (word == check)
-        {
-            return true;
-        }
-    }
-    return false;
-}
 
 int readHighScore(){
     /*
@@ -105,81 +41,13 @@ void saveHighScore(int n){
     file << n;
 }
 
-string getCommand(string n)
-{
-    /* 
-     * used to obtain the commands 
-     * from the string constants 
-     * to ensure that short form and other
-     * forms of the commands can be used 
-     */
-    string cmd = extractString(n);
-    if (checkinFile(leftfile, cmd))
-    {
-        return "left";
-    }
-    else if (checkinFile(rightfile, cmd))
-    {
-        return "right";
-    }
-    else if (checkinFile(downfile, cmd))
-    {
-        return "down";
-    }
-    else if (checkinFile(dropfile, cmd))
-    {
-        return "drop";
-    }
-    else if (checkinFile(clockwisefile, cmd))
-    {
-        return "cw";
-    }
-    else if (checkinFile(counterfile, cmd))
-    {
-        return "ccw";
-    }
-    else if (checkinFile(restartfile, cmd))
-    {
-        return "restart";
-    }
-    else if (checkinFile(randomfile, cmd))
-    {
-        return "random";
-    }
-    else if (checkinFile(levelupfile, cmd))
-    {
-        return "levelup";
-    }
-    else if (checkinFile(leveldownfile, cmd))
-    {
-        return "leveldown";
-    }
-    //if cmd is end, norand... or sequence return the whole string 
-    else if (cmd.substr(0,8)=="norandom" || cmd.substr(0,8) == "sequence")
-    {
-        // extract the file name after norandom or sequence word
-        for (int i=8; i<cmd.length(); i++) {
-            if(cmd[i]==' ') {
-                continue;
-            }
-            else {
-                file = file + cmd[i]; 
-            }
-        }
-        return cmd.substr(0,8); 
-    }
-    else
-    {
-        return cmd;
-    }
-}
 
 
 int main(int argc, char *argv[])
 {
     bool keyboardmode = false; 
-    /* this bool is 
-     * used for extra commad -keyboardmode 
+ 
+    /* used for extra commad -keyboardmode 
      * where arrows can be used to play 
      */
     cin.exceptions(ios::eofbit | ios::failbit); // from a4q4 main
@@ -264,6 +132,7 @@ int main(int argc, char *argv[])
     {
         s2 = s2.substr(0, 5);
     }
+
     cout << "Welcome to Biquadris " << s1 << " and " << s2 << "!" << endl;
     // make the pointers for player 1 and 2 
     shared_ptr<Player> p1 = make_shared<Player>(s1, 0, seqFile1);
@@ -293,36 +162,39 @@ int main(int argc, char *argv[])
     g1->setGraphics(gr);
     g2->setGraphics(gr);
     unique_ptr<Controller> c = make_unique<Controller>(g1, g2, td, highScore, text, gr);
+    
     if (keyboardmode) { // to ensure that keyboard mode is properly entered 
         c->setKeyboard(keyboardmode);
     }
     cin.ignore();
     cin.clear();
+
     string command;
     c->startlevel(lvl); 
     c->generate(); // will start the first turn (defaults to Player 1)
+    Command com;
+    com.readFiles();
     try
     {
         while (true)
         {
             // Extracting a line to work a number and string
-            file = ""; 
+           // file = ""; 
             int multiplier = 1;
             if (!keyboardmode){ // if it is keyboard mode
             // other commands are provided 
-                if(!readSeq) {
+                if(!com.readSeq) {
                     getline(cin, cmd); // obtains the line from the user's input 
                 }
-                else if(!seq_comm.empty() && readSeq) {
-                    cmd = seq_comm.back();
-                    //cout << cmd << endl; 
-                    seq_comm.pop_back();  
+                else if(!com.seq_comm.empty() && com.readSeq) {
+                    cmd = com.seq_comm.back();
+                    com.seq_comm.pop_back();  
                 }
-                else if (seq_comm.empty()) readSeq = false; 
+                else if (com.seq_comm.empty()) com.readSeq = false; 
                 // converts to a command 
-                command = getCommand(cmd);
-                string num = getNum(cmd);
-
+                command = com.getCommand(cmd);
+                int num = com.getNum(cmd);
+             //   cout << "command = " << command << endl;
                 // Handle filenames
                 if ((command).compare("end") == 0)
                 {
@@ -343,8 +215,8 @@ int main(int argc, char *argv[])
                     }
                     break;
                 }
-                if (!(num.empty()))
-                    multiplier = stoi(num);
+                if (num != 0)
+                    multiplier = num;
                 else
                     multiplier = 1;
             }
@@ -355,7 +227,7 @@ int main(int argc, char *argv[])
             /* 
              * this is where the true game loop begins, 
              * begin to move with the commands
-             * if it s provided via keyboard mode, 
+             * if it is provided via keyboard mode, 
              * it will have limited command functionality
              * all commands accept short form , as provided by the 
              * getCommand function 
@@ -384,14 +256,14 @@ int main(int argc, char *argv[])
             {
                 c->drop(multiplier);
             }
-            else if (command == "cw")
+            else if (command == "clockwise")
             {
                 // modulo of multipler is created in the controller's
                 // cw function 
                 // logic for simplifying multiplier
                 c->cw(multiplier);
             }
-            else if (command == "ccw")
+            else if (command == "counterclockwise")
             {
                 // similar to cw 
                 c->ccw(multiplier);
@@ -407,9 +279,9 @@ int main(int argc, char *argv[])
             else if (command == "norandom")
             {
                 // pass in a filename
-                if (file!="") c->norandom(file);
+                if (com.getFile() != "") c->norandom(com.getFile());
                 else cout<<"Filename not entered or file not readable" << endl; 
-                file = ""; 
+                com.setFile(""); 
             }
             else if (command == "levelup")
             {
@@ -442,17 +314,17 @@ int main(int argc, char *argv[])
             }
             else if (command == "sequence") {
                  //flush the vector 
-                 seq_comm.clear(); 
+                com.seq_comm.clear(); 
                  // pass in a filename
-                ifstream fname{file};
+                ifstream fname{com.getFile()};
                 // check if a file exists or is readable, and open it
                 if(fname.good()) {
                     string word; 
-                    readSeq = true; 
+                    com.readSeq = true; 
                     while(fname>>word) {
-                        seq_comm.emplace_back(word); 
+                        com.seq_comm.emplace_back(word); 
                     }
-                    reverse(seq_comm.begin(),seq_comm.end()); 
+                    reverse(com.seq_comm.begin(),com.seq_comm.end()); 
                 }
                 else cout<<"Filename not entered or file not readable" << endl;
             }
@@ -464,8 +336,18 @@ int main(int argc, char *argv[])
                  * may produce output if the block can not be changed
                  * because of the grid's bounds [11x18]
                  */
-                char com = command[0];
-                c->changeBlock(com);
+                char b = command[0];
+                c->changeBlock(b);
+            }
+            else if (command == "rename"){
+                if (com.rename()){
+                    if (com.isCoreCommand()){
+                        cout << "You attempted to rename a core command. Both words are now valid." << endl;
+                    }else{
+                        cout << "Success!: " << com.getOldName() << " was renamed to ";
+                        cout << com.getNewName() << endl;
+                    }          
+                }
             }
             else {}
         }
