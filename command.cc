@@ -5,7 +5,7 @@ using namespace std;
 string Command::extractString(string n)
 {
     string extract;
-    if(n.substr(0,1) == "n" || n.substr(0,3) == "seq" || n.substr(0,6) == "rename") {
+    if(n.substr(0,1) == "n" || n.substr(0,2) == "se" || n.substr(0,6) == "rename") {
         return n; 
     }
     // This will execute if it is not norandom or seq or rename
@@ -242,15 +242,16 @@ string Command::getCommand(string n)
         if (cmd[i] == ' ') break;
         firstcmd += cmd[i];
     }
-
+    
     if (checkinVector(firstcmd, this->norandomVector)){ 
         if (firstcmd == cmd) { return "sos"; }
         file = cmd.substr(i+1, cmd.length());
         return "norandom";
     }
 
-    else if (checkinVector(firstcmd, this->sequenceVector)){
-        
+    //else 
+    if (checkinVector(firstcmd, this->sequenceVector)){
+        if (firstcmd == cmd) { return "sos"; }
         file = cmd.substr(i+1, cmd.length());
         return "sequence";
     }
