@@ -432,8 +432,8 @@ string Controller::getKeyboardCommand() // used xev in console to get these numb
     else if (key == 114 || key == 132) return "right";// right arrow
     else if (key == 116 || key == 133) return "down";// down arrow
     else if (key == 65 || key == 57) return "drop";// spacebar
-    else if (key == 111 || key == 134) return "cw";// up
-    else if (key == 52 || key == 14) return "ccw";// z
+    else if (key == 111 || key == 134) return "clockwise";// up
+    else if (key == 52 || key == 14) return "counterclockwise";// z
     else if (key == 29 || key == 24) return "restart";// y
     else if (key == 25 || key == 21) return "levelup";// w
     else if (key == 38 || key == 8) return "leveldown";// s
