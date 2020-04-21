@@ -61,7 +61,7 @@ void Controller::specialAction(char c, char b = ' ') {
     if (c == 'b') {
         cout << "You have selected: Blind" << endl;
         this->blind();
-    } else if  (c == 'h') {
+    } else if (c == 'h') {
         cout << "You have selected: Heavy" << endl;
         this->heavy();
     } else if (c == 'f') {
@@ -69,6 +69,7 @@ void Controller::specialAction(char c, char b = ' ') {
         this->force(b);
     }  else { 
         cout << "Invalid choice. Special Action cancelled!" << endl;
+        this->changeTurn();
     }
 }
 
@@ -98,8 +99,8 @@ void Controller::blind() {
     // the overloaded << operator prints both grids at once!
     // that is why getGrid() is used instead of the 
     // particular players turn
-    cout << *this->getGrid(); // does not matter which Grid, just want to show blind 
     this->changeTurn();
+    cout << *this->getGrid(); // does not matter which Grid, just want to show blind 
 }
 
 /* 
@@ -119,7 +120,7 @@ void Controller::force(char c) {
     } else {  
         p = g1->getPlayer();
     }
-    Bool b = false; 
+    bool b = false; 
     // to determine if it is heavy (levels >= 3)
     if (p->getLevel() >= 3) {
         b = true;
@@ -203,7 +204,7 @@ void Controller::changeTurn() {
     if (!this->text && this->getGrid()->getPlayer()->getLevel() == 6) {
         this->getGrid()->fixBlind(this->turn);
     }
-    // if the playre updated highscore. 
+    // if the player updated highscore. 
     if (this->getGrid()->getPlayer()->getScore() > this->highscore) {
         this->highscore = this->g1->getPlayer()->getScore();
         this->td->updateScore(this->highscore);
@@ -528,9 +529,11 @@ void Controller::drop(int n) {
     }
     if (flag) {
         this->ActionMode= true;
-    } else { 
+        throw SpecialAction();
+    }  
+    else { 
         this->changeTurn(); 
-        // calls changeTurn because the players turn is done! 
+    // calls changeTurn because the players turn is done!
     }
 }
 

@@ -5,6 +5,8 @@ enum class State { p1 , p2 };
 
 class InvalidMove{}; // for exceptions
 
+class SpecialAction{};
+
 struct GameOver{
     public:
     State player;
