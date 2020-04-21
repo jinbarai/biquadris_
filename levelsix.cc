@@ -7,8 +7,9 @@
 #include "levels.h"
 #include "levelsix.h"
 #include <random>
-
 using namespace std; 
+
+// Refer to levels.h for function explanations 
 
 shared_ptr<Block> levelsix::createBlock() {
   // Read from file norandom == true 

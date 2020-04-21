@@ -14,8 +14,9 @@
 #include "sblock.h"
 #include "tblock.h"
 #include "zblock.h"
-
 using namespace std; 
+
+// Refer to levels.h for function explanations 
 
 shared_ptr<Block> leveltwo::createBlock() {
     // generate a number from 0-6 
