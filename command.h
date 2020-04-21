@@ -48,6 +48,7 @@ class Command{
         void setFile(std::string);
         int getNum(std::string);
         bool isCoreCommand();
+        bool fileValid(std::string filename); 
         bool checkinVector(std::string, std::vector <std::string>&);
         ~Command() = default;
 };

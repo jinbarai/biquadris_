@@ -1,6 +1,5 @@
-dr 
-dr 
-3ri
-dr
-4right
-dr
+ri
+ri
+ri
+down
+cw
