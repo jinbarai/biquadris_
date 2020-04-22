@@ -413,7 +413,7 @@ int main(int argc, char *argv[])
                     if (com.seq_comm.empty()) { 
                         com.readSeq = false; 
                         if (action == 'f' || action == 'F') {
-                        cout << "Sequece now empty! Please provide input for the blocktype you would like to Force!" << endl;
+                        cout << "Sequence now empty! Please provide input for the blocktype you would like to Force!" << endl;
                         cin >> b;
                         }
                     }
