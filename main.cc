@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
         else if (!strcmp(argv[i], "-seed")) // if seed is provided 
         {
             ++i;
-            seed = atoi(argv[i]);
+            seed = stoi(argv[i]);
             srand(seed);
         }
         else if (!strcmp(argv[i], "-scriptfile1")) // if scriptfiles are provided 
@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
             if (i >= argc) {
                 lvl = 0;
             } else { 
-                lvl = atoi(argv[i]);
+                lvl = stoi(argv[i]);
             }
         }
         else if (!strcmp(argv[i], "-keyboardmode")){ // to start keyboard mode 
