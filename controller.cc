@@ -59,13 +59,13 @@ void Controller::setKeyboard(bool k) {
  */ 
 
 void Controller::specialAction(char c, char b = ' ') {
-    if (c == 'b') {
+    if (c == 'B' || c == 'b') {
         cout << "You have selected: Blind" << endl;
         this->blind();
-    } else if (c == 'h') {
+    } else if (c == 'H' || c == 'h') {
         cout << "You have selected: Heavy" << endl;
         this->heavy();
-    } else if (c == 'f') {
+    } else if (c == 'F' || c == 'f') {
         cout << "You have selected: Force " << b << endl;
         this->force(b);
     }  else { 

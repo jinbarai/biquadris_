@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
         else if (!strcmp(argv[i], "-seed")) // if seed is provided 
         {
             ++i;
-            seed = atoi(argv[i]);
+            seed = stoi(argv[i]);
             srand(seed);
         }
         else if (!strcmp(argv[i], "-scriptfile1")) // if scriptfiles are provided 
@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
             if (i >= argc) {
                 lvl = 0;
             } else { 
-                lvl = atoi(argv[i]);
+                lvl = stoi(argv[i]);
             }
         }
         else if (!strcmp(argv[i], "-keyboardmode")){ // to start keyboard mode 
@@ -385,9 +385,15 @@ int main(int argc, char *argv[])
                     c->changeBonus(bonus);
                     if (c->getG1()->getPlayer()->getLevel() > 4) {
                         c->getG1()->getPlayer()->changeLevel(4);
+                        if (!text) { 
+                            gr->changeLevel();
+                        }
                     }
                     if (c->getG2()->getPlayer()->getLevel() > 4) {
                         c->getG2()->getPlayer()->changeLevel(4);
+                        if (!text) { 
+                            gr->changeLevel();
+                        }
                     }
                 }
             }
@@ -413,7 +419,7 @@ int main(int argc, char *argv[])
                     if (com.seq_comm.empty()) { 
                         com.readSeq = false; 
                         if (action == 'f' || action == 'F') {
-                        cout << "Sequece now empty! Please provide input for the blocktype you would like to Force!" << endl;
+                        cout << "Sequence now empty! Please provide input for the blocktype you would like to Force!" << endl;
                         cin >> b;
                         }
                     }
