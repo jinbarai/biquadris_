@@ -385,9 +385,15 @@ int main(int argc, char *argv[])
                     c->changeBonus(bonus);
                     if (c->getG1()->getPlayer()->getLevel() > 4) {
                         c->getG1()->getPlayer()->changeLevel(4);
+                        if (!text) { 
+                            gr->changeLevel();
+                        }
                     }
                     if (c->getG2()->getPlayer()->getLevel() > 4) {
                         c->getG2()->getPlayer()->changeLevel(4);
+                        if (!text) { 
+                            gr->changeLevel();
+                        }
                     }
                 }
             }
