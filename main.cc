@@ -455,7 +455,6 @@ int main(int argc, char *argv[])
     catch (ios::failure &)
     {
         // This won't work for windows, will work only for mac
-        //system("clear");
         if (c->getHighScore() > highScore) {
             saveHighScore(c->getHighScore());
         }
