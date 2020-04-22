@@ -6,19 +6,19 @@
 #include <sstream>
 #include <iostream>
 class Command{
-    std::string levelupfile = "textFiles/possible_levelu.txt";
-    std::string leveldownfile = "textFiles/possible_leveld.txt";
-    std::string leftfile = "textFiles/possible_left.txt";
-    std::string rightfile = "textFiles/possible_right.txt";
-    std::string downfile = "textFiles/possible_down.txt";
-    std::string dropfile = "textFiles/possible_drop.txt";
-    std::string clockwisefile = "textFiles/possible_clockwise.txt";
-    std::string counterfile = "textFiles/possible_counter.txt";
-    std::string restartfile = "textFiles/possible_restart.txt";
-    std::string hintfile = "textFiles/possible_hint.txt";
-    std::string norandomfile = "textFiles/possible_norandom.txt";
-    std::string randomfile = "textFiles/possible_random.txt";
-    std::string sequencefile = "textFiles/possible_sequence.txt";
+    std::string levelupfile = "possible_levelu.txt";
+    std::string leveldownfile = "possible_leveld.txt";
+    std::string leftfile = "possible_left.txt";
+    std::string rightfile = "possible_right.txt";
+    std::string downfile = "possible_down.txt";
+    std::string dropfile = "possible_drop.txt";
+    std::string clockwisefile = "possible_clockwise.txt";
+    std::string counterfile = "possible_counter.txt";
+    std::string restartfile = "possible_restart.txt";
+    std::string hintfile = "possible_hint.txt";
+    std::string norandomfile = "possible_norandom.txt";
+    std::string randomfile = "possible_random.txt";
+    std::string sequencefile = "possible_sequence.txt";
     std::vector <std::string> clockwiseVector;
     std::vector <std::string> counterVector;
     std::vector <std::string> downVector;
