@@ -5,7 +5,7 @@ OBJECTS = textdisplay.o cell.o graphics.o window.o main.o command.o controller.o
 DEPENDS = ${OBJECTS:.o=.d}
 
 ${EXEC}: ${OBJECTS}
-	${CXX} ${CXXFLAGS} ${OBJECTS} -o ${EXEC} -lX11 -I/opt/X11/include
+	${CXX} ${CXXFLAGS} ${OBJECTS} -o ${EXEC} -lX11
 
 -include ${DEPENDS}
 
