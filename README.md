@@ -1,6 +1,6 @@
 # Biquadris
 
-### [Plan](./Plan.pdf)
+### [Plan](./plan.pdf)
 
 ### [Demosheet](./demo-sheet.pdf)
 
