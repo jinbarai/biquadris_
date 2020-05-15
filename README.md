@@ -1,7 +1,6 @@
-# CS246 A5: Biquadris
+# Biquadris
 
-### For a detailed plan of our project:
-[Plan](./Plan.pdf)
+### [Plan](./Plan.pdf)
 
 ### [Demosheet](./demo-sheet.pdf)
 
